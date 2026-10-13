@@ -8,9 +8,7 @@
   --green-soft: #e9f0e8;
   --blue: #366496;
   --blue-soft: #e9eef5;
-  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
   --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  --mono: 'SFMono-Regular', Consolas, monospace;
 }
 
 * { box-sizing: border-box; }
@@ -22,16 +20,16 @@ button, a, input, summary { touch-action: manipulation; }
 button { cursor: pointer; color: inherit; }
 a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid #bd7b28; outline-offset: 5px; }
 h1, h2, h3, p { margin-top: 0; }
-h1, h2, h3 { font-weight: 400; line-height: 1.12; letter-spacing: -.035em; }
-h1, h2, .thread-card h3, .capstone h3, .primer h3 { font-family: var(--serif); }
+h1, h2, h3 { font-weight: 600; line-height: 1.12; letter-spacing: -.035em; }
+h1, h2, .thread-card h3, .capstone h3, .primer h3 { font-family: var(--sans); }
 h2 { font-size: 48px; }
 h3 { font-size: 28px; }
 p { margin-bottom: 22px; }
-h1 em, h2 em { font-weight: 400; }
+h1 em, h2 em { font-weight: inherit; font-style: normal; }
 .container { max-width: 1280px; padding-inline: 48px; margin-inline: auto; }
 .section { padding-block: 84px; }
 .eyebrow { font-size: 13px; letter-spacing: .12em; font-weight: 600; line-height: 1.6; margin-bottom: 18px; }
-.mono { font: 14px var(--mono); letter-spacing: .02em; }
+.mono { font: 14px var(--sans); letter-spacing: .02em; }
 .skip-link { position: fixed; top: -100px; left: 20px; z-index: 100; padding: 12px 20px; background: var(--navy); color: white; }
 .skip-link:focus { top: 10px; }
 
@@ -69,7 +67,7 @@ nav a[aria-current]::after { content: ''; height: 2px; width: 24px; background: 
 .pipeline-heading > span { font-size: 14px; color: #c4d5dc; white-space: nowrap; }
 .pipeline-stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 0; padding: 0; list-style: none; }
 .pipeline-stages li { background: #193d4c; border: 1px solid #648e7f; border-radius: 6px; padding: 17px 12px; }
-.pipeline-stages li > span { display: block; font: 14px var(--mono); margin-bottom: 12px; color: #b5dbc5; }
+.pipeline-stages li > span { display: block; font: 14px var(--sans); margin-bottom: 12px; color: #b5dbc5; }
 .pipeline-stages strong { font-size: 19px; line-height: 1.3; font-weight: 500; display: block; }
 .pipeline-connector { display: flex; justify-content: center; gap: 15px; align-items: center; font-size: 16px; color: #c4d5dc; padding-inline: 16px; }
 .pipeline-connector > span { color: #b5dbc5; font-size: 24px; }
@@ -145,7 +143,7 @@ nav a[aria-current]::after { content: ''; height: 2px; width: 24px; background: 
 .detail-heading { font-size: 13px; letter-spacing: .04em; font-weight: 600; margin-bottom: 16px; }
 .detail-columns ul, .event-detail { padding-left: 20px; font-size: 17px; color: #405a64; margin: 0; }
 .detail-columns li { padding-bottom: 12px; line-height: 1.7; }
-.scope-tag { font: 12px var(--mono); display: inline-block; border: 1px solid #b9cbb8; padding: 3px 5px; vertical-align: 2px; margin-left: 5px; color: #3f6147; border-radius: 3px; }
+.scope-tag { font: 12px var(--sans); display: inline-block; border: 1px solid #b9cbb8; padding: 3px 5px; vertical-align: 2px; margin-left: 5px; color: #3f6147; border-radius: 3px; }
 .scope-stretch { border-color: #cfbb91; color: #775826; }
 .scope-concept { border-color: #b6c5d1; color: #41617a; }
 .event-details-wrap { border-top: 1px dashed #c4d0bb; padding-top: 20px; margin-top: 12px; }
@@ -159,7 +157,7 @@ nav a[aria-current]::after { content: ''; height: 2px; width: 24px; background: 
 .assignment-card { display: flex; flex-direction: column; padding: 28px; background: var(--paper); border: 1px solid #ced8ca; border-radius: 7px; text-align: left; transition: transform .2s, box-shadow .2s; min-height: 320px; }
 .assignment-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px #112c4008; border-color: #a1b79e; }
 .assignment-top { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 23px; gap: 14px; }
-.assignment-code { padding: 5px 10px; border-radius: 4px; background: #deead9; color: #2b5940; font: 500 15px var(--mono); }
+.assignment-code { padding: 5px 10px; border-radius: 4px; background: #deead9; color: #2b5940; font: 500 15px var(--sans); }
 .training-assignment .assignment-code { background: #deE8f3; color: #31577f; }
 .assignment-date { font-size: 16px; color: var(--ink); }
 .assignment-date time { font-weight: 600; }
@@ -237,7 +235,7 @@ nav a[aria-current]::after { content: ''; height: 2px; width: 24px; background: 
 .grade-bar span:nth-child(5) { background: #c6ccbd; }
 .grade-list { margin: 0 0 24px; font-size: 17px; }
 .grade-list > div { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--line); gap: 18px; }
-.grade-list dd { margin: 0; font: 16px/1.7 var(--mono); }
+.grade-list dd { margin: 0; font: 16px/1.7 var(--sans); }
 .small-text { font-size: 16px; color: var(--muted); }
 .policies details { border-bottom: 1px solid var(--line); padding: 19px 0; }
 .policies details:first-child { padding-top: 0; }
@@ -347,7 +345,7 @@ body.dialog-open { overflow: hidden; }
   .week-label { display: inline; font-size: 18px; }
   .week-dates { display: inline; font-size: 16px; margin-left: 12px; }
   .week-topic { grid-column: 1; font-size: 19px; line-height: 1.45; }
-  .lecture-one::before, .lecture-two::before { display: inline-block; font: 12px var(--mono); padding: 3px 5px; border-radius: 3px; margin-right: 8px; background: #e0e5dc; vertical-align: 2px; }
+  .lecture-one::before, .lecture-two::before { display: inline-block; font: 12px var(--sans); padding: 3px 5px; border-radius: 3px; margin-right: 8px; background: #e0e5dc; vertical-align: 2px; }
   .lecture-one::before { content: '01'; }
   .lecture-two::before { content: '02'; }
   .block-data .lecture-one::before, .block-data .lecture-two::before { background: #dce9d7; }
@@ -392,7 +390,7 @@ body.dialog-open { overflow: hidden; }
 @media (max-width: 420px) {
   .brand { gap: 10px; }
   .brand-icon { width: 44px; height: 44px; }
-  .hero h1 { font-size: clamp(46px, 14vw, 55px); }
+  .hero h1 { font-size: clamp(40px, 12.5vw, 55px); }
   .hero-actions { gap: 20px; }
   .hero-actions .button { padding: 14px 18px; }
   .hero-actions .text-link { font-size: 16px; }

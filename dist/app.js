@@ -3,6 +3,8 @@ const $ = (selector, context = document) => context.querySelector(selector);
 const $$ = (selector, context = document) => [...context.querySelectorAll(selector)];
 const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const course = window.COURSE;
+const assignmentIcons = {D1:'collect',D2:'process',D3:'dataset',T1:'gpu',T2:'sync',T3:'scale'};
+const courseIcon = name => `<svg class="course-icon" aria-hidden="true" viewBox="0 0 24 24"><use href="#icon-${name}"></use></svg>`;
 let scheduleView = 'all';
 const dateLabel = date => new Date(`${date}T12:00:00`).toLocaleDateString('en-US', {month:'short',day:'numeric'});
 const withTags = text => escapeHTML(text).replace(/\s+(CONCEPT|BUILD|STRETCH)$/, (_, tag) => ` <span class="scope-tag scope-${tag.toLowerCase()}">${tag}</span>`);
@@ -52,7 +54,7 @@ const summaries = {
   D3:'Deduplicate, tokenize, and shard your training dataset.',
   T3:'Train with synchronized gradients and analyze parallel layouts.'
 };
-$('#assignment-grid').innerHTML = course.assignments.map(assignment => `<article class="assignment-card ${assignment.thread}-assignment" aria-labelledby="assignment-title-${assignment.code}"><span class="assignment-top"><span class="assignment-code">${assignment.code}</span><span class="assignment-date">Due <time datetime="${assignment.date}">${dateLabel(assignment.date)}</time></span></span><h3 class="assignment-title" id="assignment-title-${assignment.code}">${escapeHTML(assignment.title)}</h3><span class="assignment-description">${summaries[assignment.code]}</span><div class="card-bottom"><button type="button" class="assignment-details" data-assignment="${assignment.code}" aria-haspopup="dialog" aria-label="View ${assignment.code} assignment details">View details</button><a href="${escapeHTML(course.handouts[assignment.code])}" target="_blank" rel="noopener noreferrer" aria-label="Read ${assignment.code} handout on GitHub (opens in a new tab)">Handout <span aria-hidden="true">↗</span></a></div></article>`).join('');
+$('#assignment-grid').innerHTML = course.assignments.map(assignment => `<article class="assignment-card ${assignment.thread}-assignment" aria-labelledby="assignment-title-${assignment.code}"><span class="assignment-top"><span class="assignment-code">${assignment.code}</span><span class="assignment-date">Due <time datetime="${assignment.date}">${dateLabel(assignment.date)}</time></span></span><div class="assignment-illustration">${courseIcon(assignmentIcons[assignment.code])}</div><h3 class="assignment-title" id="assignment-title-${assignment.code}">${escapeHTML(assignment.title)}</h3><span class="assignment-description">${summaries[assignment.code]}</span><div class="card-bottom"><button type="button" class="assignment-details" data-assignment="${assignment.code}" aria-haspopup="dialog" aria-label="View ${assignment.code} assignment details">View details</button><a href="${escapeHTML(course.handouts[assignment.code])}" target="_blank" rel="noopener noreferrer" aria-label="Read ${assignment.code} handout on GitHub (opens in a new tab)">Handout <span aria-hidden="true">↗</span></a></div></article>`).join('');
 $('#capstone-handout').href = course.handouts.Capstone;
 const dialog = $('#assignment-dialog');
 let assignmentTrigger = null;
@@ -118,4 +120,18 @@ course.readings.forEach(reading => {
 if ('IntersectionObserver' in window) {
   const observer = new IntersectionObserver(entries => {entries.forEach(entry => {if(entry.isIntersecting){$$('nav a').forEach(a=>{if(a.hash === '#'+entry.target.id)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});}});},{rootMargin:'-15% 0px -65% 0px',threshold:0});
   $$('#overview,#schedule,#assignments,#resources').forEach(section => observer.observe(section));
+}
+
+// Reveal illustrations once, keeping all content available without motion or JavaScript.
+const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+if (!motionPreference.matches && 'IntersectionObserver' in window) {
+  const reveal = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('illustration-arrived');
+        reveal.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.15});
+  $$('.blueprint, .thread-card, .assignment-card, .practice').forEach(element => reveal.observe(element));
 }

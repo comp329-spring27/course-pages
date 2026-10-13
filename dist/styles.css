@@ -482,37 +482,33 @@ body.dialog-open { overflow: hidden; }
   nav { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 18px; }
 }
 
-/* The overview text sits above the compact workflow so all six steps have room. */
-.hero { grid-template-columns: 1fr; gap: 32px; padding-block: 48px; }
-.hero-copy { display: grid; grid-template-columns: 1.12fr 1fr; column-gap: 68px; }
-.hero-copy .eyebrow { grid-column: 1; grid-row: 1; }
-.hero-copy h1 { grid-column: 1; grid-row: 2 / 4; margin-bottom: 0; }
-.hero-description { grid-column: 2; grid-row: 2; align-self: end; margin-bottom: 24px; }
-.hero-actions { grid-column: 2; grid-row: 3; align-self: start; }
+/* Two compact workflow rows sit beside the course introduction. */
+.hero { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; padding-block: 48px; }
+.hero-copy { display: block; min-width: 0; }
+.hero-copy h1 { margin-bottom: 28px; }
+.hero-description { margin-bottom: 28px; }
+.blueprint-top { padding: 18px 22px; }
+.workflow-track { grid-template-columns: 1fr; gap: 14px; padding: 20px 22px; }
+.pipeline-heading { flex-wrap: nowrap; gap: 10px; margin-bottom: 14px; }
+.pipeline-heading h2 { font-size: 20px; }
+.pipeline-stages { gap: 20px; }
+.pipeline-stages li { padding: 12px; gap: 12px 8px; }
+.pipeline-stages li:not(:last-child)::after { width: 20px; }
+.pipeline-stages strong { min-height: 0; font-size: 18px; }
+.pipeline-connector { padding-top: 0; flex-direction: row; justify-content: center; gap: 10px; }
+.pipeline-connector p { font-size: 15px; }
+.handoff-arrow::before { content: "↓"; font-size: 25px; }
 @media (max-width: 1100px) {
-  .hero-copy { column-gap: 36px; }
-  .workflow-track { gap: 12px; grid-template-columns: minmax(0, 1fr) 94px minmax(0, 1fr); padding: 22px; }
-  .pipeline-heading { flex-wrap: wrap; gap: 4px; }
-  .pipeline-heading h2 { font-size: 18px; }
-  .pipeline-stages { gap: 18px; }
-  .pipeline-stages li { padding: 12px; }
-  .pipeline-stages li:not(:last-child)::after { width: 18px; font-size: 20px; }
-  .pipeline-stages strong { font-size: 17px; }
-}
-@media (max-width: 900px) {
-  .workflow-track { grid-template-columns: 1fr; gap: 16px; }
-  .pipeline-heading { flex-wrap: nowrap; }
-  .pipeline-connector { padding-top: 0; flex-direction: row; justify-content: center; gap: 12px; }
-  .handoff-arrow::before { content: "↓"; }
-  .pipeline-connector p br { display: none; }
-  .pipeline-stages strong { min-height: 0; }
-}
-@media (max-width: 760px) {
-  .hero-copy { display: block; }
-  .hero-copy h1 { margin-bottom: 28px; }
-  .hero { padding-block: 40px; gap: 28px; }
+  .hero { gap: 32px; }
   .pipeline-heading h2 { font-size: 18px; }
   .pipeline-heading > span { font-size: 13px; }
+  .pipeline-stages strong { font-size: 17px; }
+  .pipeline-stages li { padding: 10px; }
+  .workflow-track { padding: 20px; }
+}
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; padding-block: 40px; gap: 28px; }
+  .blueprint { max-width: 560px; justify-self: center; }
 }
 @media (max-width: 420px) {
   .workflow-track { padding: 18px 10px; }

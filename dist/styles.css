@@ -524,3 +524,67 @@ body.dialog-open { overflow: hidden; }
   .pipeline-connector p { font-size: 14px; }
   .pipeline-footer { font-size: 15px; padding: 12px 16px; }
 }
+
+/* A tighter rhythm retains readable type and clear separation between sections. */
+@media screen {
+  .site-header { min-height: 84px; padding-block: 14px; gap: 22px; }
+  .brand-icon { width: 44px; height: 44px; }
+  .hero { padding-block: 32px; gap: 36px; }
+  .hero-copy h1 { margin-bottom: 22px; }
+  .hero-description { margin-bottom: 22px; }
+  .hero .eyebrow { margin-bottom: 14px; }
+  .section { padding-block: 60px; }
+  .intro { padding-bottom: 24px; gap: 48px; }
+  .course-facts { padding-block: 22px; }
+  .fact-label { margin-bottom: 6px; }
+  .thread-card { padding: 24px; }
+  .thread-top { margin-bottom: 18px; }
+  .thread-card h3 { margin-bottom: 16px; }
+  .thread-card p { margin-bottom: 16px; }
+  .thread-figure { padding-block: 14px 20px; }
+  .figure-node { gap: 8px; }
+  .thread-footer { padding-top: 16px; }
+  .section-heading { margin-bottom: 18px; }
+  .section-description { margin-bottom: 22px; }
+  .schedule-toolbar { margin-bottom: 18px; }
+  .schedule-row > summary { padding-block: 18px; }
+  .week-details { padding-bottom: 24px; }
+  .detail-columns li { padding-bottom: 8px; }
+  .assignment-grid { gap: 18px; margin-top: 24px; }
+  .assignment-card { padding: 24px; min-height: 0; }
+  .assignment-top { margin-bottom: 16px; }
+  .assignment-identity { display: inline-flex; align-items: center; gap: 10px; color: var(--green); }
+  .training-assignment .assignment-identity { color: var(--blue); }
+  .assignment-identity .course-icon { width: 28px; height: 28px; }
+  .assignment-title { margin-bottom: 12px; }
+  .assignment-description { margin-bottom: 18px; }
+  .assignment-card .card-bottom { padding-top: 14px; }
+  .assignment-note { margin-block: 20px 28px; }
+  .capstone { padding: 28px; gap: 32px; }
+  .readiness { gap: 44px; }
+  .primer { padding: 26px; }
+  .resource-tabs { margin-top: 24px; }
+  .resource-panel { padding-top: 22px; }
+  .reading-entry > summary { padding-block: 14px; }
+  .lab-row, .glossary-item { padding-block: 18px; }
+  .closing > .container { padding-block: 40px; }
+  footer { padding-block: 24px; }
+  .blueprint-top { padding-block: 14px; }
+  .workflow-track { padding-block: 18px; gap: 12px; }
+  .pipeline-heading { margin-bottom: 12px; }
+}
+@media screen and (max-width: 760px) {
+  .site-header { padding-block: 12px; }
+  .hero { padding-block: 28px; gap: 24px; }
+  .section { padding-block: 44px; }
+  .intro { gap: 10px; padding-bottom: 20px; }
+  .course-facts { gap: 16px; padding-block: 20px; }
+  .course-facts > div { padding-bottom: 16px; }
+  .threads { gap: 16px; }
+  .thread-card, .assignment-card { padding: 22px; }
+  .readiness { gap: 24px; }
+  .capstone, .primer { padding: 24px; }
+  .section-heading { gap: 12px; }
+  .schedule-row > summary { row-gap: 10px; }
+  .closing > .container { padding-block: 32px; gap: 22px; }
+}

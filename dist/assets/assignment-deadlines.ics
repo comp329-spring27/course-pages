@@ -1,0 +1,71 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//COMP 329//Spring 2027 Assignment Deadlines//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:COMP 329 · Assignment deadlines
+X-WR-TIMEZONE:America/Chicago
+BEGIN:VEVENT
+UID:comp329-s27-d1@course.local
+DTSTAMP:20261013T174904Z
+DTSTART:20270130T055900Z
+DTEND:20270130T060000Z
+SUMMARY:COMP 329 — D1: Collect due
+DESCRIPTION:Due at 11:59 p.m. America/Chicago. Based on the Spring 2027 syl
+ labus. Check Canvas for updates.
+END:VEVENT
+BEGIN:VEVENT
+UID:comp329-s27-d2@course.local
+DTSTAMP:20261013T174904Z
+DTSTART:20270211T055900Z
+DTEND:20270211T060000Z
+SUMMARY:COMP 329 — D2: Process due
+DESCRIPTION:Due at 11:59 p.m. America/Chicago. Based on the Spring 2027 syl
+ labus. Check Canvas for updates.
+END:VEVENT
+BEGIN:VEVENT
+UID:comp329-s27-d3@course.local
+DTSTAMP:20261013T174904Z
+DTSTART:20270227T055900Z
+DTEND:20270227T060000Z
+SUMMARY:COMP 329 — D3: Build the dataset due
+DESCRIPTION:Due at 11:59 p.m. America/Chicago. Based on the Spring 2027 syl
+ labus. Check Canvas for updates.
+END:VEVENT
+BEGIN:VEVENT
+UID:comp329-s27-t1@course.local
+DTSTAMP:20261013T174904Z
+DTSTART:20270327T045900Z
+DTEND:20270327T050000Z
+SUMMARY:COMP 329 — T1: GPU and framework execution due
+DESCRIPTION:Due at 11:59 p.m. America/Chicago. Based on the Spring 2027 syl
+ labus. Check Canvas for updates.
+END:VEVENT
+BEGIN:VEVENT
+UID:comp329-s27-t2@course.local
+DTSTAMP:20261013T174904Z
+DTSTART:20270410T045900Z
+DTEND:20270410T050000Z
+SUMMARY:COMP 329 — T2: Distributed programming due
+DESCRIPTION:Due at 11:59 p.m. America/Chicago. Based on the Spring 2027 syl
+ labus. Check Canvas for updates.
+END:VEVENT
+BEGIN:VEVENT
+UID:comp329-s27-t3@course.local
+DTSTAMP:20261013T174904Z
+DTSTART:20270424T045900Z
+DTEND:20270424T050000Z
+SUMMARY:COMP 329 — T3: Parallel training systems due
+DESCRIPTION:Due at 11:59 p.m. America/Chicago. Based on the Spring 2027 syl
+ labus. Check Canvas for updates.
+END:VEVENT
+BEGIN:VEVENT
+UID:comp329-s27-capstone@course.local
+DTSTAMP:20261013T174904Z
+DTSTART:20270505T045900Z
+DTEND:20270505T050000Z
+SUMMARY:COMP 329 — Capstone: Final submission due
+DESCRIPTION:Due at 11:59 p.m. America/Chicago. Based on the Spring 2027 syl
+ labus. Check Canvas for updates.
+END:VEVENT
+END:VCALENDAR

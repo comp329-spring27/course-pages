@@ -1,0 +1,3 @@
+# iCalendar requires CRLF; retain these bytes when checking out the site.
+*.ics -text whitespace=cr-at-eol
+*.docx binary

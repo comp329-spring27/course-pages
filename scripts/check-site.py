@@ -55,4 +55,5 @@ manifest_path = base / '.openai/hosting.json'
 if manifest_path.exists():
     manifest = json.loads(manifest_path.read_text())
     assert manifest['project_id'] and manifest['static']['directory'] == 'dist'
-print('PASS: source freshness, schedule/deadline agreement, seven calendar events, syllabus download, and local links.')
+assert f'content="{data["source_sha256"]}"' in (dist / 'syllabus.html').read_text(), 'Readable syllabus is stale; regenerate it.'
+print('PASS: source freshness, schedule/deadline agreement, seven calendar events, readable syllabus, and local links.')

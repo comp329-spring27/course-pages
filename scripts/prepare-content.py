@@ -66,3 +66,7 @@ for line in events:
     folded.append(part)
 (base / 'dist/assets/assignment-deadlines.ics').write_bytes(('\r\n'.join(folded) + '\r\n').encode())
 print(f'Prepared {len(schedule)} schedule entries, {len(assignments)} assignments, {len(labs)} labs, and {len(glossary)} glossary terms.')
+
+# Keep the browser-readable syllabus in sync with the bundled source.
+import runpy
+runpy.run_path(str(base / "scripts/prepare-syllabus.py"))

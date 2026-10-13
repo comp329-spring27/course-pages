@@ -30,6 +30,7 @@ jobs:
           python3 scripts/check-site.py
           node --check dist/app.js
           node --check dist/data.js
+          node --check dist/theme.js
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload website

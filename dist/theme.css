@@ -1,0 +1,100 @@
+/* Shared appearance for the course homepage and browser-readable syllabus. */
+:root {
+  color-scheme: light;
+  --surface: #ffffff;
+  --surface-soft: #edf1e9;
+  --button-bg: #102b40;
+  --button-ink: #ffffff;
+  --workflow-data: #edf5ed;
+  --workflow-training: #edf3fa;
+  --workflow-data-border: #b8d0bd;
+  --workflow-training-border: #bbcee3;
+}
+.theme-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 8px 0; border: 0; background: transparent; color: var(--ink, #173247); font: 500 14px/1.4 -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; white-space: nowrap; min-height: 44px; cursor: pointer; }
+.theme-toggle-track { position: relative; display: block; width: 42px; height: 24px; border: 1px solid #7b9098; background: #dce6e6; border-radius: 20px; }
+.theme-toggle-track::before { content: "☾"; position: absolute; right: 4px; top: 1px; font-size: 15px; line-height: 20px; color: #173247; }
+.theme-toggle[aria-checked="true"] .theme-toggle-track::before { content: "☀"; left: 3px; right: auto; color: #142b20; }
+.theme-toggle-knob { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #ffffff; box-shadow: 0 1px 4px #102b4040; transition: transform .2s; }
+.theme-toggle[aria-checked="true"] .theme-toggle-track { background: #4c8d76; border-color: #8bbba9; }
+.theme-toggle[aria-checked="true"] .theme-toggle-knob { transform: translateX(18px); }
+.theme-toggle:focus-visible { outline: 3px solid #bd7b28; outline-offset: 5px; border-radius: 4px; }
+.blueprint { background: var(--surface); color: var(--ink); border: 1px solid var(--line); box-shadow: 0 12px 28px -20px #102b4030; }
+.blueprint-top, .pipeline-footer { color: var(--muted); border-color: var(--line); }
+.pipeline-heading h2, .pipeline-stages .course-icon, .pipeline-stages li > .step-code, .pipeline-stages li:not(:last-child)::after, .handoff-arrow::before { color: var(--green); }
+.pipeline-heading > span, .pipeline-connector { color: var(--muted); }
+.pipeline-stages li { background: var(--workflow-data); border-color: var(--workflow-data-border); }
+.pipeline-stages li:hover { background: var(--green-soft); border-color: var(--green); }
+.training-pipeline .pipeline-heading h2, .training-pipeline .course-icon, .training-pipeline .pipeline-stages li > .step-code, .training-pipeline .pipeline-stages li:not(:last-child)::after { color: var(--blue); }
+.training-pipeline .pipeline-stages li { background: var(--workflow-training); border-color: var(--workflow-training-border); }
+.training-pipeline .pipeline-stages li:hover { background: var(--blue-soft); border-color: var(--blue); }
+.primary { background: var(--button-bg); color: var(--button-ink); }
+.closing { background: var(--green-soft); color: var(--ink); border-block: 1px solid var(--line); }
+.closing em { color: var(--green); }
+.button.light { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+.syllabus-page { background: var(--paper, #f7f7f1); color: var(--ink, #173247); }
+.syllabus-page main { background: var(--surface); border-color: var(--line, #d6ddd4); }
+.syllabus-page a { color: var(--green, #2b6d51); }
+.syllabus-page td, .syllabus-page .table-scroll { border-color: var(--line, #d6ddd4); }
+.syllabus-page tr:first-child { background: var(--workflow-data); }
+@media screen {
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #14212c; --surface: #1c2d39; --surface-soft: #223542;
+    --navy: #d8e7f4; --ink: #e4edf3; --muted: #b3c5cf; --line: #3d5361;
+    --green: #a0d9b8; --green-soft: #243f35; --blue: #accff3; --blue-soft: #273d54;
+    --button-bg: #a9d5bc; --button-ink: #142b20;
+    --workflow-data: #243a32; --workflow-training: #263a50;
+    --workflow-data-border: #4f7561; --workflow-training-border: #56758f;
+  }
+  [data-theme="dark"] .primary:hover { background: #c3e6d1; }
+  [data-theme="dark"] .skip-link { background: var(--surface); color: var(--ink); }
+  [data-theme="dark"] .header-link, [data-theme="dark"] .thread-card, [data-theme="dark"] .thread-footer,
+  [data-theme="dark"] .assignment-card, [data-theme="dark"] .capstone, [data-theme="dark"] .capstone-dates,
+  [data-theme="dark"] .capstone-tracks, [data-theme="dark"] .primer, [data-theme="dark"] .primer-foot,
+  [data-theme="dark"] .search-box, [data-theme="dark"] .event-details-wrap { border-color: var(--line); }
+  [data-theme="dark"] .filter-group, [data-theme="dark"] .schedule-head, [data-theme="dark"] .assignments-wrap,
+  [data-theme="dark"] .primer, [data-theme="dark"] .dialog-close { background: var(--surface-soft); }
+  [data-theme="dark"] .filter.active, [data-theme="dark"] .search-box { background: var(--surface); }
+  [data-theme="dark"] .schedule-row > summary:hover, [data-theme="dark"] .schedule-row[open] > summary,
+  [data-theme="dark"] .week-details, [data-theme="dark"] .week-note, [data-theme="dark"] .capstone { background: var(--green-soft); }
+  [data-theme="dark"] .detail-columns ul, [data-theme="dark"] .event-detail, [data-theme="dark"] .week-note,
+  [data-theme="dark"] .capstone p, [data-theme="dark"] .capstone .eyebrow, [data-theme="dark"] .row-chevron { color: var(--muted); }
+  [data-theme="dark"] .block-data .week-topic, [data-theme="dark"] .assignment-code { color: var(--green); }
+  [data-theme="dark"] .block-training .week-topic, [data-theme="dark"] .training-assignment .assignment-code { color: var(--blue); }
+  [data-theme="dark"] .assignment-code, [data-theme="dark"] .milestone { background: var(--green-soft); color: var(--green); }
+  [data-theme="dark"] .training-assignment .assignment-code { background: var(--blue-soft); }
+  [data-theme="dark"] .milestone.due { background: #49412b; color: #eee0ad; }
+  [data-theme="dark"] .milestone.exam { background: #43364e; color: #dfc5ee; }
+  [data-theme="dark"] .scope-tag { border-color: #688d73; color: var(--green); }
+  [data-theme="dark"] .scope-concept { border-color: #6686a2; color: var(--blue); }
+  [data-theme="dark"] .scope-stretch { border-color: #9c854e; color: #ead39d; }
+  [data-theme="dark"] .figure-node .course-icon { background: var(--surface); border-color: var(--line); }
+  [data-theme="dark"] .lecture-one::before, [data-theme="dark"] .lecture-two::before { background: var(--surface-soft); color: var(--ink); }
+  [data-theme="dark"] .block-data .lecture-one::before, [data-theme="dark"] .block-data .lecture-two::before { background: var(--green-soft); }
+  [data-theme="dark"] .block-training .lecture-one::before, [data-theme="dark"] .block-training .lecture-two::before { background: var(--blue-soft); }
+  [data-theme="dark"] .button.light:hover, [data-theme="dark"] .dialog-close:hover { background: var(--surface-soft); }
+  [data-theme="dark"] .grade-bar span { background: #80ba98; }
+  [data-theme="dark"] .grade-bar span:nth-child(2) { background: #80abd4; }
+  [data-theme="dark"] .grade-bar span:nth-child(3) { background: #b0c38f; }
+  [data-theme="dark"] .grade-bar span:nth-child(4) { background: #a5bddb; }
+  [data-theme="dark"] .grade-bar span:nth-child(5) { background: #c5cdc0; }
+}
+@media (max-width: 1100px) { .theme-toggle-label { display: none; } }
+@media (max-width: 1000px) {
+  html { scroll-padding-top: 170px; }
+  .site-header { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; }
+  .site-header nav { grid-column: 1/-1; grid-row: 2; width: 100%; justify-content: space-between; }
+  .site-header .header-link { grid-column: 2; grid-row: 1; margin-left: 0; }
+  .site-header .theme-toggle { grid-column: 3; grid-row: 1; }
+}
+@media (max-width: 760px) { .site-header .header-link { padding: 8px 10px; } .site-header .header-link span { display: none; } }
+@media (max-width: 360px) {
+  html { scroll-padding-top: 210px; }
+  .site-header { gap: 8px; }
+  .site-header .brand { gap: 8px; }
+  .site-header .brand-icon { width: 36px; height: 36px; }
+  .site-header .brand strong { font-size: 18px; white-space: nowrap; }
+  .site-header .header-link { font-size: 13px; padding: 8px 7px; }
+}
+@media (prefers-reduced-motion: reduce) { .theme-toggle-knob { transition: none; } }
+@media print { .theme-toggle { display: none; } .syllabus-page main { background: white; } }

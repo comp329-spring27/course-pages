@@ -86,9 +86,11 @@ page = '''<!doctype html>
 <title>Syllabus · COMP 329 · Spring 2027</title>
 <link rel="icon" type="image/svg+xml" href="assets/course-mark.svg">
 <link rel="stylesheet" href="syllabus.css?v=CSS_HASH">
+<link rel="stylesheet" href="theme.css?v=THEME_CSS_HASH">
+<script src="theme.js?v=THEME_JS_HASH"></script>
 <meta name="source-sha256" content="SOURCE_HASH">
-</head><body><header><a href="./"><img src="assets/course-mark.svg" alt="" width="40" height="40">COMP 329 · Course home</a><span>Spring 2027 syllabus</span></header>
+</head><body class="syllabus-page"><header><a href="./"><img src="assets/course-mark.svg" alt="" width="40" height="40">COMP 329 · Course home</a><span>Spring 2027 syllabus</span><button type="button" class="theme-toggle" data-theme-toggle role="switch" aria-checked="false" aria-label="Dark mode"><span class="theme-toggle-track" aria-hidden="true"><span class="theme-toggle-knob"></span></span><span class="theme-toggle-label">Dark mode</span></button></header>
 <main>CONTENT</main></body></html>
-'''.replace('CSS_HASH', hashlib.sha256((base / 'dist/syllabus.css').read_bytes()).hexdigest()[:12]).replace('SOURCE_HASH', hashlib.sha256(source.read_bytes()).hexdigest()).replace('CONTENT', content)
+'''.replace('THEME_CSS_HASH', hashlib.sha256((base / 'dist/theme.css').read_bytes()).hexdigest()[:12]).replace('THEME_JS_HASH', hashlib.sha256((base / 'dist/theme.js').read_bytes()).hexdigest()[:12]).replace('CSS_HASH', hashlib.sha256((base / 'dist/syllabus.css').read_bytes()).hexdigest()[:12]).replace('SOURCE_HASH', hashlib.sha256(source.read_bytes()).hexdigest()).replace('CONTENT', content)
 (base / 'dist/syllabus.html').write_text(page)
 print('Prepared browser-readable syllabus.')

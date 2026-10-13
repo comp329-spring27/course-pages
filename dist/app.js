@@ -9,6 +9,8 @@ const withTags = text => escapeHTML(text).replace(/\s+(CONCEPT|BUILD|STRETCH)$/,
 const list = items => items.map(item => `<li>${withTags(item)}</li>`).join('');
 const milestone = event => {
   let label = event.replace(/\s*\(.+\)/, '').replace('Dataset contract published','Dataset contract').replace('Capstone pairs set','Capstone pairs').replace(/T([12]) and Lab ([34]) out.*/, 'T$1 + Lab $2 out');
+  if (/due.*Wed/.test(event)) label += ' · Wed';
+  if (/due.*Tue/.test(event)) label += ' · Tue';
   const type = /due|checkpoint/i.test(event) ? 'due' : /exam|midterm/i.test(event) ? 'exam' : '';
   return `<span class="milestone ${type}">${escapeHTML(label)}</span>`;
 };
@@ -22,12 +24,13 @@ function renderSchedule() {
   $('#schedule-list').dataset.view = scheduleView;
   $('#schedule-rows').innerHTML = weeks.map(week => {
     const joint = !week.lecture2.length;
-    const teachingWeek = /Week (1|14)$/.test(week.week);
-    const firstTitle = week.lecture1[0] || '—';
+    const firstTitle = week.week === 'Week 0' ? 'Getting ready' : week.lecture1[0] || '—';
     const secondTitle = joint ? '—' : week.lecture2[0];
     const instructor = week.block === 'data' ? 'JERMAINE' : week.block === 'training' ? 'WANG' : 'JERMAINE & WANG';
+    const keyEvents = week.events.filter(event => /\bdue\b|checkpoint|midterm.*evening|^Final exam/i.test(event));
+    const eventPreview = keyEvents.length ? keyEvents.map(milestone).join('') : `<span class="milestone-updates">${week.events.length} ${week.events.length === 1 ? 'update' : 'updates'}</span>`;
     return `<details class="schedule-row block-${week.block}" data-week="${escapeHTML(week.week)}"${previousOpen.has(week.week) || query ? ' open' : ''}>
-      <summary><span class="week-date"><span class="week-label">${escapeHTML(week.week)}</span><span class="week-dates">${escapeHTML(week.dates)}</span></span><span class="week-topic lecture-one">${escapeHTML(firstTitle)}</span><span class="week-topic lecture-two${joint ? ' empty-topic' : ''}">${escapeHTML(secondTitle)}</span><span class="milestone-cell">${week.events.map(milestone).join('')}</span><span class="row-chevron" aria-hidden="true">+</span></summary>
+      <summary><span class="week-date"><span class="week-label">${escapeHTML(week.week)}</span><span class="week-dates">${escapeHTML(week.dates)}</span></span><span class="week-topic lecture-one">${escapeHTML(firstTitle)}</span><span class="week-topic lecture-two${joint ? ' empty-topic' : ''}">${escapeHTML(secondTitle)}</span><span class="milestone-cell">${eventPreview}</span><span class="row-chevron" aria-hidden="true">+</span></summary>
       <div class="week-details"><div class="detail-columns"><div><p class="detail-heading">${joint ? 'THIS WEEK' : 'LECTURE 1 / '+instructor}</p><ul>${list(week.lecture1.slice(1).length ? week.lecture1.slice(1) : week.lecture1)}</ul></div>${joint ? '' : `<div><p class="detail-heading">LECTURE 2 / ${instructor}</p><ul>${list(week.lecture2.slice(1))}</ul></div>`}</div><div class="event-details-wrap"><p class="detail-heading">MILESTONES</p><ul class="event-detail">${list(week.events)}</ul></div>${week.note.length ? `<p class="week-note">${week.note.map(escapeHTML).join('<br>')}</p>` : ''}</div>
     </details>`;
   }).join('');
@@ -42,14 +45,14 @@ $('#schedule-search').addEventListener('input', renderSchedule);
 renderSchedule();
 
 const summaries = {
-  D1:'Stream Wikipedia into Parquet. Measure throughput and discover what limits one machine.',
-  T1:'Write a Triton kernel. Compare eager and compiled execution, and explain the GPU bottleneck.',
-  D2:'Normalize and analyze your corpus with Spark. Study partitions, shuffles, and scaling.',
-  T2:'Build a CPU collective and GPU communication benchmark. Test an α–β cost model.',
-  D3:'Deduplicate, tokenize, and shard the corpus into a dataset that passes the contract checker.',
-  T3:'Synchronize gradients, train on D3 data, and analyze data × tensor × pipeline layouts.'
+  D1:'Stream Wikipedia into Parquet and find the throughput bottleneck.',
+  T1:'Write a Triton kernel and compare framework execution modes.',
+  D2:'Analyze your corpus with Spark and study how it scales.',
+  T2:'Build and benchmark CPU and GPU collectives.',
+  D3:'Deduplicate, tokenize, and shard your training dataset.',
+  T3:'Train with synchronized gradients and analyze parallel layouts.'
 };
-$('#assignment-grid').innerHTML = course.assignments.map(assignment => `<button type="button" class="assignment-card ${assignment.thread}-assignment" data-assignment="${assignment.code}" aria-haspopup="dialog" aria-label="${assignment.code}: ${escapeHTML(assignment.title)}, due ${dateLabel(assignment.date)}. View assignment details."><span class="assignment-top"><span class="assignment-code">${assignment.code}</span><span class="assignment-date">DUE ${dateLabel(assignment.date).toUpperCase()}</span></span><span class="assignment-title">${escapeHTML(assignment.title)}</span><span class="assignment-description">${summaries[assignment.code]}</span><span class="card-bottom"><span>${escapeHTML(assignment.due.replace(' (Wed, before recess)',' · Wed'))} · ${assignment.thread === 'data' ? 'Data' : 'Training'} block</span><span aria-hidden="true">↗</span></span></button>`).join('');
+$('#assignment-grid').innerHTML = course.assignments.map(assignment => `<button type="button" class="assignment-card ${assignment.thread}-assignment" data-assignment="${assignment.code}" aria-haspopup="dialog" aria-label="${assignment.code}: ${escapeHTML(assignment.title)}, due ${dateLabel(assignment.date)}. View assignment details."><span class="assignment-top"><span class="assignment-code">${assignment.code}</span><span class="assignment-date">Due <time datetime="${assignment.date}">${dateLabel(assignment.date)}</time></span></span><span class="assignment-title">${escapeHTML(assignment.title)}</span><span class="assignment-description">${summaries[assignment.code]}</span><span class="card-bottom"><span>View details</span><span aria-hidden="true">↗</span></span></button>`).join('');
 const dialog = $('#assignment-dialog');
 let assignmentTrigger = null;
 $$('[data-assignment]').forEach(button => button.addEventListener('click', () => {
@@ -92,13 +95,22 @@ const docs = [
   {match:'Megatron-LM',links:[['Paper','https://arxiv.org/abs/2104.04473']]}
 ];
 let readingThread = 'data';
+function readingTitle(citation) {
+  if (citation.includes('PyTorch documentation')) return 'PyTorch & JAX documentation';
+  if (citation.includes('NCCL User Guide')) return 'NCCL & distributed execution';
+  if (citation.includes('Mining of Massive Datasets')) return 'Mining of Massive Datasets · Chapter 3';
+  if (citation.includes('Megatron-LM')) return 'Megatron-LM: large-scale training';
+  if (citation.includes('Bengio et al.')) return 'Language models & collective cost models';
+  const quoted = citation.match(/“([^”]+)”/);
+  return quoted ? quoted[1].replace(/[,.;]+$/, '') : citation.split(':')[0].replace(/^NVIDIA, /, '');
+}
 course.readings.forEach(reading => {
   if(/^Data (thread|systems block)$/.test(reading)){readingThread='data';return;}
   if(/^Training (thread|systems block)$/.test(reading)){readingThread='training';return;}
   if(!reading) return;
   const linked = docs.find(doc => reading.includes(doc.match));
   const clean = reading.replace(/ CUDA guide$/,'').replace(/ PyTorch dispatch Compilation JAX transformations$/,'').replace(/ NCCL ordering Distributed overview$/,'').replace(/ Paper$/,'');
-  $(`#${readingThread}-readings`).insertAdjacentHTML('beforeend',`<li>${escapeHTML(clean)}${linked ? `<div class="reading-links">${linked.links.map(([title,url]) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${title} ↗</a>`).join('')}</div>` : ''}</li>`);
+  $(`#${readingThread}-readings`).insertAdjacentHTML('beforeend',`<li><details class="reading-entry"><summary><span>${escapeHTML(readingTitle(clean))}</span><span aria-hidden="true">+</span></summary><div class="reading-details"><p>${escapeHTML(clean)}</p>${linked ? `<div class="reading-links">${linked.links.map(([title,url]) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${title} ↗</a>`).join('')}</div>` : ''}</div></details></li>`);
 });
 if ('IntersectionObserver' in window) {
   const observer = new IntersectionObserver(entries => {entries.forEach(entry => {if(entry.isIntersecting){$$('nav a').forEach(a=>{if(a.hash === '#'+entry.target.id)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});}});},{rootMargin:'-15% 0px -65% 0px',threshold:0});

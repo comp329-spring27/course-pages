@@ -25,3 +25,7 @@ GitHub Pages URL: https://comp329-spring27.github.io/course-pages/
 In repository **Settings → Pages**, select **GitHub Actions** as the publishing source. Relative asset links work beneath the `/course-pages/` path. No dependency installation or build is required.
 
 The ignored `.openai/` folder contains local metadata from an unused Sites registration. It is excluded from Git commits and GitHub Pages publication.
+
+## Course identity
+
+`dist/assets/course-mark.svg` is the custom course owl used in the header, footer, and SVG browser icon. Matching PNG, ICO, and Apple touch icons are included in `dist/assets/`. Keep these variants in sync when changing the mark.

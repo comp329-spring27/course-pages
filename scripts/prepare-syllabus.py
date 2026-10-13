@@ -85,10 +85,10 @@ page = '''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Syllabus · COMP 329 · Spring 2027</title>
 <link rel="icon" type="image/svg+xml" href="assets/course-mark.svg">
-<link rel="stylesheet" href="syllabus.css">
+<link rel="stylesheet" href="syllabus.css?v=CSS_HASH">
 <meta name="source-sha256" content="SOURCE_HASH">
 </head><body><header><a href="./"><img src="assets/course-mark.svg" alt="" width="40" height="40">COMP 329 · Course home</a><span>Spring 2027 syllabus</span></header>
 <main>CONTENT</main></body></html>
-'''.replace('SOURCE_HASH', hashlib.sha256(source.read_bytes()).hexdigest()).replace('CONTENT', content)
+'''.replace('CSS_HASH', hashlib.sha256((base / 'dist/syllabus.css').read_bytes()).hexdigest()[:12]).replace('SOURCE_HASH', hashlib.sha256(source.read_bytes()).hexdigest()).replace('CONTENT', content)
 (base / 'dist/syllabus.html').write_text(page)
 print('Prepared browser-readable syllabus.')

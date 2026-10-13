@@ -4,6 +4,7 @@ import json
 import hashlib
 import re
 from html.parser import HTMLParser
+from urllib.parse import urlsplit
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -64,7 +65,7 @@ assert {'capstone-handout', 'dialog-handout'} <= refs.ids
 assert data['handouts']['Capstone'] in refs.urls
 for url in refs.urls:
     if url.startswith('#'): assert url[1:] in refs.ids, f'Broken anchor: {url}'
-    elif not re.match(r'https?://', url): assert (dist / url).is_file(), f'Missing local asset: {url}'
+    elif not re.match(r'https?://', url): assert (dist / urlsplit(url).path).is_file(), f'Missing local asset: {url}'
 manifest_path = base / '.openai/hosting.json'
 if manifest_path.exists():
     manifest = json.loads(manifest_path.read_text())

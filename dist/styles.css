@@ -166,17 +166,21 @@ nav a[aria-current]::after { content: ''; height: 2px; width: 24px; background: 
 .assignment-title { display: block; font-size: 25px; line-height: 1.25; letter-spacing: -.025em; font-weight: 500; margin-bottom: 16px; }
 .assignment-description { display: block; font-size: 17px; line-height: 1.65; color: var(--muted); margin-bottom: 25px; }
 .assignment-card .card-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: auto; width: 100%; padding-top: 18px; border-top: 1px solid var(--line); font-size: 15px; }
-.assignment-card .card-bottom > span:last-child { font-size: 22px; }
+.assignment-details { padding: 4px 0; border: 0; background: transparent; font-size: inherit; }
+.assignment-card .card-bottom a { color: var(--green); font-weight: 600; }
+.training-assignment .card-bottom a { color: var(--blue); }
+.assignment-details:hover, .assignment-card .card-bottom a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .assignment-note { font-size: 16px; color: var(--muted); line-height: 1.7; margin: 25px 0 38px; }
 .capstone { padding: 38px; border: 1px solid #c6d4c0; border-radius: 7px; display: grid; grid-template-columns: 1fr 1fr; gap: 54px; background: #e1e9dd; }
 .capstone h3 { font-size: 38px; margin-bottom: 22px; }
 .capstone p { font-size: 17px; color: #465e43; line-height: 1.7; margin-bottom: 0; }
 .capstone .eyebrow { color: #3b6145; }
-.capstone-tracks > div:not(:last-child) { margin-bottom: 24px; }
+.capstone-tracks > div:not(.capstone-dates) { margin-bottom: 24px; }
 .capstone-tracks strong { font-size: 18px; font-weight: 600; }
 .capstone-tracks p { margin: 10px 0 0 17px; font-size: 16px; }
 .capstone-dates { border-top: 1px solid #bbcbb6; padding-top: 20px; display: flex; justify-content: space-between; font-size: 15px; gap: 15px; }
 .capstone-dates b { display: block; font-size: 18px; font-weight: 600; }
+.capstone-handout { margin-top: 24px; }
 .readiness { display: grid; grid-template-columns: 1.35fr 1fr; gap: 75px; border-bottom: 1px solid var(--line); }
 .readiness h2 { font-size: 42px; margin-bottom: 25px; }
 .readiness > div > p:not(.eyebrow) { font-size: 18px; color: var(--muted); }
@@ -266,6 +270,7 @@ dialog h3 { font: 600 19px/1.4 var(--sans); letter-spacing: -.02em; margin: 26px
 dialog p:not(.eyebrow) { font-size: 18px; color: var(--muted); }
 dialog .eyebrow { font-size: 15px; letter-spacing: 0; }
 .dialog-foot { padding-top: 24px; border-top: 1px solid var(--line); font-size: 16px; color: var(--muted); }
+.dialog-foot p { margin-bottom: 16px; }
 body.dialog-open { overflow: hidden; }
 
 @media (max-width: 1100px) {

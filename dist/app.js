@@ -52,7 +52,8 @@ const summaries = {
   D3:'Deduplicate, tokenize, and shard your training dataset.',
   T3:'Train with synchronized gradients and analyze parallel layouts.'
 };
-$('#assignment-grid').innerHTML = course.assignments.map(assignment => `<button type="button" class="assignment-card ${assignment.thread}-assignment" data-assignment="${assignment.code}" aria-haspopup="dialog" aria-label="${assignment.code}: ${escapeHTML(assignment.title)}, due ${dateLabel(assignment.date)}. View assignment details."><span class="assignment-top"><span class="assignment-code">${assignment.code}</span><span class="assignment-date">Due <time datetime="${assignment.date}">${dateLabel(assignment.date)}</time></span></span><span class="assignment-title">${escapeHTML(assignment.title)}</span><span class="assignment-description">${summaries[assignment.code]}</span><span class="card-bottom"><span>View details</span><span aria-hidden="true">↗</span></span></button>`).join('');
+$('#assignment-grid').innerHTML = course.assignments.map(assignment => `<article class="assignment-card ${assignment.thread}-assignment" aria-labelledby="assignment-title-${assignment.code}"><span class="assignment-top"><span class="assignment-code">${assignment.code}</span><span class="assignment-date">Due <time datetime="${assignment.date}">${dateLabel(assignment.date)}</time></span></span><h3 class="assignment-title" id="assignment-title-${assignment.code}">${escapeHTML(assignment.title)}</h3><span class="assignment-description">${summaries[assignment.code]}</span><div class="card-bottom"><button type="button" class="assignment-details" data-assignment="${assignment.code}" aria-haspopup="dialog" aria-label="View ${assignment.code} assignment details">View details</button><a href="${escapeHTML(course.handouts[assignment.code])}" target="_blank" rel="noopener noreferrer" aria-label="Read ${assignment.code} handout on GitHub (opens in a new tab)">Handout <span aria-hidden="true">↗</span></a></div></article>`).join('');
+$('#capstone-handout').href = course.handouts.Capstone;
 const dialog = $('#assignment-dialog');
 let assignmentTrigger = null;
 $$('[data-assignment]').forEach(button => button.addEventListener('click', () => {
@@ -63,6 +64,8 @@ $$('[data-assignment]').forEach(button => button.addEventListener('click', () =>
   $('#dialog-title').textContent = assignment.title;
   $('#dialog-build').textContent = assignment.build;
   $('#dialog-study').textContent = assignment.study;
+  $('#dialog-handout').href = course.handouts[assignment.code];
+  $('#dialog-handout').setAttribute('aria-label', `Read ${assignment.code} handout on GitHub (opens in a new tab)`);
   dialog.showModal();
   document.body.classList.add('dialog-open');
 }));

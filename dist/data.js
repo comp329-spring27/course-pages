@@ -381,6 +381,15 @@ window.COURSE = {
       "thread": "training"
     }
   ],
+  "handouts": {
+    "D1": "https://github.com/comp329-spring27/student-assignments/blob/main/01_d1_collect/README.md",
+    "D2": "https://github.com/comp329-spring27/student-assignments/blob/main/02_d2_spark/README.md",
+    "D3": "https://github.com/comp329-spring27/student-assignments/blob/main/03_d3_dataset/README.md",
+    "T1": "https://github.com/comp329-spring27/student-assignments/blob/main/04_t1_numpy/README.md",
+    "T2": "https://github.com/comp329-spring27/student-assignments/blob/main/05_t2_triton/README.md",
+    "T3": "https://github.com/comp329-spring27/student-assignments/blob/main/06_t3_scale_out/README.md",
+    "Capstone": "https://github.com/comp329-spring27/student-assignments/blob/main/07_capstone/README.md"
+  },
   "glossary": [
     {
       "term": "Partition",

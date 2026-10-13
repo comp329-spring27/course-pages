@@ -37,11 +37,22 @@ for row in tables[4].findall('w:tr', ns)[1:]:
         code, title = c[0].split(' ', 1)
         assignments.append({'code': code, 'title': title, 'due': c[1], 'date': assignment_date(c[1]), 'build': c[2].removeprefix('What you build: '), 'study': c[3].removeprefix('Scaling study: '), 'thread': 'data' if code.startswith('D') else 'training'})
 assignments.sort(key=lambda a: a['date'])
+handout_root = 'https://github.com/comp329-spring27/student-assignments/blob/main'
+handout_folders = {
+    'D1': '01_d1_collect',
+    'D2': '02_d2_spark',
+    'D3': '03_d3_dataset',
+    'T1': '04_t1_numpy',
+    'T2': '05_t2_triton',
+    'T3': '06_t3_scale_out',
+    'Capstone': '07_capstone',
+}
+handouts = {code: f'{handout_root}/{folder}/README.md' for code, folder in handout_folders.items()}
 glossary = [{'term': c[0][0], 'meaning': c[1][0]} for c in (cells(r) for r in tables[6].findall('w:tr', ns)[1:])]
 labs = [{'name': c[0][0], 'description': c[1][0], 'weeks': c[2][0]} for c in (cells(r) for r in tables[3].findall('w:tr', ns)[1:])]
 paragraphs = [''.join(p.itertext()).strip() for p in root.findall('.//w:p', ns)]
 readings = paragraphs[paragraphs.index('Selected Readings') + 2:paragraphs.index('Glossary')]
-data = {'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(), 'schedule': schedule, 'assignments': assignments, 'glossary': glossary, 'labs': labs, 'readings': readings}
+data = {'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(), 'schedule': schedule, 'assignments': assignments, 'handouts': handouts, 'glossary': glossary, 'labs': labs, 'readings': readings}
 (base / 'dist/data.js').write_text('window.COURSE = ' + json.dumps(data, ensure_ascii=False, indent=2) + ';\n')
 target = base / 'dist/assets/syllabus-spring-2027.docx'
 if source != target:

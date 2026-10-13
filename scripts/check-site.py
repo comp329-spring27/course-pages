@@ -21,6 +21,18 @@ assert len(data['assignments']) == 6
 assert len(data['labs']) == 5
 assert len(data['glossary']) == 38
 assert [a['code'] for a in data['assignments']] == ['D1', 'D2', 'D3', 'T1', 'T2', 'T3']
+assert set(data['handouts']) == {a['code'] for a in data['assignments']} | {'Capstone'}
+assert len(set(data['handouts'].values())) == 7, 'Each assignment needs its own handout.'
+handout_prefix = 'https://github.com/comp329-spring27/student-assignments/blob/main/'
+student_repo = base.parents[1] / 'students-assignment'
+student_manifest = json.loads((student_repo / 'workspace_manifest.json').read_text()) if student_repo.exists() else None
+for code, url in data['handouts'].items():
+    assert url.startswith(handout_prefix) and url.endswith('/README.md'), f'Invalid student handout: {url}'
+    relative_path = url.removeprefix(handout_prefix)
+    assert re.fullmatch(r'\d{2}_[a-z0-9_]+/README\.md', relative_path), f'Invalid handout path: {url}'
+    if student_manifest:
+        folder = student_manifest['folders'][code.lower()]
+        assert relative_path == f'{folder}/README.md' and (student_repo / relative_path).is_file(), f'Handout differs from student repository: {code}'
 for assignment in data['assignments']:
     due_week = 'Week ' + re.search(r'Week (\d+)', assignment['due']).group(1)
     week = next(w for w in data['schedule'] if w['week'] == due_week)
@@ -48,6 +60,8 @@ class References(HTMLParser):
         if 'id' in attrs: self.ids.add(attrs['id'])
         self.urls.extend(attrs[key] for key in ('src', 'href') if key in attrs)
 refs = References(); refs.feed((dist / 'index.html').read_text())
+assert {'capstone-handout', 'dialog-handout'} <= refs.ids
+assert data['handouts']['Capstone'] in refs.urls
 for url in refs.urls:
     if url.startswith('#'): assert url[1:] in refs.ids, f'Broken anchor: {url}'
     elif not re.match(r'https?://', url): assert (dist / url).is_file(), f'Missing local asset: {url}'
@@ -56,4 +70,4 @@ if manifest_path.exists():
     manifest = json.loads(manifest_path.read_text())
     assert manifest['project_id'] and manifest['static']['directory'] == 'dist'
 assert f'content="{data["source_sha256"]}"' in (dist / 'syllabus.html').read_text(), 'Readable syllabus is stale; regenerate it.'
-print('PASS: source freshness, schedule/deadline agreement, seven calendar events, readable syllabus, and local links.')
+print('PASS: source freshness, schedule/deadline agreement, seven calendar events, seven student handouts, readable syllabus, and local links.')

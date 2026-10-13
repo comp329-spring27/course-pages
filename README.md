@@ -12,6 +12,8 @@ Run `python3 scripts/check-site.py` to validate source freshness, schedule/deadl
 
 `scripts/prepare-content.py` extracts the two consecutive teaching blocks, schedule, assignments, labs, readings, and glossary from the syllabus and writes `dist/data.js`. It also creates an assignment calendar with deadlines at 11:59 p.m. America/Chicago. Only assignment and capstone deadlines are included; exam dates and times remain TBA.
 
+Assignment cards and details link to each handout in `comp329-spring27/student-assignments` on GitHub; the capstone has its own handout link. The folder mapping is maintained in `scripts/prepare-content.py` so regeneration preserves these links. Links are included even while that repository is private.
+
 After updating the syllabus, run `python3 scripts/prepare-content.py`. The script uses the syllabus in the course workspace when available, otherwise the bundled syllabus. Update the overview and policy summaries in `dist/index.html` as needed. Source styling and interactions are in `dist/styles.css` and `dist/app.js`.
 
 ## Publication

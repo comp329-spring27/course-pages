@@ -40,7 +40,7 @@ $('#assignment-list').innerHTML = course.assignments.map(a => `<details class="a
 </details>`).join('');
 $('#capstone-handout').href = course.handouts.Capstone;
 
-// Course map: each stage card grows into a short explanation on hover, focus, or tap.
+// Course map: hovering, focusing, or tapping a stage card reveals its explanation in the panel below the map.
 const stageNotes = {
   D1: 'Stream a raw Wikipedia dump into Parquet records, then measure how throughput changes with more workers and find the bottleneck.',
   D2: 'Normalize the corpus and compute statistics with Spark DataFrames and SQL, then study strong and weak scaling and the effect of partition count.',
@@ -49,7 +49,23 @@ const stageNotes = {
   T2: 'Build an all-reduce from point-to-point messages, benchmark NCCL collectives across GPUs and servers, and fit a latency–bandwidth model.',
   T3: 'Implement data-parallel gradient averaging, work through tensor and pipeline layouts, and justify a 3D layout under a fixed GPU budget.'
 };
+const overview = $('.overview');
+const detailBody = $('#stage-detail-body');
 const stages = [...document.querySelectorAll('.stage')];
+let pinned = null;
+const showDetail = stage => {
+  const code = stage.dataset.code;
+  const assignment = course.assignments.find(a => a.code === code);
+  detailBody.className = `stage-detail-body detail-${assignment.thread}`;
+  detailBody.innerHTML = `<strong>${code} · ${escapeHTML(stage.querySelector('span').textContent)}</strong><p>${escapeHTML(stageNotes[code])}</p><small>Due ${dateLabel(assignment.date)} · <a href="#assignment-${code}">Assignment details ↓</a></small>`;
+  stages.forEach(item => item.classList.toggle('is-active', item === stage));
+  overview.classList.add('is-showing');
+};
+const clearDetail = () => {
+  if (pinned) return;
+  stages.forEach(item => item.classList.remove('is-active'));
+  overview.classList.remove('is-showing');
+};
 const openAssignment = code => {
   const row = $(`#assignment-${code}`);
   row.open = true;
@@ -58,23 +74,26 @@ const openAssignment = code => {
 };
 let pointerType = 'mouse';
 stages.forEach(stage => {
-  const code = stage.dataset.code;
-  const assignment = course.assignments.find(a => a.code === code);
-  stage.insertAdjacentHTML('beforeend', `<div class="stage-note" id="note-${code}" role="tooltip"><strong>${code} · ${escapeHTML(stage.querySelector('span').textContent)}</strong><p>${escapeHTML(stageNotes[code])}</p><small>Due ${dateLabel(assignment.date)} · <a href="#assignment-${code}">Assignment details ↓</a></small></div>`);
+  stage.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch' && !pinned) showDetail(stage); });
+  stage.addEventListener('focus', () => { if (!pinned) showDetail(stage); });
   stage.addEventListener('pointerdown', event => { pointerType = event.pointerType; });
-  stage.addEventListener('click', event => {
-    if (event.target.closest('a')) { event.preventDefault(); openAssignment(code); return; }
+  stage.addEventListener('click', () => {
     if (pointerType === 'touch') {
-      const open = !stage.classList.contains('is-open');
-      stages.forEach(item => item.classList.remove('is-open'));
-      stage.classList.toggle('is-open', open);
+      pinned = pinned === stage ? null : stage;
+      if (pinned) showDetail(stage); else clearDetail();
     } else {
-      openAssignment(code);
+      openAssignment(stage.dataset.code);
     }
   });
   stage.addEventListener('keydown', event => {
-    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openAssignment(code); }
-    if (event.key === 'Escape') { stage.classList.remove('is-open'); stage.blur(); }
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openAssignment(stage.dataset.code); }
+    if (event.key === 'Escape') { pinned = null; stage.blur(); clearDetail(); }
   });
 });
-document.addEventListener('click', event => { if (!event.target.closest('.stage')) stages.forEach(item => item.classList.remove('is-open')); });
+overview.addEventListener('pointerleave', event => { if (event.pointerType !== 'touch') clearDetail(); });
+overview.addEventListener('focusout', event => { if (!overview.contains(event.relatedTarget)) clearDetail(); });
+detailBody.addEventListener('click', event => {
+  const link = event.target.closest('a');
+  if (link) { event.preventDefault(); pinned = null; openAssignment(link.hash.replace('#assignment-', '')); }
+});
+document.addEventListener('click', event => { if (pinned && !overview.contains(event.target)) { pinned = null; clearDetail(); } });

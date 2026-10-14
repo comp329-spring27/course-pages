@@ -60,6 +60,18 @@ small { font-size: 14px; }
 .stages li span { grid-column: 1 / -1; font-size: 14.5px; font-weight: 500; line-height: 1.3; color: var(--ink); }
 .stages li b { font-size: 12px; font-weight: 600; }
 .block-training .stages li { background: var(--blue-soft); color: var(--blue); }
+.stages li { position: relative; cursor: pointer; transition: background .2s; }
+.stages li:hover, .stages li:focus-visible { background: var(--surface-soft); }
+.stages li:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.stage-note { position: absolute; z-index: 6; top: -8px; left: -8px; width: 300px; max-width: 80vw; padding: 14px 16px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 16px 40px -12px rgba(0, 0, 0, .35); text-align: left; cursor: default; opacity: 0; transform: scale(.88); transform-origin: top left; pointer-events: none; transition: opacity .15s ease, transform .22s cubic-bezier(.2, .8, .3, 1.1); }
+.stages li:last-child .stage-note { left: auto; right: -8px; transform-origin: top right; }
+.block-training .stage-note { top: auto; bottom: -8px; transform-origin: bottom left; }
+.block-training .stages li:last-child .stage-note { transform-origin: bottom right; }
+.stages li:hover .stage-note, .stages li:focus-visible .stage-note, .stages li.is-open .stage-note { opacity: 1; transform: scale(1); pointer-events: auto; }
+.stage-note strong { display: block; font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.stage-note p { font-size: 14px; line-height: 1.5; color: var(--muted); margin: 0 0 10px; }
+.stage-note small { display: block; font-size: 13px; color: var(--muted); }
+.stage-note a { font-weight: 500; }
 .handoff { text-align: center; font-size: 13px; color: var(--muted); margin: 12px 0; }
 .overview-foot { font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); margin: 18px 0 0; padding-top: 14px; line-height: 1.5; }
 
@@ -176,7 +188,10 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
   .facts { grid-template-columns: 1fr; gap: 12px; }
   .overview { padding: 16px; }
   .block-head { flex-direction: column; gap: 2px; }
-  .stages { gap: 6px; }
+  .stages { position: relative; gap: 6px; }
+  .stages li { position: static; }
+  .stage-note, .stages li:last-child .stage-note { left: 0; right: 0; width: auto; max-width: none; transform-origin: top center; }
+  .block-training .stage-note, .block-training .stages li:last-child .stage-note { transform-origin: bottom center; }
   .stages li { padding: 9px 8px; }
   .stages li span { font-size: 13px; }
   .lede { font-size: 18px; }
@@ -184,7 +199,7 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .chevron, .policies summary::after { transition: none; }
+  .chevron, .policies summary::after, .stage-note, .stages li { transition: none; }
 }
 @media print {
   .site-header, .skip-link, .action, footer a { display: none; }

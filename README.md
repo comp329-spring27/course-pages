@@ -12,7 +12,7 @@ Run `python3 scripts/check-site.py` to validate source freshness, schedule/deadl
 
 The homepage has five sections, each written to be read top to bottom without tabs, filters, dialogs, or introductory prose:
 
-1. **Overview** – title, one line, three facts, and a single course map of the two blocks (D1–D3, T1–T3) with their instructors.
+1. **Overview** – title, one line, three facts, and a single course map of the two blocks (D1–D3, T1–T3) with their instructors. Hovering, focusing, or tapping a stage card grows it into a short explanation with the due date; clicking it jumps to the assignment row. The explanations are in `dist/app.js`.
 2. **Schedule** – one row per week with lecture topics and what is due or released. Opening a row shows the lecture bullets.
 3. **Assignments** – one row per assignment; opening it shows the scope, the scaling study, and the handout link. The capstone card follows; labs appear only in the schedule and the grade table.
 4. **Grading** – the grade breakdown and four short policy items.

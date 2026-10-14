@@ -34,8 +34,47 @@ const summaries = {
   T2: 'Build and benchmark CPU and GPU collectives.',
   T3: 'Train with synchronized gradients and analyze parallel layouts.'
 };
-$('#assignment-list').innerHTML = course.assignments.map(a => `<details class="assignment ${a.thread}">
+$('#assignment-list').innerHTML = course.assignments.map(a => `<details class="assignment ${a.thread}" id="assignment-${a.code}">
   <summary><span class="code">${a.code}</span><span class="assignment-main"><strong>${escapeHTML(a.title)}</strong><span>${summaries[a.code]}</span></span><span class="due">Due <time datetime="${a.date}">${dateLabel(a.date)}</time></span><span class="chevron" aria-hidden="true"></span></summary>
   <div class="assignment-body"><p><b>What you build.</b> ${escapeHTML(a.build)}</p><p><b>Scaling study.</b> ${escapeHTML(a.study)}</p><p class="assignment-foot"><a href="${escapeHTML(course.handouts[a.code])}" target="_blank" rel="noopener noreferrer">Handout on GitHub <span aria-hidden="true">↗</span></a></p></div>
 </details>`).join('');
 $('#capstone-handout').href = course.handouts.Capstone;
+
+// Course map: each stage card grows into a short explanation on hover, focus, or tap.
+const stageNotes = {
+  D1: 'Stream a raw Wikipedia dump into Parquet records, then measure how throughput changes with more workers and find the bottleneck.',
+  D2: 'Normalize the corpus and compute statistics with Spark DataFrames and SQL, then study strong and weak scaling and the effect of partition count.',
+  D3: 'Remove near-duplicates with MinHash and LSH, train a BPE tokenizer, and write sharded training data that passes the dataset contract.',
+  T1: 'Write a Triton kernel, validate it against PyTorch, and compare eager, compiled, and JAX execution on a supplied model trained on your D3 data.',
+  T2: 'Build an all-reduce from point-to-point messages, benchmark NCCL collectives across GPUs and servers, and fit a latency–bandwidth model.',
+  T3: 'Implement data-parallel gradient averaging, work through tensor and pipeline layouts, and justify a 3D layout under a fixed GPU budget.'
+};
+const stages = [...document.querySelectorAll('.stage')];
+const openAssignment = code => {
+  const row = $(`#assignment-${code}`);
+  row.open = true;
+  row.scrollIntoView({behavior: 'smooth', block: 'start'});
+  row.querySelector('summary').focus({preventScroll: true});
+};
+let pointerType = 'mouse';
+stages.forEach(stage => {
+  const code = stage.dataset.code;
+  const assignment = course.assignments.find(a => a.code === code);
+  stage.insertAdjacentHTML('beforeend', `<div class="stage-note" id="note-${code}" role="tooltip"><strong>${code} · ${escapeHTML(stage.querySelector('span').textContent)}</strong><p>${escapeHTML(stageNotes[code])}</p><small>Due ${dateLabel(assignment.date)} · <a href="#assignment-${code}">Assignment details ↓</a></small></div>`);
+  stage.addEventListener('pointerdown', event => { pointerType = event.pointerType; });
+  stage.addEventListener('click', event => {
+    if (event.target.closest('a')) { event.preventDefault(); openAssignment(code); return; }
+    if (pointerType === 'touch') {
+      const open = !stage.classList.contains('is-open');
+      stages.forEach(item => item.classList.remove('is-open'));
+      stage.classList.toggle('is-open', open);
+    } else {
+      openAssignment(code);
+    }
+  });
+  stage.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openAssignment(code); }
+    if (event.key === 'Escape') { stage.classList.remove('is-open'); stage.blur(); }
+  });
+});
+document.addEventListener('click', event => { if (!event.target.closest('.stage')) stages.forEach(item => item.classList.remove('is-open')); });

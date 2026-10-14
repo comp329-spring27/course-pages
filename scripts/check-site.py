@@ -61,7 +61,7 @@ class References(HTMLParser):
         if 'id' in attrs: self.ids.add(attrs['id'])
         self.urls.extend(attrs[key] for key in ('src', 'href') if key in attrs)
 refs = References(); refs.feed((dist / 'index.html').read_text())
-assert {'capstone-handout', 'schedule-rows', 'assignment-list', 'lab-list', 'data-readings', 'training-readings'} <= refs.ids
+assert {'capstone-handout', 'schedule-rows', 'assignment-list', 'lab-list'} <= refs.ids
 assert data['handouts']['Capstone'] in refs.urls
 for url in refs.urls:
     if url.startswith('#'): assert url[1:] in refs.ids, f'Broken anchor: {url}'
@@ -76,7 +76,9 @@ if manifest_path.exists():
     assert manifest['project_id'] and manifest['static']['directory'] == 'dist'
 syllabus_html = (dist / 'syllabus.html').read_text()
 assert f'content="{data["source_sha256"]}"' in syllabus_html, 'Readable syllabus is stale; regenerate it.'
-assert 'id="glossary"' in syllabus_html, 'Readable syllabus lacks the glossary anchor the homepage links to.'
+for anchor in ('glossary', 'selected-readings'):
+    assert f'id="{anchor}"' in syllabus_html, f'Readable syllabus lacks the {anchor} anchor the homepage links to.'
+    assert f'syllabus.html#{anchor}' in refs.urls, f'Homepage no longer links to syllabus.html#{anchor}.'
 for name in ('theme.css', 'theme.js'):
     assert f'{name}?v=' + hashlib.sha256((dist / name).read_bytes()).hexdigest()[:12] in syllabus_html, f'Readable syllabus links a stale {name}; regenerate it.'
 print('PASS: source freshness, schedule/deadline agreement, seven calendar events, seven student handouts, readable syllabus, asset stamps, and local links.')

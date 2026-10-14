@@ -11,10 +11,10 @@
   <link rel="icon" href="assets/course-icon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="theme.css?v=9196afe52cba">
-  <link rel="stylesheet" href="styles.css?v=9bfac5f46e5d">
+  <link rel="stylesheet" href="styles.css?v=bf535d1b0287">
   <script src="theme.js?v=db279466140b"></script>
   <script src="data.js?v=09fd6e687f3f" defer></script>
-  <script src="app.js?v=f7809a6e0f3a" defer></script>
+  <script src="app.js?v=65833507896e" defer></script>
 </head>
 <body>
 <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="0" height="0"><defs><symbol id="icon-collect" viewBox="0 0 24 24"><path d="M8 17H6a4 4 0 0 1-.7-7.9A7 7 0 0 1 19 8a4.5 4.5 0 0 1 0 9h-3"/><path d="M12 10v11m-4-4 4 4 4-4"/></symbol><symbol id="icon-process" viewBox="0 0 24 24"><path d="M3 4h18l-7 8v7l-4 2v-9Z"/><path d="M7 7h10"/></symbol><symbol id="icon-dataset" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/></symbol><symbol id="icon-gpu" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M8 2v3m8-3v3M8 19v3m8-3v3M2 8h3m-3 8h3M19 8h3m-3 8h3"/></symbol><symbol id="icon-sync" viewBox="0 0 24 24"><rect x="2" y="3" width="6" height="6" rx="1"/><rect x="16" y="3" width="6" height="6" rx="1"/><rect x="9" y="16" width="6" height="6" rx="1"/><path d="M8 6h8M5 9v4h14V9m-7 4v3"/></symbol><symbol id="icon-scale" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7Zm-10 10 10 5 10-5M2 17l10 5 10-5"/></symbol></defs></svg>
@@ -31,12 +31,11 @@
   <div class="hero-copy">
     <p class="eyebrow">Spring 2027 · 3 credits</p>
     <h1 id="course-title">Systems for Artificial Intelligence</h1>
-    <p class="lede">Follow an AI workload from raw text to distributed training. Build the key pieces, predict what they cost, and measure what limits them.</p>
+    <p class="lede">The systems behind modern AI, from data pipelines to GPU training.</p>
     <dl class="facts">
       <div><dt>Term</dt><dd>Jan 11 – Apr 23<br><small>Finals Apr 28 – May 4</small></dd></div>
-      <div><dt>Each week</dt><dd>2 lectures + 1 recitation<br><small>Meeting times to be announced</small></dd></div>
-      <div><dt>Instructors</dt><dd>Christopher Jermaine<br>Yuke Wang</dd></div>
-      <div><dt>Workload</dt><dd>About 9 hours<br><small>3 in class, 6 outside</small></dd></div>
+      <div><dt>Each week</dt><dd>2 lectures + 1 recitation</dd></div>
+      <div><dt>Workload</dt><dd>About 9 hours</dd></div>
     </dl>
   </div>
   <div class="overview" role="group" aria-label="Course map: two blocks of three assignments each">
@@ -48,7 +47,7 @@
         <li><svg class="icon" aria-hidden="true"><use href="#icon-dataset"></use></svg><span>Build the dataset</span><b>D3</b></li>
       </ol>
     </div>
-    <p class="handoff"><span aria-hidden="true">↓</span> Your dataset + a supplied model</p>
+    <p class="handoff"><span aria-hidden="true">↓</span> Your D3 dataset</p>
     <div class="block block-training">
       <div class="block-head"><h2>Training systems</h2><p>Weeks 8–13 · Yuke Wang</p></div>
       <ol class="stages">
@@ -57,29 +56,26 @@
         <li><svg class="icon" aria-hidden="true"><use href="#icon-scale"></use></svg><span>Train in parallel</span><b>T3</b></li>
       </ol>
     </div>
-    <p class="overview-foot">Weeks 1 and 14 are taught jointly. Every assignment follows the same loop: predict the cost, build the component, measure the result.</p>
   </div>
 </section>
 
 <section class="container section" id="schedule" aria-labelledby="schedule-title">
   <div class="section-head"><h2 id="schedule-title">Schedule</h2><a class="action" href="assets/assignment-deadlines.ics" download>Add deadlines to calendar</a></div>
-  <p class="section-intro">Open a week for lecture details. Deadlines are Fridays at 11:59 p.m. Chicago time unless noted; exam times are TBA.</p>
   <div class="schedule">
     <div class="schedule-head" aria-hidden="true"><span>Week</span><span>Lectures</span><span>Due and released</span><span></span></div>
     <div id="schedule-rows"></div>
   </div>
-  <p class="footnote">In lecture details, <b>BUILD</b> means you implement it, <b>CONCEPT</b> means you explain it on exams, and <b>STRETCH</b> is optional.</p>
+  <p class="footnote">Due Fridays, 11:59 p.m. Chicago, unless noted. <b>BUILD</b> you implement · <b>CONCEPT</b> on exams · <b>STRETCH</b> optional.</p>
 </section>
 
 <section class="container section" id="assignments" aria-labelledby="assignments-title">
   <div class="section-head"><h2 id="assignments-title">Assignments</h2><span class="section-meta">Six assignments · 7% each</span></div>
-  <p class="section-intro">Each assignment has a checkpoint (20%) and a final submission (80%). Open one for its scope; the handout has starter code, tests, and submission instructions.</p>
   <div id="assignment-list"></div>
   <article class="capstone">
     <div class="capstone-copy">
       <p class="eyebrow">Capstone · 13% · in pairs</p>
       <h3>One question, two experiments.</h3>
-      <p>Pick a data-systems or training-systems question, keep the data and model fixed, change one thing, and explain what you measure. A well-supported negative result earns full credit.</p>
+      <p>Change one thing in a fixed data or training pipeline, measure it, and explain the result. Well-supported negative results earn full credit.</p>
     </div>
     <dl class="capstone-meta">
       <div><dt>Spec released</dt><dd>Week 7</dd></div>
@@ -88,7 +84,7 @@
     </dl>
   </article>
   <div class="labs">
-    <div class="section-head"><h3>Labs</h3><span class="section-meta">Five guided labs · 2% each</span></div>
+    <div class="section-head"><h3>Labs</h3><span class="section-meta">Five labs · 2% each</span></div>
     <ol id="lab-list"></ol>
   </div>
 </section>
@@ -105,51 +101,44 @@
         <div><dt>Five labs</dt><dd>10%</dd></div>
         <div><dt>Weekly concept checks</dt><dd>5%</dd></div>
       </dl>
-      <p class="footnote">Exams test reasoning; practice exams are provided and you may bring one page of notes. Concept checks allow unlimited attempts and are graded for completion.</p>
+      <p class="footnote">Exams allow one page of notes. Concept checks are graded for completion.</p>
     </div>
     <div class="policies">
-      <details><summary>Assignment grading</summary><p>Checkpoint 20%, final submission 80%. The final is assessed on correctness (about 50%), performance (about 20%), and analysis (about 30%). Performance credit requires correct code. After D3 and T3, you complete a ten-minute individual code walkthrough with staff.</p></details>
-      <details><summary>Late work and outages</summary><p>Five slip days per semester, at most two per submission, none on the capstone. Reference outputs are released 48 hours after each deadline, and no submissions are accepted after that. A cluster outage near a deadline moves the deadline.</p></details>
-      <details><summary>Collaboration and AI tools</summary><p>Discuss ideas freely; write your own code and analysis. Do not share or view others’ code, except with your capstone partner on the capstone. AI tools may explain concepts, read documentation, and help debug, but may not write the parts each handout assigns to you. Cite AI use, including prompts.</p></details>
-      <details><summary>Help and accommodations</summary><p>If you fall behind, start the next stage from a reference output. Recitation and office hours cover tools and concepts; a TA will contact you if you miss a checkpoint. For accommodations, register with the Disability Resource Center and talk with an instructor early. The Rice Honor Code applies. Test at small scale and release cluster resources when finished.</p></details>
-    </div>
-  </div>
-</section>
-
-<section class="container section" id="start" aria-labelledby="start-title">
-  <h2 id="start-title">Getting ready</h2>
-  <div class="two-col">
-    <div>
-      <h3>Who the course is for</h3>
-      <p>Juniors with a math and ML background who are curious about systems. GPU programming, frameworks, and cluster tools are taught from the ground up.</p>
-      <p><strong>Prerequisites (proposed):</strong> COMP 345 and linear algebra (CMOR 302, CMOR 303, MATH 221, MATH 354, or MATH 355), plus Python at the level of COMP 182. <small class="muted">The current catalog lists COMP 215, 222, and 345.</small></p>
-    </div>
-    <div>
-      <h3>Before Jan 11</h3>
-      <p>A four-hour head start: refresh Python, NumPy, the terminal, and git, and review tensor shapes, the chain rule, and gradient-based optimization.</p>
-      <ul class="checklist">
-        <li>Complete the ungraded primer</li>
-        <li>Take the math and ML self-check</li>
-        <li>Activate your cluster account</li>
-      </ul>
-      <p class="muted">Materials and account instructions are on Canvas.</p>
+      <details><summary>Assignment grading</summary><p>Checkpoint 20%, final 80%. The final is graded on correctness (~50%), performance (~20%), and analysis (~30%); performance credit requires correct code. D3 and T3 end with a ten-minute code walkthrough with staff.</p></details>
+      <details><summary>Late work</summary><p>Five slip days per semester, at most two per submission, none on the capstone. Reference outputs are released 48 hours after each deadline; nothing is accepted after that. Cluster outages near a deadline move the deadline.</p></details>
+      <details><summary>Collaboration and AI tools</summary><p>Discuss freely; write your own code and analysis. Share code only with your capstone partner, on the capstone. AI may explain, read docs, and help debug, but may not write the parts a handout assigns to you. Cite AI use, including prompts.</p></details>
+      <details><summary>Help and accommodations</summary><p>Behind? Start the next stage from a reference output. Recitation and office hours cover tools and concepts. For accommodations, register with the Disability Resource Center and talk with an instructor early. The Rice Honor Code applies.</p></details>
     </div>
   </div>
 </section>
 
 <section class="container section" id="resources" aria-labelledby="resources-title">
   <h2 id="resources-title">Resources</h2>
-  <ul class="links">
-    <li><a href="syllabus.html" target="_blank" rel="noopener noreferrer">Full syllabus <span aria-hidden="true">↗</span></a></li>
-    <li><a href="syllabus.html#glossary" target="_blank" rel="noopener noreferrer">Glossary <span aria-hidden="true">↗</span></a></li>
-    <li><a href="https://github.com/comp329-spring27/student-assignments" target="_blank" rel="noopener noreferrer">Assignment handouts <span aria-hidden="true">↗</span></a></li>
-    <li><span>Canvas: announcements, office hours, and the primer</span></li>
-  </ul>
-  <h3>Readings</h3>
-  <p class="section-intro">No textbook is required. Each handout lists its weekly readings and tested software versions.</p>
-  <div class="two-col readings">
-    <div><h4>Data systems</h4><ul id="data-readings"></ul></div>
-    <div><h4>Training systems</h4><ul id="training-readings"></ul></div>
+  <div class="three-col">
+    <div>
+      <h3>Prerequisites</h3>
+      <p>COMP 345, linear algebra (CMOR 302/303 or MATH 221/354/355), and Python at the COMP 182 level. No GPU, PyTorch, or cluster experience needed.</p>
+      <p class="muted"><small>Proposed; the catalog currently lists COMP 215, 222, and 345.</small></p>
+    </div>
+    <div>
+      <h3>Before Jan 11</h3>
+      <ul class="checklist">
+        <li>Primer on Python, NumPy, the terminal, and git (about four hours, ungraded)</li>
+        <li>Math and ML self-check: tensor shapes, chain rule, gradients</li>
+        <li>Activate your cluster account</li>
+      </ul>
+      <p class="muted"><small>All on Canvas.</small></p>
+    </div>
+    <div>
+      <h3>Links</h3>
+      <ul class="links">
+        <li><a href="syllabus.html" target="_blank" rel="noopener noreferrer">Full syllabus <span aria-hidden="true">↗</span></a></li>
+        <li><a href="syllabus.html#selected-readings" target="_blank" rel="noopener noreferrer">Readings <span aria-hidden="true">↗</span></a></li>
+        <li><a href="syllabus.html#glossary" target="_blank" rel="noopener noreferrer">Glossary <span aria-hidden="true">↗</span></a></li>
+        <li><a href="https://github.com/comp329-spring27/student-assignments" target="_blank" rel="noopener noreferrer">Assignment handouts <span aria-hidden="true">↗</span></a></li>
+        <li><span>Canvas: announcements, office hours, primer</span></li>
+      </ul>
+    </div>
   </div>
 </section>
 

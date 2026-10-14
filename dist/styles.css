@@ -131,16 +131,16 @@ details[open] > summary .chevron { transform: rotate(45deg); }
 .policies details[open] summary::after { transform: rotate(45deg); }
 .policies p { font-size: 15px; line-height: 1.55; color: var(--muted); margin: 0 0 14px; }
 
-/* Getting ready and resources */
-.two-col p { font-size: 16px; }
-.checklist { padding-left: 20px; margin-bottom: 12px; font-size: 16px; }
-.checklist li { margin-bottom: 4px; }
-.links { display: flex; flex-wrap: wrap; gap: 8px 28px; list-style: none; padding: 0; margin: 0 0 32px; font-size: 16px; }
+/* Resources */
+.three-col { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+.three-col h3 { font-size: 17px; }
+.three-col p { font-size: 15px; line-height: 1.55; margin-bottom: 8px; }
+.checklist { padding-left: 20px; margin: 0 0 8px; font-size: 15px; line-height: 1.55; }
+.checklist li { margin-bottom: 6px; }
+.links { list-style: none; padding: 0; margin: 0; font-size: 15px; line-height: 1.55; }
+.links li { margin-bottom: 6px; }
 .links a { font-weight: 500; }
 .links span { color: var(--muted); }
-.readings ul { padding-left: 18px; margin: 0; }
-.readings li { font-size: 15px; line-height: 1.5; margin-bottom: 10px; }
-.reading-links a { margin-right: 10px; font-size: 14px; white-space: nowrap; }
 
 /* Footer */
 footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 24px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
@@ -151,6 +151,7 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
   .hero { grid-template-columns: 1fr; gap: 32px; padding-block: 36px; }
   .overview { max-width: 600px; }
   .grading, .two-col { grid-template-columns: 1fr; gap: 32px; }
+  .three-col { grid-template-columns: 1fr; gap: 28px; }
   .schedule-head { display: none; }
   .schedule { border-top: 1px solid var(--line); }
   .week > summary, .week:not(details) { grid-template-columns: minmax(0, 1fr) 20px; gap: 8px 12px; padding-inline: 4px; }

@@ -36,25 +36,14 @@ const summaries = {
 };
 $('#assignment-list').innerHTML = course.assignments.map(a => `<details class="assignment ${a.thread}">
   <summary><span class="code">${a.code}</span><span class="assignment-main"><strong>${escapeHTML(a.title)}</strong><span>${summaries[a.code]}</span></span><span class="due">Due <time datetime="${a.date}">${dateLabel(a.date)}</time></span><span class="chevron" aria-hidden="true"></span></summary>
-  <div class="assignment-body"><p><b>What you build.</b> ${escapeHTML(a.build)}</p><p><b>Scaling study.</b> ${escapeHTML(a.study)}</p><p class="assignment-foot">${escapeHTML(a.due)} · ${dateLabel(a.date)}, 2027, 11:59 p.m. Chicago · <a href="${escapeHTML(course.handouts[a.code])}" target="_blank" rel="noopener noreferrer">Handout on GitHub <span aria-hidden="true">↗</span></a></p></div>
+  <div class="assignment-body"><p><b>What you build.</b> ${escapeHTML(a.build)}</p><p><b>Scaling study.</b> ${escapeHTML(a.study)}</p><p class="assignment-foot"><a href="${escapeHTML(course.handouts[a.code])}" target="_blank" rel="noopener noreferrer">Handout on GitHub <span aria-hidden="true">↗</span></a></p></div>
 </details>`).join('');
 $('#capstone-handout').href = course.handouts.Capstone;
-$('#lab-list').innerHTML = course.labs.map(lab => `<li><strong>${escapeHTML(lab.name)}</strong><span>${escapeHTML(lab.description)}</span><small>Weeks ${escapeHTML(lab.weeks)}</small></li>`).join('');
-
-// Readings: full citations, with documentation links where the syllabus names them.
-const docs = [
-  {match: 'CUDA Programming Guide', strip: / CUDA guide$/, links: [['CUDA guide', 'https://docs.nvidia.com/cuda/cuda-programming-guide/index.html']]},
-  {match: 'PyTorch documentation', strip: / PyTorch dispatch Compilation JAX transformations$/, links: [['PyTorch dispatch', 'https://docs.pytorch.org/docs/stable/notes/extending.html'], ['torch.compile', 'https://docs.pytorch.org/tutorials/intermediate/torch_compile_tutorial.html'], ['JAX transformations', 'https://docs.jax.dev/en/latest/101/transformations.html']]},
-  {match: 'NCCL User Guide', strip: / NCCL ordering Distributed overview$/, links: [['NCCL guide', 'https://docs.nvidia.com/deeplearning/nccl/user-guide/docs/usage/groups.html'], ['PyTorch distributed', 'https://docs.pytorch.org/tutorials/beginner/dist_overview.html']]},
-  {match: 'Megatron-LM', strip: / Paper$/, links: [['Paper', 'https://arxiv.org/abs/2104.04473']]}
-];
-let readingBlock = 'data';
-course.readings.forEach(reading => {
-  if (/^Data (thread|systems block)$/.test(reading)) { readingBlock = 'data'; return; }
-  if (/^Training (thread|systems block)$/.test(reading)) { readingBlock = 'training'; return; }
-  if (!reading) return;
-  const doc = docs.find(d => reading.includes(d.match));
-  const citation = doc ? reading.replace(doc.strip, '') : reading;
-  const links = doc ? ` <span class="reading-links">${doc.links.map(([title, url]) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${title} <span aria-hidden="true">↗</span></a>`).join('')}</span>` : '';
-  $(`#${readingBlock}-readings`).insertAdjacentHTML('beforeend', `<li>${escapeHTML(citation)}${links}</li>`);
-});
+const labSummaries = {
+  'Lab 1': 'Cluster setup and a first CPU measurement.',
+  'Lab 2': 'MapReduce word count in Python, then PySpark.',
+  'Lab 3': 'A small Triton kernel and PyTorch/JAX traces.',
+  'Lab 4': 'NCCL collectives and a two-server run.',
+  'Lab 5': 'Tensor and pipeline partitions of a toy model.'
+};
+$('#lab-list').innerHTML = course.labs.map(lab => `<li><strong>${escapeHTML(lab.name)}</strong><span>${labSummaries[lab.name] || escapeHTML(lab.description)}</span><small>Weeks ${escapeHTML(lab.weeks)}</small></li>`).join('');

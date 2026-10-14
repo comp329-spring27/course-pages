@@ -10,16 +10,15 @@ Run `python3 scripts/check-site.py` to validate source freshness, schedule/deadl
 
 ## Page structure
 
-The homepage has six sections, each written to be read top to bottom without tabs, filters, or dialogs:
+The homepage has five sections, each written to be read top to bottom without tabs, filters, dialogs, or introductory prose:
 
-1. **Overview** – title, one-sentence description, four facts, and a single course map of the two blocks (D1–D3, T1–T3).
+1. **Overview** – title, one line, three facts, and a single course map of the two blocks (D1–D3, T1–T3) with their instructors.
 2. **Schedule** – one row per week with lecture topics and what is due or released. Opening a row shows the lecture bullets with their BUILD / CONCEPT / STRETCH tags.
 3. **Assignments** – one row per assignment; opening it shows the scope, the scaling study, and the handout link. The capstone and the five labs follow.
-4. **Grading and policies** – the grade breakdown and four short policy items.
-5. **Getting ready** – who the course is for, prerequisites, and the pre-term checklist.
-6. **Resources** – links (syllabus, glossary, handouts, Canvas) and the reading list.
+4. **Grading** – the grade breakdown and four short policy items.
+5. **Resources** – prerequisites, the pre-term checklist, and links.
 
-The glossary lives on the readable syllabus page (`syllabus.html#glossary`) rather than the homepage.
+The reading list and glossary live on the readable syllabus page (`syllabus.html#selected-readings`, `syllabus.html#glossary`) rather than the homepage.
 
 ## Content
 
@@ -27,7 +26,7 @@ The glossary lives on the readable syllabus page (`syllabus.html#glossary`) rath
 
 Assignment rows link to each handout in `comp329-spring27/student-assignments` on GitHub; the capstone has its own handout link. The folder mapping is maintained in `scripts/prepare-content.py` so regeneration preserves these links. Links are included even while that repository is private.
 
-After updating the syllabus, run `python3 scripts/prepare-content.py`. The script uses the syllabus in the course workspace when available, otherwise the bundled syllabus, and then regenerates `dist/syllabus.html` and stamps the homepage's asset links. Update the hand-written overview, grading, and policy text in `dist/index.html` as needed. Rendering of the generated data is in `dist/app.js`; styling is in `dist/styles.css`, with the shared palette and theme switch in `dist/theme.css`.
+After updating the syllabus, run `python3 scripts/prepare-content.py`. The script uses the syllabus in the course workspace when available, otherwise the bundled syllabus, and then regenerates `dist/syllabus.html` and stamps the homepage's asset links. Update the hand-written overview, grading, policy, and resources text in `dist/index.html` as needed; the one-line assignment and lab summaries are in `dist/app.js`. Rendering of the generated data is in `dist/app.js`; styling is in `dist/styles.css`, with the shared palette and theme switch in `dist/theme.css`.
 
 After editing any stylesheet or script by hand, run `python3 scripts/stamp-assets.py` (and `python3 scripts/prepare-syllabus.py` if `theme.css` or `theme.js` changed) so the `?v=` cache-busting stamps match; `check-site.py` fails otherwise.
 

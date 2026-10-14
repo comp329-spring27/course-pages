@@ -61,14 +61,22 @@ class References(HTMLParser):
         if 'id' in attrs: self.ids.add(attrs['id'])
         self.urls.extend(attrs[key] for key in ('src', 'href') if key in attrs)
 refs = References(); refs.feed((dist / 'index.html').read_text())
-assert {'capstone-handout', 'dialog-handout'} <= refs.ids
+assert {'capstone-handout', 'schedule-rows', 'assignment-list', 'lab-list', 'data-readings', 'training-readings'} <= refs.ids
 assert data['handouts']['Capstone'] in refs.urls
 for url in refs.urls:
     if url.startswith('#'): assert url[1:] in refs.ids, f'Broken anchor: {url}'
-    elif not re.match(r'https?://', url): assert (dist / urlsplit(url).path).is_file(), f'Missing local asset: {url}'
+    elif not re.match(r'https?://', url):
+        path = urlsplit(url).path
+        assert (dist / path).is_file(), f'Missing local asset: {url}'
+        if path in {'theme.css', 'styles.css', 'theme.js', 'app.js', 'data.js'}:
+            assert urlsplit(url).query == 'v=' + hashlib.sha256((dist / path).read_bytes()).hexdigest()[:12], f'Stale asset stamp: {url}; run scripts/stamp-assets.py'
 manifest_path = base / '.openai/hosting.json'
 if manifest_path.exists():
     manifest = json.loads(manifest_path.read_text())
     assert manifest['project_id'] and manifest['static']['directory'] == 'dist'
-assert f'content="{data["source_sha256"]}"' in (dist / 'syllabus.html').read_text(), 'Readable syllabus is stale; regenerate it.'
-print('PASS: source freshness, schedule/deadline agreement, seven calendar events, seven student handouts, readable syllabus, and local links.')
+syllabus_html = (dist / 'syllabus.html').read_text()
+assert f'content="{data["source_sha256"]}"' in syllabus_html, 'Readable syllabus is stale; regenerate it.'
+assert 'id="glossary"' in syllabus_html, 'Readable syllabus lacks the glossary anchor the homepage links to.'
+for name in ('theme.css', 'theme.js'):
+    assert f'{name}?v=' + hashlib.sha256((dist / name).read_bytes()).hexdigest()[:12] in syllabus_html, f'Readable syllabus links a stale {name}; regenerate it.'
+print('PASS: source freshness, schedule/deadline agreement, seven calendar events, seven student handouts, readable syllabus, asset stamps, and local links.')

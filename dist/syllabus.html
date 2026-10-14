@@ -3,7 +3,7 @@
 <title>Syllabus · COMP 329 · Spring 2027</title>
 <link rel="icon" type="image/svg+xml" href="assets/course-mark.svg">
 <link rel="stylesheet" href="syllabus.css?v=c3c97919f332">
-<link rel="stylesheet" href="theme.css?v=141a12ce1d47">
+<link rel="stylesheet" href="theme.css?v=9196afe52cba">
 <script src="theme.js?v=db279466140b"></script>
 <meta name="source-sha256" content="6be0b699c2afec62b7ea717f171fc35858823ccf192c609f8aa7a62e2e210d25">
 </head><body class="syllabus-page"><header><a href="./"><img src="assets/course-mark.svg" alt="" width="40" height="40">COMP 329 · Course home</a><span>Spring 2027 syllabus</span><button type="button" class="theme-toggle" data-theme-toggle role="switch" aria-checked="false" aria-label="Dark mode"><span class="theme-toggle-track" aria-hidden="true"><span class="theme-toggle-knob"></span></span><span class="theme-toggle-label">Dark mode</span></button></header>
@@ -13,16 +13,16 @@
 <div class="table-scroll" tabindex="0" role="region" aria-label="Syllabus table"><table><tr><td><p><strong>Instructors</strong></p></td><td><p><strong>Christopher Jermaine: data systems, Weeks 2–7</strong></p>
 <p><strong>Yuke Wang: training systems, Weeks 8–13</strong></p>
 <p>Weeks 1 and 14: taught jointly</p></td></tr><tr><td><p><strong>Credits</strong></p></td><td><p>3 credits; about 9 hours per week (3 in class, 6 outside)</p></td></tr><tr><td><p><strong>Term</strong></p></td><td><p>Classes Jan 11–Apr 23, 2027; finals Apr 28–May 4</p></td></tr><tr><td><p><strong>Meetings</strong></p></td><td><p>Two lectures and one recitation per week; times TBA</p></td></tr><tr><td><p><strong>Office hours, TAs</strong></p></td><td><p>On Canvas</p></td></tr></table></div>
-<h2>Course Description</h2>
+<h2 id="course-description">Course Description</h2>
 <p>Modern AI depends on systems that move data, execute tensor operations, manage memory, and coordinate processors. This course connects hardware, software abstractions, and distributed execution through cost models, implementation, and measurement. You learn to explain performance limits and test systems design choices.</p>
 <p>The course has two consecutive blocks. In Weeks 2–7, you collect, clean, deduplicate, and tokenize Wikipedia with Spark, studying storage, query execution, and communication costs. In Weeks 8–13, you use that dataset to study GPU architecture and programming, PyTorch and JAX execution, NCCL, and data, tensor, and pipeline parallelism. A supplied small model supports the kernel and communication exercises.</p>
 <p>The course builds on your math and ML background and introduces systems concepts from the ground up. You predict costs, inspect execution, and explain scaling limits. Christopher Jermaine leads the data systems block; Yuke Wang leads the training systems block. Weeks 1 and 14 bring both blocks together in joint sessions.</p>
-<h2>Who This Course Is For</h2>
+<h2 id="who-this-course-is-for">Who This Course Is For</h2>
 <p>This course is for juniors in AI, CS, math, or statistics who are stronger in math and ML than in systems programming.</p>
 <p><strong>Prerequisites</strong> (proposed; the current catalog lists COMP 215, 222, and 345): COMP 345 and one of CMOR 302, CMOR 303, MATH 221, MATH 354, or MATH 355. You should also know Python at the level of COMP 182.</p>
 <p>Not required: prior GPU programming, PyTorch or JAX, computer architecture, or cluster experience. These foundations are taught in the course.</p>
 <p>Before class starts: a four-hour self-paced primer on Python, NumPy, the terminal, and git, with a short math and ML self-check covering tensor shapes, the chain rule, and gradient-based optimization.</p>
-<h2>Learning Objectives</h2>
+<h2 id="learning-objectives">Learning Objectives</h2>
 <p>By the end of the course, you will be able to:</p>
 <ul>
 <li>Trace an AI workload through storage, frameworks, GPUs, and communication; identify the limiting resource.</li>
@@ -35,12 +35,12 @@
 <li>Compare data, tensor, and pipeline parallelism and state sharding; design a 3D layout with memory and communication estimates.</li>
 <li>Measure memory, throughput, scaling efficiency, cost, and GPU energy; use traces to justify a systems change.</li>
 </ul>
-<h2><strong>The System You Will Study and Build</strong></h2>
+<h2 id="the-system-you-will-study-and-build"><strong>The System You Will Study and Build</strong></h2>
 <p>Six assignments follow the course sequence: D1, D2, and D3 build the data pipeline; T1, T2, and T3 study accelerator and distributed execution. Staff provide the model, autograd, optimizers, and reference programs. You implement selected components, validate correctness, and explain performance as workload and hardware change.</p>
 <div class="table-scroll" tabindex="0" role="region" aria-label="Syllabus table"><table><tr><td></td><td><p><strong>1. Collect</strong></p></td><td><p><strong>2. Process</strong></p></td><td><p><strong>3. Build the dataset</strong></p></td><td><p><strong>4. Accelerate</strong></p></td><td><p><strong>5. Communicate and scale</strong></p></td></tr><tr><td><p><strong>Systems work</strong></p></td><td><p>Parse Wikipedia dumps into records</p></td><td><p>Normalize and analyze the corpus with Spark</p></td><td><p>Deduplicate, tokenize, and shard</p></td><td><p>Profile framework execution and a GPU kernel</p></td><td><p>Collectives, gradient sync, and parallel layouts</p></td></tr><tr><td><p><strong>Tools</strong></p></td><td><p>Python, Parquet</p></td><td><p>PySpark, SQL</p></td><td><p>PySpark, MinHash, BPE</p></td><td><p>PyTorch, JAX, Triton</p></td><td><p>mpi4py, torch.distributed, NCCL</p></td></tr><tr><td><p><strong>Assignment</strong></p></td><td><p>D1</p></td><td><p>D2</p></td><td><p>D3</p></td><td><p>T1</p></td><td><p>T2, T3</p></td></tr><tr><td><p><strong>Due</strong></p></td><td><p>Week 3</p></td><td><p>Week 5 (Wed)</p></td><td><p>Week 7</p></td><td><p>Week 10</p></td><td><p>Weeks 12 and 14</p></td></tr><tr><td><p><strong>Scale question</strong></p></td><td><p><em>What limits one machine: disk, decompression, or parsing?</em></p></td><td><p><em>When does the shuffle dominate?</em></p></td><td><p><em>How much work does LSH save?</em></p></td><td><p><em>Compute, memory, or launch overhead?</em></p></td><td><p><em>What limits multi-GPU speedup?</em></p></td></tr><tr><td><p><strong>Math you use</strong></p></td><td><p>Rates and bottlenecks</p></td><td><p>Amdahl’s law, set algebra</p></td><td><p>Jaccard similarity, probability</p></td><td><p>Tensor shapes, arithmetic intensity</p></td><td><p>Cost models; block matrices</p></td></tr><tr><td><p><strong>Block</strong></p></td><td><p>Data (Jermaine)</p></td><td><p>Data (Jermaine)</p></td><td><p>Data (Jermaine)</p></td><td><p>Training (Wang)</p></td><td><p>Training (Wang)</p></td></tr></table></div>
 <p>D3 produces the BPE dataset by Week 7, before training systems begins. T1 and T3 use it with supplied model configurations. T2 uses synthetic tensors and reference gradient sizes to isolate communication. A deeper toy model supports pipeline-parallel exercises; staff reference data is available if your pipeline is incomplete.</p>
 <p>The dataset contract specifies the format D3 writes and T1 and T3 read. Reference configurations specify the model, precision, batch size, and hardware budget. Tests check numerical correctness, and shared benchmarks make systems comparisons reproducible.</p>
-<h2>How the Course Works</h2>
+<h2 id="how-the-course-works">How the Course Works</h2>
 <h3>Each week</h3>
 <ul>
 <li><strong>Two lectures</strong> on the current block each week, except during university closures. Weeks 1 and 14 are joint. Each lecture comes with a runnable notebook.</li>
@@ -57,7 +57,7 @@
 <p>Each handout says what is provided and what you write. After each deadline we release a <strong>reference output</strong>, so you can always start the next stage from it.</p>
 <h3>Reading the schedule</h3>
 <p>The schedule lists Lecture 1 and Lecture 2 in teaching order. BUILD: you implement the specified mechanism or experiment within the handout’s scope. CONCEPT: you explain and analyze it for exams. STRETCH: optional. Guided exercises may use provided implementations.</p>
-<h2>Software and Computing</h2>
+<h2 id="software-and-computing">Software and Computing</h2>
 <ul>
 <li><strong>Core tools.</strong> Python, PySpark, and Parquet for data; PyTorch for the main training exercises; JAX for guided comparisons of differentiation, vectorization, and compilation; Triton for a small GPU kernel.</li>
 <li><strong>Distributed tools.</strong> mpi4py introduces messages and one small CPU collective. torch.distributed exposes GPU communication through NCCL. You inspect process groups, synchronization, and distributed execution rather than treating the launcher as the whole system.</li>
@@ -65,7 +65,7 @@
 <li><strong>Implementation scope.</strong> You write selected kernels, communication logic, and experiments. Rebuilding a full framework or implementing every parallel-training engine is not required. Full 3D execution is optional; its layout and cost analysis are required.</li>
 <li><strong>Compute.</strong> Every graded run fits a guaranteed per-student allocation. Bigger runs are optional. If the cluster goes down near a deadline, the deadline moves.</li>
 </ul>
-<h2>Assessment</h2>
+<h2 id="assessment">Assessment</h2>
 <div class="table-scroll" tabindex="0" role="region" aria-label="Syllabus table"><table><tr><td><p><strong>Component</strong></p></td><td><p><strong>Weight</strong></p></td></tr><tr><td><p>Weekly concept checks</p></td><td><p>5%</p></td></tr><tr><td><p>Labs (5 × 2%)</p></td><td><p>10%</p></td></tr><tr><td><p>Assignments (6 × 7%)</p></td><td><p>42%</p></td></tr><tr><td><p>Capstone (pairs)</p></td><td><p>13%</p></td></tr><tr><td><p>Midterm (data systems)</p></td><td><p>15%</p></td></tr><tr><td><p>Final (cumulative)</p></td><td><p>15%</p></td></tr><tr><td><p><strong>Total</strong></p></td><td><p><strong>100%</strong></p></td></tr></table></div>
 <h3>Labs (10%)</h3>
 <p>Labs are short and guided. Each is released after the lecture that introduces its tool.</p>
@@ -100,7 +100,7 @@
 <p>A provided protocol fixes validation data, baseline, budget, and correctness tolerances. Report both system performance and model quality. Grading rewards a justified design choice, reproducible experiments, and a causal explanation; a well-supported negative result can earn full credit. Leaderboards are optional and do not affect grades.</p>
 <h3>Exams (30%)</h3>
 <p>The midterm in Week 8 covers the joint foundations and data systems block (Weeks 1–7). The final is cumulative, emphasizing training systems and connections between the blocks. Both test reasoning, not memorization. Practice exams are provided, and you may bring one page of notes.</p>
-<h2>Course Schedule</h2>
+<h2 id="course-schedule">Course Schedule</h2>
 <p>Week 1 introduces the complete system. Jermaine teaches both lectures in Weeks 2–7; Wang teaches both in Weeks 8–13. Week 14 returns to joint integration and review. The 12 training lectures cover GPUs (2), frameworks (3), distributed programming (3), parallelism (3), and diagnosis (1). Work is due Fridays at 11:59 p.m. unless noted. No assignment is due in the midterm week.</p>
 <div class="table-scroll" tabindex="0" role="region" aria-label="Syllabus table"><table><tr><td><p><strong>Week</strong></p></td><td><p><strong>Lecture 1</strong></p></td><td><p><strong>Lecture 2</strong></p></td><td><p><strong>Due and released</strong></p></td></tr><tr><td><p><strong>Week 0</strong></p>
 <p>Before Jan 11</p></td><td colspan="2"><p><strong>Getting ready: self-paced primer and self-check; activate your cluster account.</strong></p></td><td><p>Primer (ungraded)</p></td></tr><tr><td><p><strong>Week 1</strong></p>
@@ -191,7 +191,7 @@
 <p>Compare layouts, resource limits, and failure modes; synthesize both blocks and review for the final.<strong>  CONCEPT</strong></p></td><td><p>T3 due</p></td></tr><tr><td><p><strong>Finals</strong></p>
 <p>Apr 28–May 4</p></td><td colspan="2"><p><strong>Final examination period</strong></p></td><td><p>Final exam</p>
 <p>Capstone due (Tue, May 4)</p></td></tr></table></div>
-<h2>Getting Help</h2>
+<h2 id="getting-help">Getting Help</h2>
 <ul>
 <li><strong>Fell behind?</strong> Start the next stage from the reference output.</li>
 <li><strong>Missed a checkpoint?</strong> A TA will contact you.</li>
@@ -200,7 +200,7 @@
 <li><strong>New term?</strong> See the glossary.</li>
 <li>Extra help: Mining of Massive Datasets, Chapter 3, for MinHash and LSH; the PyTorch, JAX, and NCCL documentation listed below for framework and distributed execution.</li>
 </ul>
-<h2>Course Policies</h2>
+<h2 id="course-policies">Course Policies</h2>
 <h3>Late work</h3>
 <p>You have five slip days per semester, with at most two per submission. Reference outputs come out 48 hours after each deadline, and no submissions are accepted after that. No slip days on the capstone. Accommodations and outages are handled separately.</p>
 <h3>Collaboration</h3>
@@ -215,7 +215,7 @@
 <p>The Rice Honor Code applies. See honor.rice.edu.</p>
 <h3>Accommodations</h3>
 <p>Register with the Disability Resource Center, then talk with an instructor early in the semester.</p>
-<h2>Selected Readings</h2>
+<h2 id="selected-readings">Selected Readings</h2>
 <p>There is no textbook. Selected sections of papers and official documentation support the weekly mechanisms and experiments. Staff specify the readings and tested software versions in each handout.</p>
 <h3>Data systems block</h3>
 <ul>
@@ -238,5 +238,5 @@
 <li>Rajbhandari et al., “ZeRO: Memory Optimizations Toward Training Trillion Parameter Models,” SC 2020.</li>
 <li>Bengio et al., “A Neural Probabilistic Language Model,” JMLR 2003, for the supplied workload. Thakur, Rabenseifner, and Gropp, “Optimization of Collective Communication Operations in MPICH,” IJHPCA 2005, for collective cost models.</li>
 </ul>
-<h2>Glossary</h2>
+<h2 id="glossary">Glossary</h2>
 <div class="table-scroll" tabindex="0" role="region" aria-label="Syllabus table"><table><tr><td><p><strong>Term</strong></p></td><td><p><strong>Meaning</strong></p></td></tr><tr><td><p><strong>Partition</strong></p></td><td><p>A slice of a dataset handled by one worker.</p></td></tr><tr><td><p><strong>Shuffle</strong></p></td><td><p>Moving data between workers by key, over the network.</p></td></tr><tr><td><p><strong>Data skew</strong></p></td><td><p>Uneven partitions, so a few workers do most of the work.</p></td></tr><tr><td><p><strong>Lineage</strong></p></td><td><p>How a dataset was computed; Spark uses it to rebuild lost data.</p></td></tr><tr><td><p><strong>MinHash and LSH</strong></p></td><td><p>Hashing tricks that find similar documents without comparing every pair.</p></td></tr><tr><td><p><strong>BPE</strong></p></td><td><p>Byte-pair encoding: a tokenizer that repeatedly merges the most common pair of symbols.</p></td></tr><tr><td><p><strong>Byte-level tokens</strong></p></td><td><p>Each byte of text is one token (256 possible). Used for small illustrative workloads; the main training assignments use the BPE dataset from D3.</p></td></tr><tr><td><p><strong>Shard</strong></p></td><td><p>One file of a dataset split across many files.</p></td></tr><tr><td><p><strong>Dataset contract</strong></p></td><td><p>The written format that D3 produces and T1 and T3 read.</p></td></tr><tr><td><p><strong>Memory mapping</strong></p></td><td><p>Reading a file as an array, loading pages only when used.</p></td></tr><tr><td><p><strong>Bits per byte</strong></p></td><td><p>Loss per byte of raw text, so different tokenizers compare fairly.</p></td></tr><tr><td><p><strong>FLOP</strong></p></td><td><p>One floating-point operation (an add or a multiply).</p></td></tr><tr><td><p><strong>Arithmetic intensity</strong></p></td><td><p>FLOPs per byte moved to or from memory.</p></td></tr><tr><td><p><strong>Roofline model</strong></p></td><td><p>Attainable speed ≤ min(peak compute, bandwidth × arithmetic intensity).</p></td></tr><tr><td><p><strong>Kernel</strong></p></td><td><p>A function that runs on the GPU across many threads.</p></td></tr><tr><td><p><strong>HBM</strong></p></td><td><p>The GPU’s main memory: large but slower than on-chip memory.</p></td></tr><tr><td><p><strong>Tile</strong></p></td><td><p>A small block of a matrix kept in fast memory and reused.</p></td></tr><tr><td><p><strong>CUDA stream</strong></p></td><td><p>A queue of GPU work that runs in order; separate streams can overlap.</p></td></tr><tr><td><p><strong>Collective</strong></p></td><td><p>A communication step that involves every GPU in a group.</p></td></tr><tr><td><p><strong>All-reduce</strong></p></td><td><p>Every GPU sends a vector and receives the sum. It equals a reduce-scatter followed by an all-gather.</p></td></tr><tr><td><p><strong>Reduce-scatter</strong></p></td><td><p>Every GPU sends a vector and receives one slice of the sum.</p></td></tr><tr><td><p><strong>All-gather</strong></p></td><td><p>Every GPU sends one slice and receives all slices.</p></td></tr><tr><td><p><strong>α–β model</strong></p></td><td><p>Sending n bytes takes about α + nβ (latency plus size ÷ bandwidth).</p></td></tr><tr><td><p><strong>Data parallelism</strong></p></td><td><p>Partition examples across workers and synchronize gradients; computation is replicated, while model state may also be sharded.</p></td></tr><tr><td><p><strong>Tensor parallelism</strong></p></td><td><p>Partition tensors and operations within a layer across devices, communicating partial results or inputs as needed.</p></td></tr><tr><td><p><strong>ZeRO</strong></p></td><td><p>Data parallelism that splits optimizer state (and optionally more) across GPUs.</p></td></tr><tr><td><p><strong>MFU</strong></p></td><td><p>Model FLOP/s achieved ÷ peak FLOP/s of all GPUs used, at the stated precision.</p></td></tr><tr><td><p><strong>Strong and weak scaling</strong></p></td><td><p>Strong: fixed problem, more workers. Weak: problem grows with workers.</p></td></tr><tr><td><p><strong>SIMT</strong></p></td><td><p>Single instruction, multiple threads: GPU threads execute in groups, with costs from divergent paths and memory access patterns.</p></td></tr><tr><td><p><strong>Autograd</strong></p></td><td><p>Automatic differentiation that tracks operations and computes gradients; its saved intermediates and execution affect memory and runtime.</p></td></tr><tr><td><p><strong>Operator dispatch</strong></p></td><td><p>Selecting the implementation of an operation for its tensor properties and execution backend.</p></td></tr><tr><td><p><strong>Graph compilation</strong></p></td><td><p>Transforming captured operations into executable code; compilation and graph breaks affect performance.</p></td></tr><tr><td><p><strong>Rank and process group</strong></p></td><td><p>A rank identifies a process within a group whose members participate in communication.</p></td></tr><tr><td><p><strong>NCCL</strong></p></td><td><p>NVIDIA library providing GPU communication primitives, including collectives, within and across servers.</p></td></tr><tr><td><p><strong>Model parallelism</strong></p></td><td><p>Distributing a model’s computation across devices, including tensor and pipeline parallelism.</p></td></tr><tr><td><p><strong>Pipeline parallelism</strong></p></td><td><p>Partition layers into stages; pass microbatches between stages, balancing work and idle pipeline bubbles.</p></td></tr><tr><td><p><strong>3D parallelism</strong></p></td><td><p>Compose data, tensor, and pipeline parallelism. In a simple rectangular layout, GPU count is DP × TP × PP.</p></td></tr><tr><td><p><strong>FSDP</strong></p></td><td><p>Fully sharded data parallelism: shard model state across data-parallel workers and communicate it when needed.</p></td></tr></table></div></main></body></html>

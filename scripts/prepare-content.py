@@ -78,6 +78,7 @@ for line in events:
 (base / 'dist/assets/assignment-deadlines.ics').write_bytes(('\r\n'.join(folded) + '\r\n').encode())
 print(f'Prepared {len(schedule)} schedule entries, {len(assignments)} assignments, {len(labs)} labs, and {len(glossary)} glossary terms.')
 
-# Keep the browser-readable syllabus in sync with the bundled source.
+# Keep the browser-readable syllabus and the homepage's asset links in sync.
 import runpy
 runpy.run_path(str(base / "scripts/prepare-syllabus.py"))
+runpy.run_path(str(base / "scripts/stamp-assets.py"))

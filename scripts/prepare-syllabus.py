@@ -4,6 +4,7 @@ from zipfile import ZipFile
 from xml.etree import ElementTree as ET
 from html import escape
 import hashlib
+import re
 
 base = Path(__file__).resolve().parents[1]
 source = base / 'dist/assets/syllabus-spring-2027.docx'
@@ -37,6 +38,10 @@ def inline(node):
 
 first_paragraph = True
 
+def slug(html):
+    text = re.sub(r'<[^>]+>', '', html)
+    return re.sub(r'[^a-z0-9]+', '-', text.lower()).strip('-')
+
 def blocks(parent):
     global first_paragraph
     result = []
@@ -62,7 +67,9 @@ def blocks(parent):
                 first_paragraph = False
             else:
                 tag = {'Heading1': 'h2', 'Heading2': 'h3'}.get(style, 'p')
-            result.append(f'<{tag}>{content}</{tag}>')
+            # Section headings get stable ids so the homepage can link to them (for example syllabus.html#glossary).
+            anchor = f' id="{slug(content)}"' if tag == 'h2' else ''
+            result.append(f'<{tag}{anchor}>{content}</{tag}>')
         elif node.tag == W + 'tbl':
             if in_list:
                 result.append('</ul>')

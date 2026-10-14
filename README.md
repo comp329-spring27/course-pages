@@ -1,20 +1,35 @@
 # COMP 329 · Spring 2027
 
-A responsive, buildless course website grounded in the current Spring 2027 syllabus. The source syllabus is downloadable at `dist/assets/syllabus-spring-2027.docx`. Instructor-facing launch and design notes are not included in the site.
+A one-page, buildless course website grounded in the current Spring 2027 syllabus. The source syllabus is downloadable at `dist/assets/syllabus-spring-2027.docx`. Instructor-facing launch and design notes are not included in the site.
 
 ## Preview
 
 Open `dist/index.html` directly in a browser, or run `python3 -m http.server 4329 --directory dist --bind 127.0.0.1` from this folder.
 
-Run `python3 scripts/check-site.py` to validate source freshness, schedule/deadline consistency, calendar times, and local links.
+Run `python3 scripts/check-site.py` to validate source freshness, schedule/deadline consistency, calendar times, asset stamps, and local links.
+
+## Page structure
+
+The homepage has six sections, each written to be read top to bottom without tabs, filters, or dialogs:
+
+1. **Overview** – title, one-sentence description, four facts, and a single course map of the two blocks (D1–D3, T1–T3).
+2. **Schedule** – one row per week with lecture topics and what is due or released. Opening a row shows the lecture bullets with their BUILD / CONCEPT / STRETCH tags.
+3. **Assignments** – one row per assignment; opening it shows the scope, the scaling study, and the handout link. The capstone and the five labs follow.
+4. **Grading and policies** – the grade breakdown and four short policy items.
+5. **Getting ready** – who the course is for, prerequisites, and the pre-term checklist.
+6. **Resources** – links (syllabus, glossary, handouts, Canvas) and the reading list.
+
+The glossary lives on the readable syllabus page (`syllabus.html#glossary`) rather than the homepage.
 
 ## Content
 
-`scripts/prepare-content.py` extracts the two consecutive teaching blocks, schedule, assignments, labs, readings, and glossary from the syllabus and writes `dist/data.js`. It also creates an assignment calendar with deadlines at 11:59 p.m. America/Chicago. Only assignment and capstone deadlines are included; exam dates and times remain TBA.
+`scripts/prepare-content.py` extracts the schedule, assignments, labs, readings, and glossary from the syllabus and writes `dist/data.js`. It also creates an assignment calendar with deadlines at 11:59 p.m. America/Chicago. Only assignment and capstone deadlines are included; exam dates and times remain TBA.
 
-Assignment cards and details link to each handout in `comp329-spring27/student-assignments` on GitHub; the capstone has its own handout link. The folder mapping is maintained in `scripts/prepare-content.py` so regeneration preserves these links. Links are included even while that repository is private.
+Assignment rows link to each handout in `comp329-spring27/student-assignments` on GitHub; the capstone has its own handout link. The folder mapping is maintained in `scripts/prepare-content.py` so regeneration preserves these links. Links are included even while that repository is private.
 
-After updating the syllabus, run `python3 scripts/prepare-content.py`. The script uses the syllabus in the course workspace when available, otherwise the bundled syllabus. Update the overview and policy summaries in `dist/index.html` as needed. Source styling and interactions are in `dist/styles.css` and `dist/app.js`.
+After updating the syllabus, run `python3 scripts/prepare-content.py`. The script uses the syllabus in the course workspace when available, otherwise the bundled syllabus, and then regenerates `dist/syllabus.html` and stamps the homepage's asset links. Update the hand-written overview, grading, and policy text in `dist/index.html` as needed. Rendering of the generated data is in `dist/app.js`; styling is in `dist/styles.css`, with the shared palette and theme switch in `dist/theme.css`.
+
+After editing any stylesheet or script by hand, run `python3 scripts/stamp-assets.py` (and `python3 scripts/prepare-syllabus.py` if `theme.css` or `theme.js` changed) so the `?v=` cache-busting stamps match; `check-site.py` fails otherwise.
 
 ## Publication
 
@@ -32,6 +47,6 @@ The ignored `.openai/` folder contains local metadata from an unused Sites regis
 
 `dist/assets/course-mark.svg` is the custom course owl used in the header, footer, and SVG browser icon. Matching PNG, ICO, and Apple touch icons are included in `dist/assets/`. Keep these variants in sync when changing the mark.
 
-Syllabus links open `dist/syllabus.html` in a new tab for browser reading. This page is generated from the bundled Word syllabus by `scripts/prepare-syllabus.py`, also run during content preparation.
+Syllabus links open `dist/syllabus.html` in a new tab for browser reading. This page is generated from the bundled Word syllabus by `scripts/prepare-syllabus.py`, also run during content preparation. Its section headings carry ids so the homepage can link into it.
 
-The homepage and syllabus share `theme.css` and `theme.js`. Light mode is the default; the accessible header switch saves the selected theme in local storage and synchronizes it across open tabs.
+The homepage and syllabus share `theme.css` and `theme.js`. Light mode is the default; the header switch saves the selected theme in local storage and synchronizes it across open tabs. All colors are CSS variables defined once in `theme.css` for light and dark, so component styles need no per-theme overrides.

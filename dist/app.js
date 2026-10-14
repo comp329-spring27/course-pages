@@ -39,11 +39,3 @@ $('#assignment-list').innerHTML = course.assignments.map(a => `<details class="a
   <div class="assignment-body"><p><b>What you build.</b> ${escapeHTML(a.build)}</p><p><b>Scaling study.</b> ${escapeHTML(a.study)}</p><p class="assignment-foot"><a href="${escapeHTML(course.handouts[a.code])}" target="_blank" rel="noopener noreferrer">Handout on GitHub <span aria-hidden="true">↗</span></a></p></div>
 </details>`).join('');
 $('#capstone-handout').href = course.handouts.Capstone;
-const labSummaries = {
-  'Lab 1': 'Cluster setup and a first CPU measurement.',
-  'Lab 2': 'MapReduce word count in Python, then PySpark.',
-  'Lab 3': 'A small Triton kernel and PyTorch/JAX traces.',
-  'Lab 4': 'NCCL collectives and a two-server run.',
-  'Lab 5': 'Tensor and pipeline partitions of a toy model.'
-};
-$('#lab-list').innerHTML = course.labs.map(lab => `<li><strong>${escapeHTML(lab.name)}</strong><span>${labSummaries[lab.name] || escapeHTML(lab.description)}</span><small>Weeks ${escapeHTML(lab.weeks)}</small></li>`).join('');

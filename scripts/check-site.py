@@ -61,7 +61,7 @@ class References(HTMLParser):
         if 'id' in attrs: self.ids.add(attrs['id'])
         self.urls.extend(attrs[key] for key in ('src', 'href') if key in attrs)
 refs = References(); refs.feed((dist / 'index.html').read_text())
-assert {'capstone-handout', 'schedule-rows', 'assignment-list', 'lab-list'} <= refs.ids
+assert {'capstone-handout', 'schedule-rows', 'assignment-list'} <= refs.ids
 assert data['handouts']['Capstone'] in refs.urls
 for url in refs.urls:
     if url.startswith('#'): assert url[1:] in refs.ids, f'Broken anchor: {url}'

@@ -109,13 +109,6 @@ details[open] > summary .chevron { transform: rotate(45deg); }
 .capstone-meta { display: grid; gap: 12px; margin: 0; min-width: 180px; }
 .capstone-meta dt { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 .capstone-meta dd { margin: 0; font-size: 16px; font-weight: 500; }
-.labs { margin-top: 40px; }
-.labs ol { list-style: none; margin: 12px 0 0; padding: 0; }
-.labs li { display: grid; grid-template-columns: 70px minmax(0, 1fr) 90px; gap: 16px; padding: 10px 12px; border-top: 1px solid var(--line); font-size: 15px; line-height: 1.5; }
-.labs li:last-child { border-bottom: 1px solid var(--line); }
-.labs strong { font-weight: 600; }
-.labs small { color: var(--muted); text-align: right; font-size: 14px; }
-
 /* Grading and policies */
 .grading, .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
 .grading { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
@@ -170,8 +163,6 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
   .assignment-body { padding: 4px 4px 18px; }
   .capstone { grid-template-columns: 1fr; gap: 20px; padding: 20px; }
   .capstone-meta { grid-template-columns: repeat(3, auto); justify-content: start; gap: 24px; }
-  .labs li { grid-template-columns: 60px minmax(0, 1fr); padding-inline: 4px; }
-  .labs small { grid-column: 2; text-align: left; }
 }
 @media (max-width: 640px) {
   html { scroll-padding-top: 120px; }

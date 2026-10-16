@@ -142,14 +142,15 @@ details[open] > summary .chevron { transform: rotate(45deg); }
 
 /* Resources */
 .three-col { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
-.three-col h3 { font-size: 17px; }
-.three-col p { font-size: 15px; line-height: 1.55; margin-bottom: 8px; }
-.checklist { padding-left: 20px; margin: 0 0 8px; font-size: 15px; line-height: 1.55; }
-.checklist li { margin-bottom: 6px; }
-.links { list-style: none; padding: 0; margin: 0; font-size: 15px; line-height: 1.55; }
-.links li { margin-bottom: 6px; }
-.links a { font-weight: 500; }
-.links span { color: var(--muted); }
+.three-col h3 { font-size: 17px; margin-bottom: 10px; }
+.resource-list { list-style: none; padding: 0; margin: 0; }
+.resource-list li { display: grid; gap: 2px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 15px; line-height: 1.45; }
+.resource-list li:last-child { border-bottom: 1px solid var(--line); }
+.resource-list strong { font-weight: 600; }
+.resource-list li > span { font-size: 14px; color: var(--muted); }
+.resource-list a { font-weight: 500; text-decoration: none; }
+.resource-list a:hover { text-decoration: underline; }
+.resource-note { font-size: 13px; color: var(--muted); margin: 10px 0 0; }
 
 /* Footer */
 footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 24px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }

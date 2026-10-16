@@ -80,7 +80,15 @@ small { font-size: 14px; }
 /* Schedule */
 .schedule-head, .week > summary, .week:not(details) { display: grid; grid-template-columns: 150px minmax(0, 1fr) 230px 20px; gap: 20px; align-items: start; padding: 14px 12px; }
 .schedule-head { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); padding-block: 8px; }
-.week { border-bottom: 1px solid var(--line); }
+.block-divider { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; padding: 22px 12px 8px; border-bottom: 1px solid var(--line); font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.block-divider small { font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--muted); }
+.block-divider.block-data { color: var(--green); }
+.block-divider.block-training { color: var(--blue); }
+.week { border-bottom: 1px solid var(--line); border-left: 3px solid transparent; }
+.week.block-data { border-left-color: var(--green); }
+.week.block-training { border-left-color: var(--blue); }
+.week.block-data > summary:hover, .week.block-data[open] > summary, .week.block-data .week-body { background: var(--green-soft); }
+.week.block-training > summary:hover, .week.block-training[open] > summary, .week.block-training .week-body { background: var(--blue-soft); }
 .week > summary { list-style: none; cursor: pointer; }
 .week > summary::-webkit-details-marker { display: none; }
 .week > summary:hover, .week[open] > summary { background: var(--surface-soft); }
@@ -155,14 +163,15 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
   .three-col { grid-template-columns: 1fr; gap: 28px; }
   .schedule-head { display: none; }
   .schedule { border-top: 1px solid var(--line); }
-  .week > summary, .week:not(details) { grid-template-columns: minmax(0, 1fr) 20px; gap: 8px 12px; padding-inline: 4px; }
+  .week > summary, .week:not(details) { grid-template-columns: minmax(0, 1fr) 20px; gap: 8px 12px; padding-inline: 10px 4px; }
+  .block-divider { padding-inline: 4px; }
   .week-col { display: flex; flex-wrap: wrap; gap: 0 10px; align-items: baseline; }
   .week-col strong { font-size: 15px; }
   .week-note { width: 100%; margin-top: 0; }
   .week .chevron, .week:not(details) > span:last-child { grid-column: 2; grid-row: 1; }
   .lectures, .events { grid-column: 1; }
   .events { flex-direction: row; flex-wrap: wrap; gap: 4px 14px; }
-  .week-body { grid-template-columns: 1fr; gap: 16px; padding: 8px 4px 18px; }
+  .week-body { grid-template-columns: 1fr; gap: 16px; padding: 8px 10px 18px; }
   .assignment > summary { grid-template-columns: 48px minmax(0, 1fr) 20px; gap: 6px 14px; padding-inline: 4px; }
   .assignment .code { grid-row: 1; align-self: start; margin-top: 2px; }
   .assignment-main { grid-column: 2; grid-row: 1; }

@@ -14,15 +14,22 @@ const eventLabel = event => {
   const due = /\bdue\b|checkpoint|^midterm(?! review)|^final exam/i.test(event) && !/^nothing/i.test(event);
   return `<span class="event${due ? ' due' : ''}">${escapeHTML(label)}</span>`;
 };
+const dividers = {
+  'Week 0': ['shared', 'Introduction', 'Weeks 0–1 · both instructors'],
+  'Week 2': ['data', 'Data systems', 'Weeks 2–7 · Christopher Jermaine'],
+  'Week 8': ['training', 'Training systems', 'Weeks 8–13 · Yuke Wang'],
+  'Week 14': ['shared', 'Wrap-up and finals', 'Both instructors']
+};
 $('#schedule-rows').innerHTML = course.schedule.map(week => {
+  const divider = dividers[week.week] ? `<div class="block-divider block-${dividers[week.week][0]}"><span>${dividers[week.week][1]}</span><small>${dividers[week.week][2]}</small></div>` : '';
   const [title1, ...notes1] = week.lecture1;
   const [title2, ...notes2] = week.lecture2;
   const summary = `<span class="week-col"><strong>${escapeHTML(week.week)}</strong><span class="week-dates">${escapeHTML(week.dates)}</span>${week.note.map(note => `<span class="week-note">${escapeHTML(note)}</span>`).join('')}</span>` +
     `<span class="lectures"><span>${escapeHTML(title1)}</span>${title2 ? `<span>${escapeHTML(title2)}</span>` : ''}</span>` +
     `<span class="events">${week.events.map(eventLabel).join('')}</span>`;
-  if (!notes1.length && !notes2.length) return `<div class="week block-${week.block}">${summary}<span></span></div>`;
+  if (!notes1.length && !notes2.length) return `${divider}<div class="week block-${week.block}">${summary}<span></span></div>`;
   const body = [[1, notes1], [2, notes2]].filter(([, notes]) => notes.length).map(([n, notes]) => `<div><h4>Lecture ${n}</h4>${bullets(notes)}</div>`).join('');
-  return `<details class="week block-${week.block}"><summary>${summary}<span class="chevron" aria-hidden="true"></span></summary><div class="week-body">${body}</div></details>`;
+  return `${divider}<details class="week block-${week.block}"><summary>${summary}<span class="chevron" aria-hidden="true"></span></summary><div class="week-body">${body}</div></details>`;
 }).join('');
 
 // Assignments: a one-line summary each; scope and handout expand in place.

@@ -38,7 +38,6 @@ $('#assignment-list').innerHTML = course.assignments.map(a => `<details class="a
   <summary><span class="code">${a.code}</span><span class="assignment-main"><strong>${escapeHTML(a.title)}</strong><span>${summaries[a.code]}</span></span><span class="due">Due <time datetime="${a.date}">${dateLabel(a.date)}</time></span><span class="chevron" aria-hidden="true"></span></summary>
   <div class="assignment-body"><p><b>What you build.</b> ${escapeHTML(a.build)}</p><p><b>Scaling study.</b> ${escapeHTML(a.study)}</p><p class="assignment-foot"><a href="${escapeHTML(course.handouts[a.code])}" target="_blank" rel="noopener noreferrer">Handout on GitHub <span aria-hidden="true">↗</span></a></p></div>
 </details>`).join('');
-$('#capstone-handout').href = course.handouts.Capstone;
 
 // Course map: hovering, focusing, or tapping a stage card reveals its explanation in the panel below the map.
 const stageNotes = {

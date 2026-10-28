@@ -1,5 +1,5 @@
 window.COURSE = {
-  "source_sha256": "6be0b699c2afec62b7ea717f171fc35858823ccf192c609f8aa7a62e2e210d25",
+  "source_sha256": "38b284421fe122558176ce0658d6e3c748a12a2bfca54bae747dadd33f42f6fa",
   "schedule": [
     {
       "week": "Week 0",
@@ -172,7 +172,7 @@ window.COURSE = {
       ],
       "events": [
         "Midterm (data systems), evening TBA",
-        "T1 and Lab 3 out after midterm and Lecture 2"
+        "T1 and Lab 3 out (after midterm and Lecture 2)"
       ],
       "block": "training"
     },
@@ -182,12 +182,12 @@ window.COURSE = {
       "note": [],
       "lecture1": [
         "Framework fundamentals",
-        "PyTorch tensors, storage/layout, autograd, and operator dispatch.  CONCEPT",
+        "PyTorch tensors, storage/layout, operator dispatch, and the forward pass; autograd as a provided tool.  CONCEPT",
         "Trace a supplied training step and its memory use.  BUILD"
       ],
       "lecture2": [
         "Graphs and transformations",
-        "PyTorch eager and compiled execution; JAX grad, vmap, and jit; tracing and graph breaks.  CONCEPT",
+        "PyTorch eager and compiled execution; JAX vmap and jit; tracing and graph breaks.  CONCEPT",
         "Compare execution modes; separate compile and runtime costs.  BUILD"
       ],
       "events": [
@@ -358,7 +358,7 @@ window.COURSE = {
       "title": "GPU and framework execution",
       "due": "Due Week 10",
       "date": "2027-03-26",
-      "build": "Implement one Triton reduction or fused elementwise kernel and validate it against PyTorch. Integrate it into a supplied workload using your D3 dataset; compare PyTorch eager and compiled execution and a guided JAX equivalent. Model, autograd, optimizer, and data loader are provided. Checkpoint: correct kernel and timing harness.",
+      "build": "Implement one Triton reduction or fused elementwise kernel and validate it against PyTorch. Integrate it into the forward pass of a supplied workload using your D3 dataset; compare PyTorch eager and compiled execution and a guided JAX equivalent. Model, autograd, optimizer, and data loader are provided. Checkpoint: correct kernel and timing harness.",
       "study": "Predict memory traffic and arithmetic intensity; vary input and batch size. Separate compile, launch, and steady-state costs; explain the observed bottleneck with a trace.",
       "thread": "training"
     },
@@ -485,7 +485,7 @@ window.COURSE = {
     },
     {
       "term": "Data parallelism",
-      "meaning": "Partition examples across workers and synchronize gradients; computation is replicated, while model state may also be sharded."
+      "meaning": "Partition examples across workers and synchronize gradients; the model is replicated, though its state may also be sharded."
     },
     {
       "term": "Tensor parallelism",
@@ -582,12 +582,13 @@ window.COURSE = {
     "Penedo et al., “The FineWeb Datasets: Decanting the Web for the Finest Text Data at Scale,” NeurIPS 2024 (Datasets and Benchmarks).",
     "Training systems block",
     "NVIDIA, CUDA Programming Guide: execution hierarchy, GPU memory, synchronization, and streams. CUDA guide",
-    "PyTorch documentation: tensors, autograd, operator dispatch, and torch.compile; JAX documentation: grad, vmap, jit, and asynchronous execution. PyTorch dispatch Compilation JAX transformations",
+    "PyTorch documentation: tensors, operator dispatch, and torch.compile; JAX documentation: vmap, jit, and asynchronous execution. PyTorch dispatch · Compilation · JAX transformations",
     "Williams, Waterman, and Patterson, “Roofline: An Insightful Visual Performance Model for Multicore Architectures,” CACM 2009.",
     "Tillet, Kung, and Cox, “Triton: An Intermediate Language and Compiler for Tiled Neural Network Computations,” MAPL 2019.",
-    "NVIDIA, NCCL User Guide: collectives, process and device mapping, ordering, and synchronization. PyTorch Distributed Overview: communication primitives and parallel execution. NCCL ordering Distributed overview",
+    "NVIDIA, NCCL User Guide: collectives, process and device mapping, ordering, and synchronization. PyTorch Distributed Overview: communication primitives and parallel execution. NCCL ordering · Distributed overview",
     "Narayanan et al., “Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM,” SC 2021: composing data, tensor, and pipeline parallelism. Paper",
     "Rajbhandari et al., “ZeRO: Memory Optimizations Toward Training Trillion Parameter Models,” SC 2020.",
-    "Bengio et al., “A Neural Probabilistic Language Model,” JMLR 2003, for the supplied workload. Thakur, Rabenseifner, and Gropp, “Optimization of Collective Communication Operations in MPICH,” IJHPCA 2005, for collective cost models."
+    "Bengio et al., “A Neural Probabilistic Language Model,” JMLR 2003, for the supplied workload.",
+    "Thakur, Rabenseifner, and Gropp, “Optimization of Collective Communication Operations in MPICH,” IJHPCA 2005, for collective cost models."
   ]
 };

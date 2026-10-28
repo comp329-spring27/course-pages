@@ -9,7 +9,7 @@ const bullets = items => `<ul>${items.map(item => `<li>${withTag(item)}</li>`).j
 // Schedule: one row per week; lecture details expand in place.
 const eventLabel = event => {
   let label = event.replace(/\s*\(.+\)/, '').replace(/T([12]) and Lab ([34]) out.*/, 'T$1 + Lab $2 out');
-  const day = event.match(/\((Mon|Tue|Wed|Thu|Fri)\b/);
+  const day = event.match(/\(((?:Mon|Tue|Wed|Thu|Fri)(?:, [A-Z][a-z]{2} \d+)?)/);
   if (day) label += ` (${day[1]})`;
   const due = /\bdue\b|checkpoint|^midterm(?! review)|^final exam/i.test(event) && !/^nothing/i.test(event);
   return `<span class="event${due ? ' due' : ''}">${escapeHTML(label)}</span>`;

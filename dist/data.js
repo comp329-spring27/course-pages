@@ -390,6 +390,32 @@ window.COURSE = {
     "T3": "https://github.com/comp329-spring27/student-assignments/blob/main/06_t3_scale_out/README.md",
     "Capstone": "https://github.com/comp329-spring27/student-assignments/blob/main/07_capstone/README.md"
   },
+  "slides": {
+    "Week 8": {
+      "1": "assets/slides/w08_l1_gpu_architecture.pdf",
+      "2": "assets/slides/w08_l2_gpu_programming.pdf"
+    },
+    "Week 9": {
+      "1": "assets/slides/w09_l1_framework_fundamentals.pdf",
+      "2": "assets/slides/w09_l2_graphs_transformations.pdf"
+    },
+    "Week 10": {
+      "1": "assets/slides/w10_l1_framework_gpu.pdf",
+      "2": "assets/slides/w10_l2_distributed_foundations.pdf"
+    },
+    "Week 11": {
+      "1": "assets/slides/w11_l1_nccl_communication.pdf",
+      "2": "assets/slides/w11_l2_multiserver.pdf"
+    },
+    "Week 12": {
+      "1": "assets/slides/w12_l1_data_parallelism.pdf",
+      "2": "assets/slides/w12_l2_tensor_parallelism.pdf"
+    },
+    "Week 13": {
+      "1": "assets/slides/w13_l1_pipeline_3d.pdf",
+      "2": "assets/slides/w13_l2_diagnosing.pdf"
+    }
+  },
   "glossary": [
     {
       "term": "Partition",

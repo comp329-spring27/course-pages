@@ -14,6 +14,11 @@ const eventLabel = event => {
   const due = /\bdue\b|checkpoint|^midterm(?! review)|^final exam/i.test(event) && !/^nothing/i.test(event);
   return `<span class="event${due ? ' due' : ''}">${escapeHTML(label)}</span>`;
 };
+// Training-block lectures (Weeks 8–13) link their slides; the PDFs are listed in data.js.
+const slidesLink = (week, lecture) => {
+  const path = (course.slides[week] || {})[lecture];
+  return path ? ` <a class="slides-link" href="${escapeHTML(path)}" target="_blank" rel="noopener" aria-label="Lecture ${lecture} slides (PDF)">[slides]</a>` : '';
+};
 const dividers = {
   'Week 0': ['shared', 'Introduction', 'Weeks 0–1 · both instructors'],
   'Week 2': ['data', 'Data systems', 'Weeks 2–7 · Christopher Jermaine'],
@@ -25,7 +30,7 @@ $('#schedule-rows').innerHTML = course.schedule.map(week => {
   const [title1, ...notes1] = week.lecture1;
   const [title2, ...notes2] = week.lecture2;
   const summary = `<span class="week-col"><strong>${escapeHTML(week.week)}</strong><span class="week-dates">${escapeHTML(week.dates)}</span>${week.note.map(note => `<span class="week-note">${escapeHTML(note)}</span>`).join('')}</span>` +
-    `<span class="lectures"><span>${escapeHTML(title1)}</span>${title2 ? `<span>${escapeHTML(title2)}</span>` : ''}</span>` +
+    `<span class="lectures"><span>${escapeHTML(title1)}${slidesLink(week.week, 1)}</span>${title2 ? `<span>${escapeHTML(title2)}${slidesLink(week.week, 2)}</span>` : ''}</span>` +
     `<span class="events">${week.events.map(eventLabel).join('')}</span>`;
   if (!notes1.length && !notes2.length) return `${divider}<div class="week block-${week.block}">${summary}<span></span></div>`;
   const body = [[1, notes1], [2, notes2]].filter(([, notes]) => notes.length).map(([n, notes]) => `<div><h4>Lecture ${n}</h4>${bullets(notes)}</div>`).join('');

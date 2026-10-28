@@ -48,11 +48,26 @@ handout_folders = {
     'Capstone': '07_capstone',
 }
 handouts = {code: f'{handout_root}/{folder}/README.md' for code, folder in handout_folders.items()}
+# Lecture slides (training block, Weeks 8-13): PDFs built in the course workspace
+# (assignments/lecturer/lectures/wWW_lN_*.pdf) are copied into dist/assets/slides/.
+# Without the workspace, the PDFs already in dist/ are used.
+slides_source = base.parents[1] / 'assignments/lecturer/lectures'
+slides_dir = base / 'dist/assets/slides'
+if slides_source.is_dir():
+    slides_dir.mkdir(exist_ok=True)
+    for old in slides_dir.glob('w*_l*_*.pdf'):
+        old.unlink()
+    for pdf in sorted(slides_source.glob('w[0-9][0-9]_l[12]_*.pdf')):
+        shutil.copyfile(pdf, slides_dir / pdf.name)
+slides = {}
+for pdf in sorted(slides_dir.glob('w[0-9][0-9]_l[12]_*.pdf')):
+    week, lecture = re.match(r'w(\d\d)_l(\d)_', pdf.name).groups()
+    slides.setdefault(f'Week {int(week)}', {})[lecture] = f'assets/slides/{pdf.name}'
 glossary = [{'term': c[0][0], 'meaning': c[1][0]} for c in (cells(r) for r in tables[6].findall('w:tr', ns)[1:])]
 labs = [{'name': c[0][0], 'description': c[1][0], 'weeks': c[2][0]} for c in (cells(r) for r in tables[3].findall('w:tr', ns)[1:])]
 paragraphs = [''.join(p.itertext()).strip() for p in root.findall('.//w:p', ns)]
 readings = paragraphs[paragraphs.index('Selected Readings') + 2:paragraphs.index('Glossary')]
-data = {'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(), 'schedule': schedule, 'assignments': assignments, 'handouts': handouts, 'glossary': glossary, 'labs': labs, 'readings': readings}
+data = {'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(), 'schedule': schedule, 'assignments': assignments, 'handouts': handouts, 'slides': slides, 'glossary': glossary, 'labs': labs, 'readings': readings}
 (base / 'dist/data.js').write_text('window.COURSE = ' + json.dumps(data, ensure_ascii=False, indent=2) + ';\n')
 target = base / 'dist/assets/syllabus-spring-2027.docx'
 if source != target:

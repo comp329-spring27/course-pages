@@ -416,6 +416,16 @@ window.COURSE = {
       "2": "assets/slides/w13_l2_diagnosing.pdf"
     }
   },
+  "assignment_slides": {
+    "D1": "assets/assignment-slides/01_d1_collect.pdf",
+    "D2": "assets/assignment-slides/02_d2_spark.pdf",
+    "D3": "assets/assignment-slides/03_d3_dataset.pdf",
+    "T1": "assets/assignment-slides/04_t1_numpy.pdf",
+    "T2": "assets/assignment-slides/05_t2_triton.pdf",
+    "T3": "assets/assignment-slides/06_t3_scale_out.pdf",
+    "Capstone": "assets/assignment-slides/07_capstone.pdf",
+    "UI": "assets/assignment-slides/08_ui_dashboard.pdf"
+  },
   "glossary": [
     {
       "term": "Partition",

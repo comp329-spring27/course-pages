@@ -12,7 +12,9 @@ const eventLabel = event => {
   const day = event.match(/\(((?:Mon|Tue|Wed|Thu|Fri)(?:, [A-Z][a-z]{2} \d+)?)/);
   if (day) label += ` (${day[1]})`;
   const due = /\bdue\b|checkpoint|^midterm(?! review)|^final exam/i.test(event) && !/^nothing/i.test(event);
-  return `<span class="event${due ? ' due' : ''}">${escapeHTML(label)}</span>`;
+  const slides = /^Capstone spec out/.test(event) && course.assignment_slides.Capstone
+    ? ` <a class="slides-link" href="${escapeHTML(course.assignment_slides.Capstone)}" target="_blank" rel="noopener" aria-label="Capstone slides (PDF)">[slides]</a>` : '';
+  return `<span class="event${due ? ' due' : ''}">${escapeHTML(label)}${slides}</span>`;
 };
 // Training-block lectures (Weeks 8–13) link their slides; the PDFs are listed in data.js.
 const slidesLink = (week, lecture) => {
@@ -46,9 +48,11 @@ const summaries = {
   T2: 'Build and benchmark CPU and GPU collectives.',
   T3: 'Train with synchronized gradients and analyze parallel layouts.'
 };
+const assignmentSlides = code => course.assignment_slides[code]
+  ? ` <a class="slides-link" href="${escapeHTML(course.assignment_slides[code])}" target="_blank" rel="noopener" aria-label="${escapeHTML(code)} slides (PDF)">[slides]</a>` : '';
 $('#assignment-list').innerHTML = course.assignments.map(a => `<details class="assignment ${a.thread}" id="assignment-${a.code}">
   <summary><span class="code">${a.code}</span><span class="assignment-main"><strong>${escapeHTML(a.title)}</strong><span>${summaries[a.code]}</span></span><span class="due">Due <time datetime="${a.date}">${dateLabel(a.date)}</time></span><span class="chevron" aria-hidden="true"></span></summary>
-  <div class="assignment-body"><p><b>What you build.</b> ${escapeHTML(a.build)}</p><p><b>Scaling study.</b> ${escapeHTML(a.study)}</p><p class="assignment-foot"><a href="${escapeHTML(course.handouts[a.code])}" target="_blank" rel="noopener noreferrer">Handout on GitHub <span aria-hidden="true">↗</span></a></p></div>
+  <div class="assignment-body"><p><b>What you build.</b> ${escapeHTML(a.build)}</p><p><b>Scaling study.</b> ${escapeHTML(a.study)}</p><p class="assignment-foot"><a href="${escapeHTML(course.handouts[a.code])}" target="_blank" rel="noopener noreferrer">Handout on GitHub <span aria-hidden="true">↗</span></a>${assignmentSlides(a.code)}</p></div>
 </details>`).join('');
 
 // Course map: hovering, focusing, or tapping a stage card reveals its explanation in the panel below the map.

@@ -63,11 +63,22 @@ slides = {}
 for pdf in sorted(slides_dir.glob('w[0-9][0-9]_l[12]_*.pdf')):
     week, lecture = re.match(r'w(\d\d)_l(\d)_', pdf.name).groups()
     slides.setdefault(f'Week {int(week)}', {})[lecture] = f'assets/slides/{pdf.name}'
+# Assignment slides (one deck per assignment, plus capstone and optional UI), built with
+# `make slides` in the course workspace (assignments/lecturer/slides/<folder>.pdf).
+assignment_slide_folders = {**handout_folders, 'UI': '08_ui_dashboard'}
+assignment_slides_source = base.parents[1] / 'assignments/lecturer/slides'
+assignment_slides_dir = base / 'dist/assets/assignment-slides'
+if assignment_slides_source.is_dir():
+    assignment_slides_dir.mkdir(exist_ok=True)
+    for folder in assignment_slide_folders.values():
+        shutil.copyfile(assignment_slides_source / f'{folder}.pdf', assignment_slides_dir / f'{folder}.pdf')
+assignment_slides = {code: f'assets/assignment-slides/{folder}.pdf' for code, folder in assignment_slide_folders.items()
+                     if (assignment_slides_dir / f'{folder}.pdf').is_file()}
 glossary = [{'term': c[0][0], 'meaning': c[1][0]} for c in (cells(r) for r in tables[6].findall('w:tr', ns)[1:])]
 labs = [{'name': c[0][0], 'description': c[1][0], 'weeks': c[2][0]} for c in (cells(r) for r in tables[3].findall('w:tr', ns)[1:])]
 paragraphs = [''.join(p.itertext()).strip() for p in root.findall('.//w:p', ns)]
 readings = paragraphs[paragraphs.index('Selected Readings') + 2:paragraphs.index('Glossary')]
-data = {'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(), 'schedule': schedule, 'assignments': assignments, 'handouts': handouts, 'slides': slides, 'glossary': glossary, 'labs': labs, 'readings': readings}
+data = {'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(), 'schedule': schedule, 'assignments': assignments, 'handouts': handouts, 'slides': slides, 'assignment_slides': assignment_slides, 'glossary': glossary, 'labs': labs, 'readings': readings}
 (base / 'dist/data.js').write_text('window.COURSE = ' + json.dumps(data, ensure_ascii=False, indent=2) + ';\n')
 target = base / 'dist/assets/syllabus-spring-2027.docx'
 if source != target:

@@ -40,6 +40,9 @@ for week, files in data['slides'].items():
     assert set(files) == {'1', '2'}, f'{week}: both lectures need slides.'
     for path in files.values():
         assert re.fullmatch(r'assets/slides/w\d\d_l[12]_[a-z0-9_]+\.pdf', path) and (dist / path).is_file(), f'Missing slides: {path}'
+assert set(data['assignment_slides']) == set(data['handouts']) | {'UI'}, 'Every assignment, the capstone, and the UI need slides.'
+for path in data['assignment_slides'].values():
+    assert re.fullmatch(r'assets/assignment-slides/\d{2}_[a-z0-9_]+\.pdf', path) and (dist / path).is_file(), f'Missing slides: {path}'
 for assignment in data['assignments']:
     due_week = 'Week ' + re.search(r'Week (\d+)', assignment['due']).group(1)
     week = next(w for w in data['schedule'] if w['week'] == due_week)
@@ -86,4 +89,4 @@ for anchor in ('glossary', 'selected-readings'):
     assert f'syllabus.html#{anchor}' in refs.urls, f'Homepage no longer links to syllabus.html#{anchor}.'
 for name in ('theme.css', 'theme.js'):
     assert f'{name}?v=' + hashlib.sha256((dist / name).read_bytes()).hexdigest()[:12] in syllabus_html, f'Readable syllabus links a stale {name}; regenerate it.'
-print('PASS: source freshness, schedule/deadline agreement, seven calendar events, seven student handouts, twelve lecture slide decks, readable syllabus, asset stamps, and local links.')
+print('PASS: source freshness, schedule/deadline agreement, seven calendar events, seven student handouts, twelve lecture slide decks, eight assignment slide decks, readable syllabus, asset stamps, and local links.')

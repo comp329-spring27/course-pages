@@ -101,6 +101,8 @@ small { font-size: 14px; }
 .lectures span + span { margin-top: 4px; }
 .slides-link { font-size: 13px; font-weight: 600; color: var(--blue); text-decoration: none; white-space: nowrap; }
 .slides-link:hover, .slides-link:focus-visible { text-decoration: underline; }
+.assignment.data .slides-link, .week.block-data .slides-link { color: var(--green); }
+.assignment-foot .slides-link { margin-left: 10px; font-size: 14px; }
 .events { display: flex; flex-direction: column; gap: 3px; font-size: 14px; line-height: 1.4; color: var(--muted); }
 .event.due { color: var(--ink); font-weight: 500; }
 .chevron { color: var(--muted); font-size: 22px; line-height: 1; justify-self: end; transition: transform .2s; }

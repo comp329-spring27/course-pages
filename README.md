@@ -24,7 +24,7 @@ The reading list and glossary live on the readable syllabus page (`syllabus.html
 
 `scripts/prepare-content.py` extracts the schedule, assignments, labs, readings, and glossary from the syllabus and writes `dist/data.js`. It also creates an assignment calendar with deadlines at 11:59 p.m. America/Chicago. Only assignment and capstone deadlines are included; exam dates and times remain TBA.
 
-Lecture slides for Weeks 8–13 are copied by `scripts/prepare-content.py` from `assignments/lecturer/lectures/` (built with `make lectures`) into `dist/assets/slides/` and listed in `dist/data.js`; `check-site.py` requires all twelve.
+Assignment slides (D1–T3 next to each handout link, the capstone on its Week 7 schedule event and under Resources, and the optional UI under Resources) are copied the same way from `assignments/lecturer/slides/` (built with `make slides`) into `dist/assets/assignment-slides/`. Lecture slides for Weeks 8–13 are copied by `scripts/prepare-content.py` from `assignments/lecturer/lectures/` (built with `make lectures`) into `dist/assets/slides/` and listed in `dist/data.js`; `check-site.py` requires all twelve.
 
 Assignment rows link to each handout in `comp329-spring27/student-assignments` on GitHub; the capstone handout is reachable from the handouts repository link under Resources. The folder mapping is maintained in `scripts/prepare-content.py` so regeneration preserves these links. Links are included even while that repository is private.
 

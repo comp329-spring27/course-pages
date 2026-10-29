@@ -31,7 +31,7 @@ small { font-size: 14px; }
 .icon { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
 
 /* Header */
-.site-header { position: sticky; top: 0; z-index: 20; background: var(--paper); border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 28px; max-width: 1184px; margin-inline: auto; padding: 12px 32px; min-height: 68px; }
+.site-header { position: sticky; top: 0; z-index: 20; background: var(--header); box-shadow: 0 0 0 100vmax var(--header); clip-path: inset(0 -100vmax); border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 28px; max-width: 1184px; margin-inline: auto; padding: 12px 32px; min-height: 68px; }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; margin-right: auto; }
 .brand-icon { width: 40px; height: 40px; display: block; }
 .brand strong { display: block; font-size: 19px; line-height: 1.2; letter-spacing: -.02em; }

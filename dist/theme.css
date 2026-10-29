@@ -2,6 +2,7 @@
 :root {
   color-scheme: light;
   --paper: #f7f7f1;
+  --header: #e8ece3;
   --surface: #ffffff;
   --surface-soft: #eef1ea;
   --ink: #173247;
@@ -20,6 +21,7 @@
   :root[data-theme="dark"] {
     color-scheme: dark;
     --paper: #14212c;
+    --header: #0f1a23;
     --surface: #1c2d39;
     --surface-soft: #243744;
     --ink: #e4edf3;

@@ -1,5 +1,5 @@
 window.COURSE = {
-  "source_sha256": "38b284421fe122558176ce0658d6e3c748a12a2bfca54bae747dadd33f42f6fa",
+  "source_sha256": "83bf36119586095f00ee6b50e5d5a1e2ba554a696570b53ec6bb971902773c92",
   "schedule": [
     {
       "week": "Week 0",
@@ -187,7 +187,7 @@ window.COURSE = {
       ],
       "lecture2": [
         "Graphs and transformations",
-        "PyTorch eager and compiled execution; JAX vmap and jit; tracing and graph breaks.  CONCEPT",
+        "PyTorch eager and compiled execution; torch.func vmap and compilation modes; tracing and graph breaks.  CONCEPT",
         "Compare execution modes; separate compile and runtime costs.  BUILD"
       ],
       "events": [
@@ -358,7 +358,7 @@ window.COURSE = {
       "title": "GPU and framework execution",
       "due": "Due Week 10",
       "date": "2027-03-26",
-      "build": "Implement one Triton reduction or fused elementwise kernel and validate it against PyTorch. Integrate it into the forward pass of a supplied workload using your D3 dataset; compare PyTorch eager and compiled execution and a guided JAX equivalent. Model, autograd, optimizer, and data loader are provided. Checkpoint: correct kernel and timing harness.",
+      "build": "Implement one Triton reduction or fused elementwise kernel and validate it against PyTorch. Integrate it into the forward pass of a supplied workload using your D3 dataset; compare PyTorch eager and compiled execution and a guided torch.func.vmap version. Model, autograd, optimizer, and data loader are provided. Checkpoint: correct kernel and timing harness.",
       "study": "Predict memory traffic and arithmetic intensity; vary input and batch size. Separate compile, launch, and steady-state costs; explain the observed bottleneck with a trace.",
       "thread": "training"
     },
@@ -593,7 +593,7 @@ window.COURSE = {
     },
     {
       "name": "Lab 3",
-      "description": "GPU and framework lab: inspect memory access, write a small Triton kernel, and trace PyTorch eager/compiled execution with a guided JAX comparison.",
+      "description": "GPU and framework lab: inspect memory access, write a small Triton kernel, and trace PyTorch eager/compiled execution with a guided torch.func.vmap comparison.",
       "weeks": "8–10"
     },
     {
@@ -618,7 +618,7 @@ window.COURSE = {
     "Penedo et al., “The FineWeb Datasets: Decanting the Web for the Finest Text Data at Scale,” NeurIPS 2024 (Datasets and Benchmarks).",
     "Training systems block",
     "NVIDIA, CUDA Programming Guide: execution hierarchy, GPU memory, synchronization, and streams. CUDA guide",
-    "PyTorch documentation: tensors, operator dispatch, and torch.compile; JAX documentation: vmap, jit, and asynchronous execution. PyTorch dispatch · Compilation · JAX transformations",
+    "PyTorch documentation: tensors, operator dispatch, torch.compile, torch.func (vmap), and asynchronous CUDA execution. PyTorch dispatch · Compilation · torch.func",
     "Williams, Waterman, and Patterson, “Roofline: An Insightful Visual Performance Model for Multicore Architectures,” CACM 2009.",
     "Tillet, Kung, and Cox, “Triton: An Intermediate Language and Compiler for Tiled Neural Network Computations,” MAPL 2019.",
     "NVIDIA, NCCL User Guide: collectives, process and device mapping, ordering, and synchronization. PyTorch Distributed Overview: communication primitives and parallel execution. NCCL ordering · Distributed overview",

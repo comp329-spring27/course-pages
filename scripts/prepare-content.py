@@ -8,7 +8,9 @@ import hashlib
 from datetime import datetime, timedelta, timezone
 
 base = Path(__file__).resolve().parents[1]
-source = base.parents[1] / 'COMP 329 Syllabus - Spring 2027.docx'
+# The course workspace: the folder that holds course-pages/ and assignments/ side by side.
+workspace = base.parent
+source = workspace / 'COMP 329 Syllabus - Spring 2027.docx'
 if not source.exists():
     source = base / 'dist/assets/syllabus-spring-2027.docx'
 ns = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
@@ -51,7 +53,7 @@ handouts = {code: f'{handout_root}/{folder}/README.md' for code, folder in hando
 # Lecture slides (training block, Weeks 8-13): PDFs built in the course workspace
 # (assignments/lecturer/lectures/wWW_lN_*.pdf) are copied into dist/assets/slides/.
 # Without the workspace, the PDFs already in dist/ are used.
-slides_source = base.parents[1] / 'assignments/lecturer/lectures'
+slides_source = workspace / 'assignments/lecturer/lectures'
 slides_dir = base / 'dist/assets/slides'
 if slides_source.is_dir():
     slides_dir.mkdir(exist_ok=True)
@@ -66,7 +68,7 @@ for pdf in sorted(slides_dir.glob('w[0-9][0-9]_l[12]_*.pdf')):
 # Assignment slides (one deck per assignment, plus capstone and optional UI), built with
 # `make slides` in the course workspace (assignments/lecturer/slides/<folder>.pdf).
 assignment_slide_folders = {**handout_folders, 'UI': '08_ui_dashboard'}
-assignment_slides_source = base.parents[1] / 'assignments/lecturer/slides'
+assignment_slides_source = workspace / 'assignments/lecturer/slides'
 assignment_slides_dir = base / 'dist/assets/assignment-slides'
 if assignment_slides_source.is_dir():
     assignment_slides_dir.mkdir(exist_ok=True)

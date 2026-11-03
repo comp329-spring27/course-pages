@@ -60,7 +60,7 @@ const stageNotes = {
   D1: 'Stream a raw Wikipedia dump into Parquet records, then measure how throughput changes with more workers and find the bottleneck.',
   D2: 'Normalize the corpus and compute statistics with Spark DataFrames and SQL, then study strong and weak scaling and the effect of partition count.',
   D3: 'Remove near-duplicates with MinHash and LSH, train a BPE tokenizer, and write sharded training data that passes the dataset contract.',
-  T1: 'Write a Triton kernel, validate it against PyTorch, and compare eager, compiled, and JAX execution on a supplied model trained on your D3 data.',
+  T1: 'Write a fused Triton kernel, validate it against PyTorch, and compare eager and compiled execution of a supplied model trained on your D3 data.',
   T2: 'Build an all-reduce from point-to-point messages, benchmark NCCL collectives across GPUs and servers, and fit a latency–bandwidth model.',
   T3: 'Implement data-parallel gradient averaging, work through tensor and pipeline layouts, and justify a 3D layout under a fixed GPU budget.'
 };

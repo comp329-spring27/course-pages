@@ -418,6 +418,9 @@ window.COURSE = {
     "Capstone": "https://github.com/comp329-spring27/student-assignments/blob/main/07_capstone/README.md"
   },
   "slides": {
+    "Week 1": {
+      "1": "assets/slides/w01_l1_pipeline_overview.pdf"
+    },
     "Week 8": {
       "1": "assets/slides/w08_l1_gpu_architecture.pdf",
       "2": "assets/slides/w08_l2_gpu_programming.pdf"

@@ -16,7 +16,7 @@ const eventLabel = event => {
     ? ` <a class="slides-link" href="${escapeHTML(course.assignment_slides.Capstone)}" target="_blank" rel="noopener" aria-label="Capstone slides (PDF)">[slides]</a>` : '';
   return `<span class="event${due ? ' due' : ''}">${escapeHTML(label)}${slides}</span>`;
 };
-// Training-block lectures (Weeks 8–13) link their slides; the PDFs are listed in data.js.
+// The Week 1 overview and the training-block lectures (Weeks 8–13) link their slides; the PDFs are listed in data.js.
 const slidesLink = (week, lecture) => {
   const path = (course.slides[week] || {})[lecture];
   return path ? ` <a class="slides-link" href="${escapeHTML(path)}" target="_blank" rel="noopener" aria-label="Lecture ${lecture} slides (PDF)">[slides]</a>` : '';

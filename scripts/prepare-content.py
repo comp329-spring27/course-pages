@@ -50,7 +50,7 @@ handout_folders = {
     'Capstone': '07_capstone',
 }
 handouts = {code: f'{handout_root}/{folder}/README.md' for code, folder in handout_folders.items()}
-# Lecture slides (training block, Weeks 8-13): PDFs built in the course workspace
+# Lecture slides (Week 1, Lecture 1 and the training block, Weeks 8-13): PDFs built in the course workspace
 # (assignments/lecturer/lectures/wWW_lN_*.pdf) are copied into dist/assets/slides/.
 # Without the workspace, the PDFs already in dist/ are used.
 slides_source = workspace / 'assignments/lecturer/lectures'

@@ -34,10 +34,11 @@ for code, url in data['handouts'].items():
     if student_manifest:
         folder = student_manifest['folders'][code.lower()]
         assert relative_path == f'{folder}/README.md' and (student_repo / relative_path).is_file(), f'Handout differs from student repository: {code}'
-training_weeks = {f'Week {n}' for n in range(8, 14)}
-assert set(data['slides']) == training_weeks, 'Every training-block week (8-13) needs lecture slides.'
+# Lecture slides: the joint pipeline overview (Week 1, Lecture 1) and both lectures of every training-block week (8-13).
+expected_slides = {'Week 1': {'1'}} | {f'Week {n}': {'1', '2'} for n in range(8, 14)}
+assert set(data['slides']) == set(expected_slides), 'Lecture slides are needed for Week 1 and Weeks 8-13.'
 for week, files in data['slides'].items():
-    assert set(files) == {'1', '2'}, f'{week}: both lectures need slides.'
+    assert set(files) == expected_slides[week], f'{week}: lecture slides should be {sorted(expected_slides[week])}.'
     for path in files.values():
         assert re.fullmatch(r'assets/slides/w\d\d_l[12]_[a-z0-9_]+\.pdf', path) and (dist / path).is_file(), f'Missing slides: {path}'
 assert set(data['assignment_slides']) == set(data['handouts']) | {'UI'}, 'Every assignment, the capstone, and the UI need slides.'
@@ -89,4 +90,4 @@ for anchor in ('glossary', 'selected-readings'):
     assert f'syllabus.html#{anchor}' in refs.urls, f'Homepage no longer links to syllabus.html#{anchor}.'
 for name in ('theme.css', 'theme.js'):
     assert f'{name}?v=' + hashlib.sha256((dist / name).read_bytes()).hexdigest()[:12] in syllabus_html, f'Readable syllabus links a stale {name}; regenerate it.'
-print('PASS: source freshness, schedule/deadline agreement, seven calendar events, seven student handouts, twelve lecture slide decks, eight assignment slide decks, readable syllabus, asset stamps, and local links.')
+print('PASS: source freshness, schedule/deadline agreement, seven calendar events, seven student handouts, thirteen lecture slide decks, eight assignment slide decks, readable syllabus, asset stamps, and local links.')

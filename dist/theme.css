@@ -15,6 +15,7 @@
   --accent: #102b40;
   --accent-ink: #ffffff;
   --focus: #bd7b28;
+  --amber: #8a5514;
   --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
 }
 @media screen {
@@ -33,6 +34,7 @@
     --blue-soft: #253a4f;
     --accent: #a9d5bc;
     --accent-ink: #142b20;
+    --amber: #e8b876;
   }
 }
 

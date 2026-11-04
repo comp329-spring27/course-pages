@@ -63,7 +63,7 @@ small { font-size: 14px; }
 .stages li { cursor: pointer; transition: background .2s, box-shadow .2s; }
 .stages li:hover, .stages li:focus-visible, .stages li.is-active { background: var(--surface-soft); box-shadow: inset 0 0 0 1.5px currentColor; }
 .stages li:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-.stage-detail { position: relative; min-height: 108px; margin-top: 16px; }
+.stage-detail { position: relative; min-height: 150px; margin-top: 16px; }
 .stage-detail-hint { position: absolute; top: 0; left: 0; right: 0; margin: 0; padding-top: 12px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); transition: opacity .15s; }
 .stage-detail-body { padding: 12px 14px; border-radius: 10px; background: var(--surface-soft); box-shadow: inset 0 0 0 1px var(--line); opacity: 0; transform: translateY(8px) scale(.96); transform-origin: top left; transition: opacity .18s ease, transform .25s cubic-bezier(.2, .8, .3, 1.1); }
 .stage-detail-body.detail-data { color: var(--green); }
@@ -72,6 +72,7 @@ small { font-size: 14px; }
 .overview.is-showing .stage-detail-body { opacity: 1; transform: none; }
 .stage-detail-body strong { display: block; font-size: 15px; font-weight: 600; margin-bottom: 4px; }
 .stage-detail-body p { font-size: 14px; line-height: 1.5; color: var(--ink); margin: 0 0 8px; }
+.stage-detail-body p.stage-why b { color: var(--amber); font-weight: 600; }
 .stage-detail-body small { display: block; font-size: 13px; color: var(--muted); }
 .stage-detail-body a { font-weight: 500; }
 .handoff { text-align: center; font-size: 13px; color: var(--muted); margin: 12px 0; }
@@ -113,6 +114,7 @@ details[open] > summary .chevron { transform: rotate(45deg); }
 .week-body li { margin-bottom: 6px; }
 .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .04em; line-height: 1.3; padding: 1px 5px; margin-left: 6px; border: 1px solid var(--line); border-radius: 3px; color: var(--muted); vertical-align: 1px; }
 .tag-build { color: var(--green); border-color: var(--green); }
+.tag-why { color: var(--amber); border-color: var(--amber); }
 .tag-stretch { color: var(--muted); border-style: dashed; }
 
 /* Assignments */

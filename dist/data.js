@@ -1,5 +1,5 @@
 window.COURSE = {
-  "source_sha256": "83bf36119586095f00ee6b50e5d5a1e2ba554a696570b53ec6bb971902773c92",
+  "source_sha256": "f9685f18eaa57d83de0374e7a0b8b31492412c675050799a1bfa84ccc5289cb1",
   "schedule": [
     {
       "week": "Week 0",
@@ -19,11 +19,13 @@ window.COURSE = {
       "dates": "Jan 11–15",
       "note": [],
       "lecture1": [
-        "Joint introduction to AI systems",
-        "Follow a workload through storage, frameworks, accelerators, and communication.  CONCEPT"
+        "Joint introduction: the AI pipeline end to end",
+        "Training a model touches data, frameworks, accelerators, and networks. See the whole pipeline, and what each part is for, before studying any one part.  WHY",
+        "Follow one workload from raw text to a trained model: collect, process, build the dataset, run on a GPU, communicate, and train in parallel; the problem each component solves.  CONCEPT"
       ],
       "lecture2": [
         "Joint foundations for measurement",
+        "You cannot fix what you have not measured. A quick estimate tells you which part of the pipeline to look at first.  WHY",
         "Estimate bytes, FLOPs, time, dollars, and joules; predict and measure a bottleneck.  BUILD"
       ],
       "events": [
@@ -41,11 +43,13 @@ window.COURSE = {
       ],
       "lecture1": [
         "Collecting and storing raw data",
+        "A model learns only from text you can legally use and read quickly. A Wikipedia dump arrives as one huge compressed XML file.  WHY",
         "Sources, licensing, provenance, privacy; XML, JSON Lines, compression, and Parquet.  CONCEPT",
         "Stream large files into records.  BUILD"
       ],
       "lecture2": [
         "From one machine to many",
+        "A full corpus takes one machine hours to days to process. Splitting the work across machines finishes sooner, but adds data movement and failures.  WHY",
         "Map, shuffle, reduce; failure recovery, strong and weak scaling.  CONCEPT",
         "Implement a small MapReduce computation.  BUILD"
       ],
@@ -62,11 +66,13 @@ window.COURSE = {
       "note": [],
       "lecture1": [
         "Spark and declarative execution",
+        "Hand-written distributed jobs are hard to get right. Spark lets you say what to compute and decides how to run it on many machines.  WHY",
         "RDDs, lazy execution, stages, tasks, and lineage; relational algebra.  CONCEPT",
         "Express jobs with DataFrames and SQL; inspect the Spark UI.  BUILD"
       ],
       "lecture2": [
         "Spark performance",
+        "The same Spark job can run many times faster or slower depending on how its data is partitioned and moved.  WHY",
         "Join strategies, partitions, data skew, Python UDFs, and shuffle costs.  CONCEPT",
         "Measure execution and justify a configuration change.  BUILD"
       ],
@@ -83,11 +89,13 @@ window.COURSE = {
       "note": [],
       "lecture1": [
         "Cleaning and quality filtering",
+        "Web text contains boilerplate, spam, private data, and copies of test sets. Training on it wastes compute and makes the model worse.  WHY",
         "Normalization, language ID, quality rules, PII, and contamination.  CONCEPT",
         "Apply provided rules and validate against a reference.  BUILD"
       ],
       "lecture2": [
         "Deduplication",
+        "Repeated documents push a model to memorize instead of generalize, and comparing every pair of n documents grows as n².  WHY",
         "Exact hashes, Jaccard similarity, MinHash, and LSH.  CONCEPT",
         "Implement near-duplicate detection in Spark.  BUILD"
       ],
@@ -105,6 +113,7 @@ window.COURSE = {
       ],
       "lecture1": [
         "Tokenization at scale",
+        "Models read integer tokens, not characters. The tokenizer sets sequence length, and with it the cost of every training step.  WHY",
         "BPE vocabulary construction and tokenizer trade-offs.  CONCEPT",
         "Train on a sample with the provided trainer; tokenize in parallel.  BUILD",
         "Implement BPE training yourself.  STRETCH"
@@ -124,11 +133,13 @@ window.COURSE = {
       "note": [],
       "lecture1": [
         "Building the dataset",
+        "Training must never wait for data or test on what it trained on. Shards give the GPU fixed-format tokens it can read quickly.  WHY",
         "Leak-free splits, binary shards, memory mapping, and global shuffling.  CONCEPT",
         "Write shards and pass the dataset contract checker.  BUILD"
       ],
       "lecture2": [
         "Streaming and loading data",
+        "With many workers, each must read different samples, and a crashed job must resume without repeating or skipping data.  WHY",
         "Partition shards among workers; disjoint samples and deterministic resume.  CONCEPT",
         "Measure a supplied data consumer; diagnose I/O limits.  BUILD"
       ],
@@ -143,10 +154,12 @@ window.COURSE = {
       "note": [],
       "lecture1": [
         "Data quality and documentation",
+        "You cannot tell whether a filtering choice helped without a controlled comparison, and nobody can reuse a dataset without documentation.  WHY",
         "Ablations, contamination checks, and dataset documentation; interpret staff-provided model evaluations.  CONCEPT"
       ],
       "lecture2": [
         "Data systems design review",
+        "Before training starts, find the data stage that would limit a larger run.  WHY",
         "Use traces and cost models to explain pipeline bottlenecks and scaling limits; midterm review.  CONCEPT"
       ],
       "events": [
@@ -162,11 +175,13 @@ window.COURSE = {
       "note": [],
       "lecture1": [
         "GPU architecture",
+        "Starts with a training-block overview: why we need GPUs, frameworks, and many GPUs. A training step is millions of multiply-adds that a CPU runs too slowly; a GPU runs them in parallel if data reaches it fast enough.  WHY",
         "SIMT, warps, compute units; registers, shared memory, caches, and HBM.  CONCEPT",
         "Predict a kernel bottleneck with the roofline model.  BUILD"
       ],
       "lecture2": [
         "GPU programming model",
+        "A GPU is fast only when thousands of threads share the work well. The programming model is how you describe that work.  WHY",
         "Threads, blocks, grids, coalescing, synchronization, and streams.  CONCEPT",
         "Triton blocks, masks, and reductions; correct timing and tests.  BUILD"
       ],
@@ -182,11 +197,13 @@ window.COURSE = {
       "note": [],
       "lecture1": [
         "Framework fundamentals",
+        "No one writes a GPU kernel for every operation. Frameworks such as PyTorch turn Python model code into GPU work, and their choices set memory use and speed.  WHY",
         "PyTorch tensors, storage/layout, operator dispatch, and the forward pass; autograd as a provided tool.  CONCEPT",
         "Trace a supplied training step and its memory use.  BUILD"
       ],
       "lecture2": [
         "Graphs and transformations",
+        "Running one Python operation at a time spends GPU time on overhead. Seeing the whole computation lets the framework combine and optimize work.  WHY",
         "PyTorch eager and compiled execution; torch.func vmap and compilation modes; tracing and graph breaks.  CONCEPT",
         "Compare execution modes; separate compile and runtime costs.  BUILD"
       ],
@@ -214,11 +231,13 @@ window.COURSE = {
       "note": [],
       "lecture1": [
         "Framework and GPU interaction",
+        "A fast kernel does not help if data arrives late, memory runs out, or the GPU waits for the CPU. This lecture joins the pieces.  WHY",
         "Fusion, allocation, framework data loaders, asynchronous transfers, and precision.  CONCEPT",
         "Integrate a kernel; profile and test a bottleneck hypothesis.  BUILD"
       ],
       "lecture2": [
         "Distributed programming foundations",
+        "One GPU is too slow for large training jobs and too small to hold large models, so many processes must coordinate.  WHY",
         "Processes, ranks, device mapping, synchronization, and collective semantics.  CONCEPT",
         "mpi4py messages; model latency and bandwidth.  BUILD"
       ],
@@ -235,11 +254,13 @@ window.COURSE = {
       "note": [],
       "lecture1": [
         "NCCL and GPU communication",
+        "GPUs that train together exchange gradients at every step. NCCL moves that data between GPUs quickly, so communication does not erase the speedup.  WHY",
         "Communicators, all-reduce, reduce-scatter, all-gather, ring/tree ideas, and ordering.  CONCEPT",
         "Test torch.distributed/NCCL results and completion.  BUILD"
       ],
       "lecture2": [
         "Multi-server communication",
+        "Large jobs span many servers. The network between servers is slower than links inside one, and one mismatched call can hang the whole job.  WHY",
         "Topology, launch, timeouts, hangs, and matching operations.  CONCEPT",
         "Guided two-server benchmarks; fit an α–β model.  BUILD"
       ],
@@ -255,11 +276,13 @@ window.COURSE = {
       "note": [],
       "lecture1": [
         "Data parallelism and sharding",
+        "The simplest way to use N GPUs is to give each one part of the batch. That works until the model’s state no longer fits on one GPU.  WHY",
         "Replicated models, gradient averaging, batch conventions, DDP, ZeRO, and FSDP.  CONCEPT",
         "Check a distributed update; account for memory.  BUILD"
       ],
       "lecture2": [
         "Tensor and model parallelism",
+        "When one layer is too large or too slow for one GPU, split its matrices across GPUs.  WHY",
         "Partition linear operators; row/column layouts and activation/gradient communication.  CONCEPT",
         "Guided tensor-parallel exercise and per-rank memory estimates.  BUILD"
       ],
@@ -276,11 +299,13 @@ window.COURSE = {
       "note": [],
       "lecture1": [
         "Pipeline and 3D parallelism",
+        "The largest models combine data, tensor, and pipeline splits because each one alone runs out of memory or bandwidth.  WHY",
         "Layer stages, microbatches, pipeline bubbles; data × tensor × pipeline layouts.  CONCEPT",
         "Guided pipeline exercise and simulated 3D cost analysis.  BUILD"
       ],
       "lecture2": [
         "Diagnosing distributed systems",
+        "At scale, one slow GPU, hang, or crash stalls every other GPU. You need tools to find the cause and recover.  WHY",
         "Profile overlap, stragglers, utilization, and GPU energy.  BUILD",
         "Checkpoint/restart consistency, recovery, and reproducible scaling.  CONCEPT"
       ],
@@ -299,10 +324,12 @@ window.COURSE = {
       ],
       "lecture1": [
         "Joint end-to-end integration",
+        "Data and training choices affect each other, so a design is justified only by end-to-end evidence.  WHY",
         "Connect data execution to training performance; use traces and cost models to justify a design.  CONCEPT"
       ],
       "lecture2": [
         "Joint systems design review",
+        "Every design trades off compute, memory, communication, and failure risk. Bring both blocks together.  WHY",
         "Compare layouts, resource limits, and failure modes; synthesize both blocks and review for the final.  CONCEPT"
       ],
       "events": [

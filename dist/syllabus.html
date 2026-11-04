@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="syllabus.css?v=c3c97919f332">
 <link rel="stylesheet" href="theme.css?v=19049eec3839">
 <script src="theme.js?v=db279466140b"></script>
-<meta name="source-sha256" content="f9685f18eaa57d83de0374e7a0b8b31492412c675050799a1bfa84ccc5289cb1">
+<meta name="source-sha256" content="6b757c8eb7cf3f524f3d97b41992efc232948a3dcfcb0969fb9fae364ab23fd4">
 </head><body class="syllabus-page"><header><a href="./"><img src="assets/course-mark.svg" alt="" width="40" height="40">COMP 329 · Course home</a><span>Spring 2027 syllabus</span><button type="button" class="theme-toggle" data-theme-toggle role="switch" aria-checked="false" aria-label="Dark mode"><span class="theme-toggle-track" aria-hidden="true"><span class="theme-toggle-knob"></span></span><span class="theme-toggle-label">Dark mode</span></button></header>
 <main><h1><strong>COMP 329: Systems for Artificial Intelligence</strong></h1>
 <p><em>Understand and build the systems behind scalable AI</em></p>
@@ -106,106 +106,131 @@
 <p>Before Jan 11</p></td><td colspan="2"><p><strong>Getting ready: self-paced primer and self-check; activate your cluster account.</strong></p></td><td><p>Primer (ungraded)</p></td></tr><tr><td><p><strong>Week 1</strong></p>
 <p>Jan 11–15</p></td><td><p><strong>Joint introduction: the AI pipeline end to end</strong></p>
 <p>Training a model touches data, frameworks, accelerators, and networks. See the whole pipeline, and what each part is for, before studying any one part.<strong>  WHY</strong></p>
+<p>Follow one training job from raw text to a trained model, and name the problem each stage solves.<strong>  WE WILL</strong></p>
 <p>Follow one workload from raw text to a trained model: collect, process, build the dataset, run on a GPU, communicate, and train in parallel; the problem each component solves.<strong>  CONCEPT</strong></p></td><td><p><strong>Joint foundations for measurement</strong></p>
 <p>You cannot fix what you have not measured. A quick estimate tells you which part of the pipeline to look at first.<strong>  WHY</strong></p>
+<p>Estimate a job’s bytes, FLOPs, time, and cost on paper, then measure it to find the bottleneck.<strong>  WE WILL</strong></p>
 <p>Estimate bytes, FLOPs, time, dollars, and joules; predict and measure a bottleneck.<strong>  BUILD</strong></p></td><td><p>Lab 1 out</p>
 <p>D1 out (Fri)</p>
 <p>Dataset contract published</p></td></tr><tr><td><p><strong>Week 2</strong></p>
 <p>Jan 18–22</p>
 <p><em>No class Mon, Jan 18 (MLK Day)</em></p></td><td><p><strong>Collecting and storing raw data</strong></p>
 <p>A model learns only from text you can legally use and read quickly. A Wikipedia dump arrives as one huge compressed XML file.<strong>  WHY</strong></p>
+<p>Stream a compressed Wikipedia dump into Parquet records, and check its license and provenance.<strong>  WE WILL</strong></p>
 <p>Sources, licensing, provenance, privacy; XML, JSON Lines, compression, and Parquet.<strong>  CONCEPT</strong></p>
 <p>Stream large files into records.<strong>  BUILD</strong></p></td><td><p><strong>From one machine to many</strong></p>
 <p>A full corpus takes one machine hours to days to process. Splitting the work across machines finishes sooner, but adds data movement and failures.<strong>  WHY</strong></p>
+<p>Split a job into map, shuffle, and reduce steps, and see what more machines gain and cost.<strong>  WE WILL</strong></p>
 <p>Map, shuffle, reduce; failure recovery, strong and weak scaling.<strong>  CONCEPT</strong></p>
 <p>Implement a small MapReduce computation.<strong>  BUILD</strong></p></td><td><p>Lab 1 due</p>
 <p>D1 checkpoint</p>
 <p>Lab 2 out (after Lecture 2)</p></td></tr><tr><td><p><strong>Week 3</strong></p>
 <p>Jan 25–29</p></td><td><p><strong>Spark and declarative execution</strong></p>
 <p>Hand-written distributed jobs are hard to get right. Spark lets you say what to compute and decides how to run it on many machines.<strong>  WHY</strong></p>
+<p>Write the same job with Spark DataFrames and SQL, and watch Spark plan it in the Spark UI.<strong>  WE WILL</strong></p>
 <p>RDDs, lazy execution, stages, tasks, and lineage; relational algebra.<strong>  CONCEPT</strong></p>
 <p>Express jobs with DataFrames and SQL; inspect the Spark UI.<strong>  BUILD</strong></p></td><td><p><strong>Spark performance</strong></p>
 <p>The same Spark job can run many times faster or slower depending on how its data is partitioned and moved.<strong>  WHY</strong></p>
+<p>Measure a slow Spark job, find where it shuffles or skews, and fix it with one justified change.<strong>  WE WILL</strong></p>
 <p>Join strategies, partitions, data skew, Python UDFs, and shuffle costs.<strong>  CONCEPT</strong></p>
 <p>Measure execution and justify a configuration change.<strong>  BUILD</strong></p></td><td><p>D1 due</p>
 <p>D2 out (after Lecture 2)</p>
 <p>Lab 2 due (after Spark lecture)</p></td></tr><tr><td><p><strong>Week 4</strong></p>
 <p>Feb 1–5</p></td><td><p><strong>Cleaning and quality filtering</strong></p>
 <p>Web text contains boilerplate, spam, private data, and copies of test sets. Training on it wastes compute and makes the model worse.<strong>  WHY</strong></p>
+<p>Apply cleaning and quality rules to raw text, and check the result against a reference.<strong>  WE WILL</strong></p>
 <p>Normalization, language ID, quality rules, PII, and contamination.<strong>  CONCEPT</strong></p>
 <p>Apply provided rules and validate against a reference.<strong>  BUILD</strong></p></td><td><p><strong>Deduplication</strong></p>
 <p>Repeated documents push a model to memorize instead of generalize, and comparing every pair of n documents grows as n².<strong>  WHY</strong></p>
+<p>Find near-duplicate documents with MinHash and LSH instead of comparing every pair.<strong>  WE WILL</strong></p>
 <p>Exact hashes, Jaccard similarity, MinHash, and LSH.<strong>  CONCEPT</strong></p>
 <p>Implement near-duplicate detection in Spark.<strong>  BUILD</strong></p></td><td><p>D2 checkpoint</p>
 <p>D3 out (after Lecture 2)</p></td></tr><tr><td><p><strong>Week 5</strong></p>
 <p>Feb 8–12</p>
 <p><em>No class Thu–Fri, Feb 11–12 (recess)</em></p></td><td><p><strong>Tokenization at scale</strong></p>
 <p>Models read integer tokens, not characters. The tokenizer sets sequence length, and with it the cost of every training step.<strong>  WHY</strong></p>
+<p>Train a BPE tokenizer on a sample, and tokenize the corpus in parallel.<strong>  WE WILL</strong></p>
 <p>BPE vocabulary construction and tokenizer trade-offs.<strong>  CONCEPT</strong></p>
 <p>Train on a sample with the provided trainer; tokenize in parallel.<strong>  BUILD</strong></p>
 <p>Implement BPE training yourself.<strong>  STRETCH</strong></p></td><td><p><strong>University recess</strong></p>
 <p>No second lecture this week.</p></td><td><p>D2 due (Wed, before recess)</p></td></tr><tr><td><p><strong>Week 6</strong></p>
 <p>Feb 15–19</p></td><td><p><strong>Building the dataset</strong></p>
 <p>Training must never wait for data or test on what it trained on. Shards give the GPU fixed-format tokens it can read quickly.<strong>  WHY</strong></p>
+<p>Split the data without leaks, and write binary shards that pass the dataset contract.<strong>  WE WILL</strong></p>
 <p>Leak-free splits, binary shards, memory mapping, and global shuffling.<strong>  CONCEPT</strong></p>
 <p>Write shards and pass the dataset contract checker.<strong>  BUILD</strong></p></td><td><p><strong>Streaming and loading data</strong></p>
 <p>With many workers, each must read different samples, and a crashed job must resume without repeating or skipping data.<strong>  WHY</strong></p>
+<p>Give each worker its own shards, resume after a crash, and find where loading becomes I/O-bound.<strong>  WE WILL</strong></p>
 <p>Partition shards among workers; disjoint samples and deterministic resume.<strong>  CONCEPT</strong></p>
 <p>Measure a supplied data consumer; diagnose I/O limits.<strong>  BUILD</strong></p></td><td><p>D3 checkpoint (dedup)</p></td></tr><tr><td><p><strong>Week 7</strong></p>
 <p>Feb 22–26</p></td><td><p><strong>Data quality and documentation</strong></p>
 <p>You cannot tell whether a filtering choice helped without a controlled comparison, and nobody can reuse a dataset without documentation.<strong>  WHY</strong></p>
+<p>Run controlled comparisons, check for test-set contamination, and document a dataset so others can reuse it.<strong>  WE WILL</strong></p>
 <p>Ablations, contamination checks, and dataset documentation; interpret staff-provided model evaluations.<strong>  CONCEPT</strong></p></td><td><p><strong>Data systems design review</strong></p>
 <p>Before training starts, find the data stage that would limit a larger run.<strong>  WHY</strong></p>
+<p>Use traces and cost models to find the stage that limits a larger run, and review for the midterm.<strong>  WE WILL</strong></p>
 <p>Use traces and cost models to explain pipeline bottlenecks and scaling limits; midterm review.<strong>  CONCEPT</strong></p></td><td><p>D3 due</p>
 <p>Capstone spec out</p>
 <p>Midterm review</p></td></tr><tr><td><p><strong>Week 8</strong></p>
 <p>Mar 1–5</p></td><td><p><strong>GPU architecture</strong></p>
 <p>Starts with a training-block overview: why we need GPUs, frameworks, and many GPUs. A training step is millions of multiply-adds that a CPU runs too slowly; a GPU runs them in parallel if data reaches it fast enough.<strong>  WHY</strong></p>
+<p>Look inside a GPU, and use the roofline model to predict whether a kernel is limited by arithmetic or memory.<strong>  WE WILL</strong></p>
 <p>SIMT, warps, compute units; registers, shared memory, caches, and HBM.<strong>  CONCEPT</strong></p>
 <p>Predict a kernel bottleneck with the roofline model.<strong>  BUILD</strong></p></td><td><p><strong>GPU programming model</strong></p>
 <p>A GPU is fast only when thousands of threads share the work well. The programming model is how you describe that work.<strong>  WHY</strong></p>
+<p>Write and time small Triton kernels with blocks and masks, and test them against PyTorch.<strong>  WE WILL</strong></p>
 <p>Threads, blocks, grids, coalescing, synchronization, and streams.<strong>  CONCEPT</strong></p>
 <p>Triton blocks, masks, and reductions; correct timing and tests.<strong>  BUILD</strong></p></td><td><p>Midterm (data systems), evening TBA</p>
 <p>T1 and Lab 3 out (after midterm and Lecture 2)</p></td></tr><tr><td><p><strong>Week 9</strong></p>
 <p>Mar 8–12</p></td><td><p><strong>Framework fundamentals</strong></p>
 <p>No one writes a GPU kernel for every operation. Frameworks such as PyTorch turn Python model code into GPU work, and their choices set memory use and speed.<strong>  WHY</strong></p>
-<p>PyTorch tensors, storage/layout, operator dispatch, and the forward pass; autograd as a provided tool.<strong>  CONCEPT</strong></p>
+<p>Follow one training step from PyTorch code to GPU kernels, measure its memory, and see how autograd works at a high level.<strong>  WE WILL</strong></p>
+<p>PyTorch tensors, storage/layout, operator dispatch, and the forward pass; how autograd works, at a high level.<strong>  CONCEPT</strong></p>
 <p>Trace a supplied training step and its memory use.<strong>  BUILD</strong></p></td><td><p><strong>Graphs and transformations</strong></p>
 <p>Running one Python operation at a time spends GPU time on overhead. Seeing the whole computation lets the framework combine and optimize work.<strong>  WHY</strong></p>
+<p>Run the same model eagerly, with torch.compile, and with vmap, and separate compile time from run time.<strong>  WE WILL</strong></p>
 <p>PyTorch eager and compiled execution; torch.func vmap and compilation modes; tracing and graph breaks.<strong>  CONCEPT</strong></p>
 <p>Compare execution modes; separate compile and runtime costs.<strong>  BUILD</strong></p></td><td><p>T1 checkpoint (before break)</p></td></tr><tr><td><p><strong>Break</strong></p>
 <p>Mar 13–21</p></td><td colspan="2"><p><strong>Spring break</strong></p></td><td><p>Nothing due</p></td></tr><tr><td><p><strong>Week 10</strong></p>
 <p>Mar 22–26</p></td><td><p><strong>Framework and GPU interaction</strong></p>
 <p>A fast kernel does not help if data arrives late, memory runs out, or the GPU waits for the CPU. This lecture joins the pieces.<strong>  WHY</strong></p>
+<p>Plug a kernel into the training step, profile it, and test one idea about its bottleneck.<strong>  WE WILL</strong></p>
 <p>Fusion, allocation, framework data loaders, asynchronous transfers, and precision.<strong>  CONCEPT</strong></p>
 <p>Integrate a kernel; profile and test a bottleneck hypothesis.<strong>  BUILD</strong></p></td><td><p><strong>Distributed programming foundations</strong></p>
 <p>One GPU is too slow for large training jobs and too small to hold large models, so many processes must coordinate.<strong>  WHY</strong></p>
+<p>Start many processes, send messages between them with mpi4py, and model the cost as latency plus bandwidth.<strong>  WE WILL</strong></p>
 <p>Processes, ranks, device mapping, synchronization, and collective semantics.<strong>  CONCEPT</strong></p>
 <p>mpi4py messages; model latency and bandwidth.<strong>  BUILD</strong></p></td><td><p>T1 due</p>
 <p>Lab 3 due (after Lecture 1)</p>
 <p>T2 and Lab 4 out (after Lecture 2)</p></td></tr><tr><td><p><strong>Week 11</strong></p>
 <p>Mar 29–Apr 2</p></td><td><p><strong>NCCL and GPU communication</strong></p>
 <p>GPUs that train together exchange gradients at every step. NCCL moves that data between GPUs quickly, so communication does not erase the speedup.<strong>  WHY</strong></p>
+<p>Call NCCL collectives such as all-reduce from PyTorch, and check that the results are correct and complete.<strong>  WE WILL</strong></p>
 <p>Communicators, all-reduce, reduce-scatter, all-gather, ring/tree ideas, and ordering.<strong>  CONCEPT</strong></p>
 <p>Test torch.distributed/NCCL results and completion.<strong>  BUILD</strong></p></td><td><p><strong>Multi-server communication</strong></p>
 <p>Large jobs span many servers. The network between servers is slower than links inside one, and one mismatched call can hang the whole job.<strong>  WHY</strong></p>
+<p>Benchmark communication across two servers, fit an α–β model, and learn how to spot and avoid hangs.<strong>  WE WILL</strong></p>
 <p>Topology, launch, timeouts, hangs, and matching operations.<strong>  CONCEPT</strong></p>
 <p>Guided two-server benchmarks; fit an α–β model.<strong>  BUILD</strong></p></td><td><p>T2 checkpoint</p>
 <p>Lab 4 due (after Lecture 2)</p></td></tr><tr><td><p><strong>Week 12</strong></p>
 <p>Apr 5–9</p></td><td><p><strong>Data parallelism and sharding</strong></p>
 <p>The simplest way to use N GPUs is to give each one part of the batch. That works until the model’s state no longer fits on one GPU.<strong>  WHY</strong></p>
+<p>Train one model on several GPUs by averaging gradients, and count the memory each GPU needs.<strong>  WE WILL</strong></p>
 <p>Replicated models, gradient averaging, batch conventions, DDP, ZeRO, and FSDP.<strong>  CONCEPT</strong></p>
 <p>Check a distributed update; account for memory.<strong>  BUILD</strong></p></td><td><p><strong>Tensor and model parallelism</strong></p>
 <p>When one layer is too large or too slow for one GPU, split its matrices across GPUs.<strong>  WHY</strong></p>
+<p>Split a layer’s matrices across GPUs, and work out what each GPU stores and sends.<strong>  WE WILL</strong></p>
 <p>Partition linear operators; row/column layouts and activation/gradient communication.<strong>  CONCEPT</strong></p>
 <p>Guided tensor-parallel exercise and per-rank memory estimates.<strong>  BUILD</strong></p></td><td><p>T2 due</p>
 <p>T3 out (after Lecture 1)</p>
 <p>Lab 5 out (after Lecture 2)</p></td></tr><tr><td><p><strong>Week 13</strong></p>
 <p>Apr 12–16</p></td><td><p><strong>Pipeline and 3D parallelism</strong></p>
 <p>The largest models combine data, tensor, and pipeline splits because each one alone runs out of memory or bandwidth.<strong>  WHY</strong></p>
+<p>Cut a model into pipeline stages, measure the idle time, and choose a 3D layout for a fixed GPU budget.<strong>  WE WILL</strong></p>
 <p>Layer stages, microbatches, pipeline bubbles; data × tensor × pipeline layouts.<strong>  CONCEPT</strong></p>
 <p>Guided pipeline exercise and simulated 3D cost analysis.<strong>  BUILD</strong></p></td><td><p><strong>Diagnosing distributed systems</strong></p>
 <p>At scale, one slow GPU, hang, or crash stalls every other GPU. You need tools to find the cause and recover.<strong>  WHY</strong></p>
+<p>Profile a multi-GPU job, find slow GPUs and hangs, and restart from a checkpoint without losing work.<strong>  WE WILL</strong></p>
 <p>Profile overlap, stragglers, utilization, and GPU energy.<strong>  BUILD</strong></p>
 <p>Checkpoint/restart consistency, recovery, and reproducible scaling.<strong>  CONCEPT</strong></p></td><td><p>T3 checkpoint (after Lecture 1)</p>
 <p>Lab 5 due (after Lecture 1)</p>
@@ -213,8 +238,10 @@
 <p>Apr 19–23</p>
 <p><em>Last class: Fri, Apr 23</em></p></td><td><p><strong>Joint end-to-end integration</strong></p>
 <p>Data and training choices affect each other, so a design is justified only by end-to-end evidence.<strong>  WHY</strong></p>
+<p>Connect data choices to training speed with end-to-end measurements, and justify one design.<strong>  WE WILL</strong></p>
 <p>Connect data execution to training performance; use traces and cost models to justify a design.<strong>  CONCEPT</strong></p></td><td><p><strong>Joint systems design review</strong></p>
 <p>Every design trades off compute, memory, communication, and failure risk. Bring both blocks together.<strong>  WHY</strong></p>
+<p>Compare designs by compute, memory, communication, and failure risk, and review for the final.<strong>  WE WILL</strong></p>
 <p>Compare layouts, resource limits, and failure modes; synthesize both blocks and review for the final.<strong>  CONCEPT</strong></p></td><td><p>T3 due</p></td></tr><tr><td><p><strong>Finals</strong></p>
 <p>Apr 28–May 4</p></td><td colspan="2"><p><strong>Final examination period</strong></p></td><td><p>Final exam</p>
 <p>Capstone due (Tue, May 4)</p></td></tr></table></div>

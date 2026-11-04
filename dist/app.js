@@ -3,7 +3,7 @@ const $ = (selector, context = document) => context.querySelector(selector);
 const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const course = window.COURSE;
 const dateLabel = date => new Date(`${date}T12:00:00`).toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
-const withTag = text => escapeHTML(text).replace(/\s+(WHY|CONCEPT|BUILD|STRETCH)$/, (_, tag) => ` <span class="tag tag-${tag.toLowerCase()}">${tag}</span>`);
+const withTag = text => escapeHTML(text).replace(/\s+(WHY|WE WILL|CONCEPT|BUILD|STRETCH)$/, (_, tag) => ` <span class="tag tag-${tag.toLowerCase().replace(' ', '-')}">${tag}</span>`);
 const bullets = items => `<ul>${items.map(item => `<li>${withTag(item)}</li>`).join('')}</ul>`;
 
 // Schedule: one row per week; lecture details expand in place.
@@ -55,7 +55,7 @@ $('#assignment-list').innerHTML = course.assignments.map(a => `<details class="a
   <div class="assignment-body"><p><b>What you build.</b> ${escapeHTML(a.build)}</p><p><b>Scaling study.</b> ${escapeHTML(a.study)}</p><p class="assignment-foot"><a href="${escapeHTML(course.handouts[a.code])}" target="_blank" rel="noopener noreferrer">Handout on GitHub <span aria-hidden="true">↗</span></a>${assignmentSlides(a.code)}</p></div>
 </details>`).join('');
 
-// Course map: hovering, focusing, or tapping a stage card reveals why the stage exists and what you build, in the panel below the map.
+// Course map: hovering, focusing, or tapping a stage card reveals why the stage exists (Why:) and what we will do in it (We will:), in the panel below the map.
 const stageWhy = {
   D1: 'A model learns only from text you can legally use and read quickly, and a raw dump is one huge compressed file.',
   D2: 'A raw corpus is too large and messy to clean on one machine, so the work is split across many.',
@@ -80,7 +80,7 @@ const showDetail = stage => {
   const code = stage.dataset.code;
   const assignment = course.assignments.find(a => a.code === code);
   detailBody.className = `stage-detail-body detail-${assignment.thread}`;
-  detailBody.innerHTML = `<strong>${code} · ${escapeHTML(stage.querySelector('span').textContent)}</strong><p class="stage-why"><b>Why:</b> ${escapeHTML(stageWhy[code])}</p><p>${escapeHTML(stageNotes[code])}</p><small>Due ${dateLabel(assignment.date)} · <a href="#assignment-${code}">Assignment details ↓</a></small>`;
+  detailBody.innerHTML = `<strong>${code} · ${escapeHTML(stage.querySelector('span').textContent)}</strong><p class="stage-why"><b>Why:</b> ${escapeHTML(stageWhy[code])}</p><p class="stage-will"><b>We will:</b> ${escapeHTML(stageNotes[code])}</p><small>Due ${dateLabel(assignment.date)} · <a href="#assignment-${code}">Assignment details ↓</a></small>`;
   stages.forEach(item => item.classList.toggle('is-active', item === stage));
   overview.classList.add('is-showing');
 };

@@ -73,6 +73,7 @@ small { font-size: 14px; }
 .stage-detail-body strong { display: block; font-size: 15px; font-weight: 600; margin-bottom: 4px; }
 .stage-detail-body p { font-size: 14px; line-height: 1.5; color: var(--ink); margin: 0 0 8px; }
 .stage-detail-body p.stage-why b { color: var(--amber); font-weight: 600; }
+.stage-detail-body p.stage-will b { color: var(--blue); font-weight: 600; }
 .stage-detail-body small { display: block; font-size: 13px; color: var(--muted); }
 .stage-detail-body a { font-weight: 500; }
 .handoff { text-align: center; font-size: 13px; color: var(--muted); margin: 12px 0; }
@@ -115,6 +116,7 @@ details[open] > summary .chevron { transform: rotate(45deg); }
 .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .04em; line-height: 1.3; padding: 1px 5px; margin-left: 6px; border: 1px solid var(--line); border-radius: 3px; color: var(--muted); vertical-align: 1px; }
 .tag-build { color: var(--green); border-color: var(--green); }
 .tag-why { color: var(--amber); border-color: var(--amber); }
+.tag-we-will { color: var(--blue); border-color: var(--blue); }
 .tag-stretch { color: var(--muted); border-style: dashed; }
 
 /* Assignments */

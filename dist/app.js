@@ -8,7 +8,7 @@ const bullets = items => `<ul>${items.map(item => `<li>${withTag(item)}</li>`).j
 
 // Schedule: one row per week; lecture details expand in place.
 const eventLabel = event => {
-  let label = event.replace(/\s*\(.+\)/, '').replace(/T([12]) and Lab ([34]) out.*/, 'T$1 + Lab $2 out');
+  let label = event.replace(/\s*\(.+\)/, '').replace(/T([123]) and Lab ([345]) out.*/, 'T$1 + Lab $2 out');
   const day = event.match(/\(((?:Mon|Tue|Wed|Thu|Fri)(?:, [A-Z][a-z]{2} \d+)?)/);
   if (day) label += ` (${day[1]})`;
   const due = /\bdue\b|checkpoint|^midterm(?! review)|^final exam/i.test(event) && !/^nothing/i.test(event);
@@ -16,16 +16,18 @@ const eventLabel = event => {
     ? ` <a class="slides-link" href="${escapeHTML(course.assignment_slides.Capstone)}" target="_blank" rel="noopener" aria-label="Capstone slides (PDF)">[slides]</a>` : '';
   return `<span class="event${due ? ' due' : ''}">${escapeHTML(label)}${slides}</span>`;
 };
-// The Week 1 overview and the training-block lectures (Weeks 8–13) link their slides; the PDFs are listed in data.js.
+// Lectures with a slide deck link it; the PDFs are listed in data.js.
 const slidesLink = (week, lecture) => {
   const path = (course.slides[week] || {})[lecture];
   return path ? ` <a class="slides-link" href="${escapeHTML(path)}" target="_blank" rel="noopener" aria-label="Lecture ${lecture} slides (PDF)">[slides]</a>` : '';
 };
 const dividers = {
-  'Week 0': ['shared', 'Introduction', 'Weeks 0–1 · both instructors'],
-  'Week 2': ['data', 'Data systems', 'Weeks 2–7 · Christopher Jermaine'],
-  'Week 8': ['training', 'Training systems', 'Weeks 8–13 · Yuke Wang'],
-  'Week 14': ['shared', 'Wrap-up and finals', 'Both instructors']
+  'Week 0': ['shared', 'Getting ready', 'Before Jan 11'],
+  'Week 1': ['data', 'Large-scale data processing', 'Weeks 1–4 · Christopher Jermaine'],
+  'Week 5': ['training', 'Distributed and parallel computing', 'Weeks 5–8 · Yuke Wang'],
+  'Week 9': ['training', 'Distributed computing for tensors and ML', 'Weeks 9–11 · Yuke Wang'],
+  'Week 12': ['training', 'GPU hardware', 'Weeks 12–14 · Yuke Wang'],
+  'Finals': ['shared', 'Finals', 'Apr 28–May 4']
 };
 $('#schedule-rows').innerHTML = course.schedule.map(week => {
   const divider = dividers[week.week] ? `<div class="block-divider block-${dividers[week.week][0]}"><span>${dividers[week.week][1]}</span><small>${dividers[week.week][2]}</small></div>` : '';

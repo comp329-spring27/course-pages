@@ -1,5 +1,5 @@
 window.COURSE = {
-  "source_sha256": "6b757c8eb7cf3f524f3d97b41992efc232948a3dcfcb0969fb9fae364ab23fd4",
+  "source_sha256": "183111ed73bda3ecefdc4d4a3385a2b2fcb214ca4f9dc004e9fe98f6d3ba5494",
   "schedule": [
     {
       "week": "Week 0",
@@ -19,23 +19,24 @@ window.COURSE = {
       "dates": "Jan 11–15",
       "note": [],
       "lecture1": [
-        "Joint introduction: the AI pipeline end to end",
-        "Training a model touches data, frameworks, accelerators, and networks. See the whole pipeline, and what each part is for, before studying any one part.  WHY",
-        "Follow one training job from raw text to a trained model, and name the problem each stage solves.  WE WILL",
-        "Follow one workload from raw text to a trained model: collect, process, build the dataset, run on a GPU, communicate, and train in parallel; the problem each component solves.  CONCEPT"
+        "Relations and the relational model",
+        "A training corpus is data like any other. Treating it as a set of tuples with a schema lets us describe it and query it precisely.  WHY",
+        "Describe data as relations with attributes, domains, and keys, and model Wikipedia as a set of relations.  WE WILL",
+        "Relations, attributes, domains, schemas, and keys; Wikipedia as articles, revisions, links, and categories.  CONCEPT"
       ],
       "lecture2": [
-        "Joint foundations for measurement",
-        "You cannot fix what you have not measured. A quick estimate tells you which part of the pipeline to look at first.  WHY",
-        "Estimate a job’s bytes, FLOPs, time, and cost on paper, then measure it to find the bottleneck.  WE WILL",
-        "Estimate bytes, FLOPs, time, dollars, and joules; predict and measure a bottleneck.  BUILD"
+        "Storing relations: rows versus columns",
+        "How a relation is laid out on disk decides how many bytes a query must read.  WHY",
+        "Compare row-oriented and columnar storage, and store Wikipedia records in Parquet.  WE WILL",
+        "Row-oriented versus columnar storage; Parquet.  CONCEPT",
+        "Stream a Wikipedia dump into Parquet records.  BUILD"
       ],
       "events": [
         "Lab 1 out",
         "D1 out (Fri)",
         "Dataset contract published"
       ],
-      "block": "shared"
+      "block": "data"
     },
     {
       "week": "Week 2",
@@ -44,23 +45,20 @@ window.COURSE = {
         "No class Mon, Jan 18 (MLK Day)"
       ],
       "lecture1": [
-        "Collecting and storing raw data",
-        "A model learns only from text you can legally use and read quickly. A Wikipedia dump arrives as one huge compressed XML file.  WHY",
-        "Stream a compressed Wikipedia dump into Parquet records, and check its license and provenance.  WE WILL",
-        "Sources, licensing, provenance, privacy; XML, JSON Lines, compression, and Parquet.  CONCEPT",
-        "Stream large files into records.  BUILD"
+        "Relational algebra",
+        "Before running a query on many machines, we need a precise language for what it computes.  WHY",
+        "Write queries as compositions of a few operators, and build a join from them.  WE WILL",
+        "Selection, projection, union, difference, and Cartesian product; join as a derived operator; grouping and aggregation.  CONCEPT"
       ],
       "lecture2": [
-        "From one machine to many",
-        "A full corpus takes one machine hours to days to process. Splitting the work across machines finishes sooner, but adds data movement and failures.  WHY",
-        "Split a job into map, shuffle, and reduce steps, and see what more machines gain and cost.  WE WILL",
-        "Map, shuffle, reduce; failure recovery, strong and weak scaling.  CONCEPT",
-        "Implement a small MapReduce computation.  BUILD"
+        "Relational calculus and SQL",
+        "SQL is how most people query data, and it is the algebra and calculus in practice.  WHY",
+        "Write the same queries in tuple relational calculus and in SQL, and see why the two languages are equivalent.  WE WILL",
+        "Tuple relational calculus and its equivalence with the algebra; SELECT/FROM/WHERE, JOIN, and GROUP BY.  CONCEPT"
       ],
       "events": [
         "Lab 1 due",
-        "D1 checkpoint",
-        "Lab 2 out (after Lecture 2)"
+        "D1 checkpoint"
       ],
       "block": "data"
     },
@@ -69,23 +67,22 @@ window.COURSE = {
       "dates": "Jan 25–29",
       "note": [],
       "lecture1": [
-        "Spark and declarative execution",
-        "Hand-written distributed jobs are hard to get right. Spark lets you say what to compute and decides how to run it on many machines.  WHY",
-        "Write the same job with Spark DataFrames and SQL, and watch Spark plan it in the Spark UI.  WE WILL",
-        "RDDs, lazy execution, stages, tasks, and lineage; relational algebra.  CONCEPT",
-        "Express jobs with DataFrames and SQL; inspect the Spark UI.  BUILD"
+        "Spark: from one machine to many",
+        "A full corpus outgrows one machine’s memory, disk, and I/O. Spark splits the work across many machines.  WHY",
+        "See how Spark runs a job with a driver and executors, and why transformations wait for an action.  WE WILL",
+        "Data larger than RAM; driver and executors; jobs, stages, and tasks; RDDs, lazy evaluation, and transformations versus actions.  CONCEPT"
       ],
       "lecture2": [
-        "Spark performance",
+        "Partitions, the shuffle, and Spark SQL",
         "The same Spark job can run many times faster or slower depending on how its data is partitioned and moved.  WHY",
-        "Measure a slow Spark job, find where it shuffles or skews, and fix it with one justified change.  WE WILL",
-        "Join strategies, partitions, data skew, Python UDFs, and shuffle costs.  CONCEPT",
-        "Measure execution and justify a configuration change.  BUILD"
+        "Write a job with PySpark DataFrames and Spark SQL, and find where it shuffles.  WE WILL",
+        "Partitions and the shuffle; DataFrames and Spark SQL in PySpark.  CONCEPT",
+        "Express jobs with DataFrames and SQL; inspect the Spark UI.  BUILD"
       ],
       "events": [
         "D1 due",
-        "D2 out (after Lecture 2)",
-        "Lab 2 due (after Spark lecture)"
+        "Lab 2 out (after Lecture 1)",
+        "D2 out (after Lecture 2)"
       ],
       "block": "data"
     },
@@ -94,21 +91,22 @@ window.COURSE = {
       "dates": "Feb 1–5",
       "note": [],
       "lecture1": [
-        "Cleaning and quality filtering",
-        "Web text contains boilerplate, spam, private data, and copies of test sets. Training on it wastes compute and makes the model worse.  WHY",
-        "Apply cleaning and quality rules to raw text, and check the result against a reference.  WE WILL",
-        "Normalization, language ID, quality rules, PII, and contamination.  CONCEPT",
-        "Apply provided rules and validate against a reference.  BUILD"
+        "Tokenization and byte-pair encoding",
+        "Models read integer tokens, not characters. The tokenizer sets sequence length, and with it the cost of every training step.  WHY",
+        "Compare characters, words, and subwords, and run the BPE merge loop by hand.  WE WILL",
+        "Characters versus words versus subwords; vocabulary size; BPE pair counting and the merge loop; pre-tokenization and normalization (whitespace, case, Unicode).  CONCEPT"
       ],
       "lecture2": [
-        "Deduplication",
-        "Repeated documents push a model to memorize instead of generalize, and comparing every pair of n documents grows as n².  WHY",
-        "Find near-duplicate documents with MinHash and LSH instead of comparing every pair.  WE WILL",
-        "Exact hashes, Jaccard similarity, MinHash, and LSH.  CONCEPT",
-        "Implement near-duplicate detection in Spark.  BUILD"
+        "Tokenization at scale with Spark",
+        "Counting pairs over a whole corpus is too slow on one machine, but it is just an aggregation.  WHY",
+        "Write BPE training as Spark jobs, and encode the full corpus with a trained vocabulary.  WE WILL",
+        "Pair counting as aggregation; merges as iterations; encoding the corpus in parallel.  CONCEPT",
+        "Train on a sample with the provided trainer; tokenize in parallel.  BUILD",
+        "Implement BPE training yourself.  STRETCH"
       ],
       "events": [
         "D2 checkpoint",
+        "Lab 2 due",
         "D3 out (after Lecture 2)"
       ],
       "block": "data"
@@ -120,12 +118,10 @@ window.COURSE = {
         "No class Thu–Fri, Feb 11–12 (recess)"
       ],
       "lecture1": [
-        "Tokenization at scale",
-        "Models read integer tokens, not characters. The tokenizer sets sequence length, and with it the cost of every training step.  WHY",
-        "Train a BPE tokenizer on a sample, and tokenize the corpus in parallel.  WE WILL",
-        "BPE vocabulary construction and tokenizer trade-offs.  CONCEPT",
-        "Train on a sample with the provided trainer; tokenize in parallel.  BUILD",
-        "Implement BPE training yourself.  STRETCH"
+        "Processes and threads",
+        "One core is not enough. Using many means choosing between processes and threads, and controlling what they share.  WHY",
+        "Run work in parallel with Python threads and processes, and find a race and a deadlock.  WE WILL",
+        "Processes versus threads (address spaces, scheduling); concurrency versus parallelism; Amdahl’s law; races, locks, and deadlock; the GIL, threading versus multiprocessing.  CONCEPT"
       ],
       "lecture2": [
         "University recess",
@@ -134,75 +130,73 @@ window.COURSE = {
       "events": [
         "D2 due (Wed, before recess)"
       ],
-      "block": "data"
+      "block": "training"
     },
     {
       "week": "Week 6",
       "dates": "Feb 15–19",
       "note": [],
       "lecture1": [
-        "Building the dataset",
-        "Training must never wait for data or test on what it trained on. Shards give the GPU fixed-format tokens it can read quickly.  WHY",
-        "Split the data without leaks, and write binary shards that pass the dataset contract.  WE WILL",
-        "Leak-free splits, binary shards, memory mapping, and global shuffling.  CONCEPT",
-        "Write shards and pass the dataset contract checker.  BUILD"
+        "Networking: latency, bandwidth, and sockets",
+        "Once work spans machines, every byte crosses a network. Its cost decides whether more machines help.  WHY",
+        "Model a message as α + βn, and send data over TCP and UDP sockets.  WE WILL",
+        "Latency versus bandwidth and the α + βn cost of a message; sockets; TCP versus UDP.  CONCEPT"
       ],
       "lecture2": [
-        "Streaming and loading data",
-        "With many workers, each must read different samples, and a crashed job must resume without repeating or skipping data.  WHY",
-        "Give each worker its own shards, resume after a crash, and find where loading becomes I/O-bound.  WE WILL",
-        "Partition shards among workers; disjoint samples and deterministic resume.  CONCEPT",
-        "Measure a supplied data consumer; diagnose I/O limits.  BUILD"
+        "Serialization, RPC, and datacenter networks",
+        "Programs exchange objects, not bytes, and datacenter networks move bytes much faster than ordinary Ethernet.  WHY",
+        "Turn objects into messages, call a function on another machine, and compare datacenter interconnects.  WE WILL",
+        "Serialization; remote procedure calls; Ethernet, InfiniBand, and RDMA.  CONCEPT"
       ],
       "events": [
         "D3 checkpoint (dedup)"
       ],
-      "block": "data"
+      "block": "training"
     },
     {
       "week": "Week 7",
       "dates": "Feb 22–26",
       "note": [],
       "lecture1": [
-        "Data quality and documentation",
-        "You cannot tell whether a filtering choice helped without a controlled comparison, and nobody can reuse a dataset without documentation.  WHY",
-        "Run controlled comparisons, check for test-set contamination, and document a dataset so others can reuse it.  WE WILL",
-        "Ablations, contamination checks, and dataset documentation; interpret staff-provided model evaluations.  CONCEPT"
+        "Message passing",
+        "Distributed programs coordinate by sending messages, and getting the order wrong makes a program hang.  WHY",
+        "Write rank-based programs with mpi4py, and see when blocking sends deadlock.  WE WILL",
+        "Ranks; point-to-point send and receive; blocking versus non-blocking.  CONCEPT",
+        "mpi4py messages; fit latency and bandwidth.  BUILD"
       ],
       "lecture2": [
-        "Data systems design review",
-        "Before training starts, find the data stage that would limit a larger run.  WHY",
-        "Use traces and cost models to find the stage that limits a larger run, and review for the midterm.  WE WILL",
-        "Use traces and cost models to explain pipeline bottlenecks and scaling limits; midterm review.  CONCEPT"
+        "Collective communication",
+        "Many programs need the same few patterns: share, collect, and sum. A collective does each in one call, faster than hand-written messages.  WHY",
+        "Use the standard collectives, build all-reduce from reduce-scatter and all-gather, and count the cost of a tree.  WE WILL",
+        "Broadcast, scatter, gather, reduce, all-reduce, all-gather, and reduce-scatter; all-reduce = reduce-scatter + all-gather; tree-based collectives and their cost.  CONCEPT"
       ],
       "events": [
         "D3 due",
         "Capstone spec out",
+        "T2 and Lab 4 out (after Lecture 2)",
         "Midterm review"
       ],
-      "block": "data"
+      "block": "training"
     },
     {
       "week": "Week 8",
       "dates": "Mar 1–5",
       "note": [],
       "lecture1": [
-        "GPU architecture",
-        "Starts with a training-block overview: why we need GPUs, frameworks, and many GPUs. A training step is millions of multiply-adds that a CPU runs too slowly; a GPU runs them in parallel if data reaches it fast enough.  WHY",
-        "Look inside a GPU, and use the roofline model to predict whether a kernel is limited by arithmetic or memory.  WE WILL",
-        "SIMT, warps, compute units; registers, shared memory, caches, and HBM.  CONCEPT",
-        "Predict a kernel bottleneck with the roofline model.  BUILD"
+        "All-reduce: rings and trees",
+        "GPUs that train together sum their gradients at every step. A good algorithm keeps that cost almost independent of the number of GPUs.  WHY",
+        "Derive the ring all-reduce and its cost, and choose between a ring and a tree by message size.  WE WILL",
+        "Ring all-reduce and its cost; tree versus ring by message size.  CONCEPT"
       ],
       "lecture2": [
-        "GPU programming model",
-        "A GPU is fast only when thousands of threads share the work well. The programming model is how you describe that work.  WHY",
-        "Write and time small Triton kernels with blocks and masks, and test them against PyTorch.  WE WILL",
-        "Threads, blocks, grids, coalescing, synchronization, and streams.  CONCEPT",
-        "Triton blocks, masks, and reductions; correct timing and tests.  BUILD"
+        "NCCL and interconnect topology",
+        "GPUs talk over links of very different speeds. NCCL picks the algorithm and the path, if every rank calls it correctly.  WHY",
+        "Call NCCL collectives from torch.distributed, and see how NVLink, PCIe, and InfiniBand set their speed.  WE WILL",
+        "NCCL and torch.distributed; interconnect topology: NVLink, PCIe, and InfiniBand.  CONCEPT",
+        "Benchmark NCCL collectives and check their results.  BUILD"
       ],
       "events": [
-        "Midterm (data systems), evening TBA",
-        "T1 and Lab 3 out (after midterm and Lecture 2)"
+        "Midterm (Weeks 1–7), evening TBA"
       ],
       "block": "training"
     },
@@ -211,21 +205,21 @@ window.COURSE = {
       "dates": "Mar 8–12",
       "note": [],
       "lecture1": [
-        "Framework fundamentals",
-        "No one writes a GPU kernel for every operation. Frameworks such as PyTorch turn Python model code into GPU work, and their choices set memory use and speed.  WHY",
-        "Follow one training step from PyTorch code to GPU kernels, measure its memory, and see how autograd works at a high level.  WE WILL",
-        "PyTorch tensors, storage/layout, operator dispatch, and the forward pass; how autograd works, at a high level.  CONCEPT",
-        "Trace a supplied training step and its memory use.  BUILD"
+        "Data parallelism",
+        "The simplest way to use N GPUs is to give each one part of the batch, but then every GPU holds the whole model.  WHY",
+        "Count where memory goes in a training step, and train one model on several GPUs by averaging gradients.  WE WILL",
+        "Parameters, gradients, optimizer state, and activations; synchronous data parallelism: shard the batch, all-reduce the gradients; Distributed Data Parallel.  CONCEPT",
+        "Check a distributed update against a single-process reference.  BUILD"
       ],
       "lecture2": [
-        "Graphs and transformations",
-        "Running one Python operation at a time spends GPU time on overhead. Seeing the whole computation lets the framework combine and optimize work.  WHY",
-        "Run the same model eagerly, with torch.compile, and with vmap, and separate compile time from run time.  WE WILL",
-        "PyTorch eager and compiled execution; torch.func vmap and compilation modes; tracing and graph breaks.  CONCEPT",
-        "Compare execution modes; separate compile and runtime costs.  BUILD"
+        "Sharding the state: ZeRO and FSDP",
+        "Replication wastes memory: N GPUs store N copies of the same state.  WHY",
+        "Split optimizer state, gradients, and parameters across GPUs, and count what each choice costs in memory and communication.  WE WILL",
+        "ZeRO and Fully Sharded Data Parallel; memory versus communication.  CONCEPT"
       ],
       "events": [
-        "T1 checkpoint (before break)"
+        "T2 checkpoint",
+        "Lab 4 due"
       ],
       "block": "training"
     },
@@ -247,23 +241,22 @@ window.COURSE = {
       "dates": "Mar 22–26",
       "note": [],
       "lecture1": [
-        "Framework and GPU interaction",
-        "A fast kernel does not help if data arrives late, memory runs out, or the GPU waits for the CPU. This lecture joins the pieces.  WHY",
-        "Plug a kernel into the training step, profile it, and test one idea about its bottleneck.  WE WILL",
-        "Fusion, allocation, framework data loaders, asynchronous transfers, and precision.  CONCEPT",
-        "Integrate a kernel; profile and test a bottleneck hypothesis.  BUILD"
+        "Tensor parallelism",
+        "When one layer is too large or too slow for one GPU, split its matrices across GPUs.  WHY",
+        "Split a linear layer by columns and by rows, and work out what each GPU stores and sends.  WE WILL",
+        "Column- and row-parallel linear layers (Megatron).  CONCEPT",
+        "Guided tensor-parallel exercise and per-rank memory estimates.  BUILD"
       ],
       "lecture2": [
-        "Distributed programming foundations",
-        "One GPU is too slow for large training jobs and too small to hold large models, so many processes must coordinate.  WHY",
-        "Start many processes, send messages between them with mpi4py, and model the cost as latency plus bandwidth.  WE WILL",
-        "Processes, ranks, device mapping, synchronization, and collective semantics.  CONCEPT",
-        "mpi4py messages; model latency and bandwidth.  BUILD"
+        "Pipeline and 3D parallelism",
+        "The largest models combine data, tensor, and pipeline splits, because each one alone runs out of memory or bandwidth.  WHY",
+        "Cut a model into pipeline stages, measure the idle time, and choose a 3D layout for a fixed GPU budget.  WE WILL",
+        "Stages, micro-batches, and the pipeline bubble; combining data, tensor, and pipeline parallelism.  CONCEPT",
+        "Guided pipeline exercise and simulated 3D cost analysis.  BUILD"
       ],
       "events": [
-        "T1 due",
-        "Lab 3 due (after Lecture 1)",
-        "T2 and Lab 4 out (after Lecture 2)"
+        "T2 due",
+        "T3 and Lab 5 out (after Lecture 2)"
       ],
       "block": "training"
     },
@@ -272,22 +265,20 @@ window.COURSE = {
       "dates": "Mar 29–Apr 2",
       "note": [],
       "lecture1": [
-        "NCCL and GPU communication",
-        "GPUs that train together exchange gradients at every step. NCCL moves that data between GPUs quickly, so communication does not erase the speedup.  WHY",
-        "Call NCCL collectives such as all-reduce from PyTorch, and check that the results are correct and complete.  WE WILL",
-        "Communicators, all-reduce, reduce-scatter, all-gather, ring/tree ideas, and ordering.  CONCEPT",
-        "Test torch.distributed/NCCL results and completion.  BUILD"
+        "Distributed matrix multiplication in 2D",
+        "Matrix multiplication is the unit of ML work. When the matrices span many processors, the communication pattern sets the speed.  WHY",
+        "Multiply matrices on a √p × √p processor grid with Cannon’s algorithm and SUMMA, and count the communication.  WE WILL",
+        "Matrix multiply as the unit of ML work; Cannon’s algorithm and SUMMA; communication cost on a √p × √p grid.  CONCEPT"
       ],
       "lecture2": [
-        "Multi-server communication",
-        "Large jobs span many servers. The network between servers is slower than links inside one, and one mismatched call can hang the whole job.  WHY",
-        "Benchmark communication across two servers, fit an α–β model, and learn how to spot and avoid hangs.  WE WILL",
-        "Topology, launch, timeouts, hangs, and matching operations.  CONCEPT",
-        "Guided two-server benchmarks; fit an α–β model.  BUILD"
+        "3D matrix multiplication and tensor parallelism",
+        "Extra memory can buy less communication, and tensor parallelism is one point on that trade-off.  WHY",
+        "Multiply on a ∛p × ∛p × ∛p grid, and read tensor parallelism as a 1D or 2D decomposition.  WE WILL",
+        "The 3D algorithm: trading memory for communication; tensor parallelism as a 1D/2D decomposition.  CONCEPT"
       ],
       "events": [
-        "T2 checkpoint",
-        "Lab 4 due (after Lecture 2)"
+        "T3 checkpoint",
+        "Lab 5 due (after Lecture 2)"
       ],
       "block": "training"
     },
@@ -296,23 +287,20 @@ window.COURSE = {
       "dates": "Apr 5–9",
       "note": [],
       "lecture1": [
-        "Data parallelism and sharding",
-        "The simplest way to use N GPUs is to give each one part of the batch. That works until the model’s state no longer fits on one GPU.  WHY",
-        "Train one model on several GPUs by averaging gradients, and count the memory each GPU needs.  WE WILL",
-        "Replicated models, gradient averaging, batch conventions, DDP, ZeRO, and FSDP.  CONCEPT",
-        "Check a distributed update; account for memory.  BUILD"
+        "GPU architecture",
+        "A training step is millions of multiply-adds that a CPU runs too slowly; a GPU runs them in parallel if the work is shaped for it.  WHY",
+        "Compare latency- and throughput-oriented processors, and map threads, warps, blocks, and grids onto the GPU.  WE WILL",
+        "CPUs versus GPUs; streaming multiprocessors, CUDA cores, and tensor cores; threads, warps, thread blocks, and grids; SIMT and warp divergence.  CONCEPT"
       ],
       "lecture2": [
-        "Tensor and model parallelism",
-        "When one layer is too large or too slow for one GPU, split its matrices across GPUs.  WHY",
-        "Split a layer’s matrices across GPUs, and work out what each GPU stores and sends.  WE WILL",
-        "Partition linear operators; row/column layouts and activation/gradient communication.  CONCEPT",
-        "Guided tensor-parallel exercise and per-rank memory estimates.  BUILD"
+        "The GPU execution model",
+        "A GPU hides slow memory by keeping many warps ready, but every kernel launch and host transfer costs time.  WHY",
+        "Reason about occupancy and latency hiding, and measure the cost of kernel launches and host-to-device copies.  WE WILL",
+        "Latency hiding by warp scheduling; occupancy; kernels and kernel launches; host-to-device transfers.  CONCEPT"
       ],
       "events": [
-        "T2 due",
-        "T3 out (after Lecture 1)",
-        "Lab 5 out (after Lecture 2)"
+        "T3 due",
+        "T1 and Lab 3 out (after Lecture 2)"
       ],
       "block": "training"
     },
@@ -321,22 +309,20 @@ window.COURSE = {
       "dates": "Apr 12–16",
       "note": [],
       "lecture1": [
-        "Pipeline and 3D parallelism",
-        "The largest models combine data, tensor, and pipeline splits because each one alone runs out of memory or bandwidth.  WHY",
-        "Cut a model into pipeline stages, measure the idle time, and choose a 3D layout for a fixed GPU budget.  WE WILL",
-        "Layer stages, microbatches, pipeline bubbles; data × tensor × pipeline layouts.  CONCEPT",
-        "Guided pipeline exercise and simulated 3D cost analysis.  BUILD"
+        "The GPU memory hierarchy",
+        "Most GPU kernels wait on memory, not arithmetic. Where data lives decides how fast it arrives.  WHY",
+        "Compare registers, shared memory, L2, and HBM, and see how coalesced access uses bandwidth well.  WE WILL",
+        "Registers, shared memory, L2, and high-bandwidth memory: capacity and bandwidth at each level; memory coalescing.  CONCEPT"
       ],
       "lecture2": [
-        "Diagnosing distributed systems",
-        "At scale, one slow GPU, hang, or crash stalls every other GPU. You need tools to find the cause and recover.  WHY",
-        "Profile a multi-GPU job, find slow GPUs and hangs, and restart from a checkpoint without losing work.  WE WILL",
-        "Profile overlap, stragglers, utilization, and GPU energy.  BUILD",
-        "Checkpoint/restart consistency, recovery, and reproducible scaling.  CONCEPT"
+        "Arithmetic intensity and the roofline model",
+        "Before optimizing a kernel, you need to know whether arithmetic or memory limits it.  WHY",
+        "Compute arithmetic intensity, and use the roofline model to predict a kernel’s bottleneck.  WE WILL",
+        "Arithmetic intensity; the roofline model; memory-bound versus compute-bound operations.  CONCEPT",
+        "Predict a kernel bottleneck with the roofline model.  BUILD"
       ],
       "events": [
-        "T3 checkpoint (after Lecture 1)",
-        "Lab 5 due (after Lecture 1)",
+        "T1 checkpoint",
         "Capstone pairs set"
       ],
       "block": "training"
@@ -348,21 +334,23 @@ window.COURSE = {
         "Last class: Fri, Apr 23"
       ],
       "lecture1": [
-        "Joint end-to-end integration",
-        "Data and training choices affect each other, so a design is justified only by end-to-end evidence.  WHY",
-        "Connect data choices to training speed with end-to-end measurements, and justify one design.  WE WILL",
-        "Connect data execution to training performance; use traces and cost models to justify a design.  CONCEPT"
+        "Precision and the anatomy of a matrix multiply",
+        "Fewer bits per number mean faster arithmetic and less memory traffic, and a naive matrix multiply leaves most of the GPU idle.  WHY",
+        "Compare FP32, FP16, BF16, and FP8, and tile a matrix multiply through shared memory, registers, and tensor cores.  WE WILL",
+        "Number formats: range versus precision; mixed precision: low-precision inputs, FP32 accumulation, and loss scaling; naive matmul is memory-bound; tiling; tensor cores and tile shapes.  CONCEPT"
       ],
       "lecture2": [
-        "Joint systems design review",
-        "Every design trades off compute, memory, communication, and failure risk. Bring both blocks together.  WHY",
-        "Compare designs by compute, memory, communication, and failure risk, and review for the final.  WE WILL",
-        "Compare layouts, resource limits, and failure modes; synthesize both blocks and review for the final.  CONCEPT"
+        "Triton, and one training step end to end",
+        "Fast CUDA is hard to write by hand. Triton lets you describe a block of work and leaves coalescing, staging, and tensor cores to the compiler.  WHY",
+        "Write a tiled matmul and a fused softmax in Triton, autotune block sizes, and follow one training step from corpus to cluster to SM.  WE WILL",
+        "Programs instead of threads; blocks, tl.load, tl.store, masks, and tl.dot; what the compiler does; autotuning; kernel fusion; course synthesis.  CONCEPT",
+        "Triton blocks, masks, and reductions; correct timing and tests.  BUILD"
       ],
       "events": [
-        "T3 due"
+        "T1 due",
+        "Lab 3 due (after Lecture 1)"
       ],
-      "block": "shared"
+      "block": "training"
     },
     {
       "week": "Finals",
@@ -408,19 +396,10 @@ window.COURSE = {
       "thread": "data"
     },
     {
-      "code": "T1",
-      "title": "GPU and framework execution",
-      "due": "Due Week 10",
-      "date": "2027-03-26",
-      "build": "Implement one Triton reduction or fused elementwise kernel and validate it against PyTorch. Integrate it into the forward pass of a supplied workload using your D3 dataset; compare PyTorch eager and compiled execution and a guided torch.func.vmap version. Model, autograd, optimizer, and data loader are provided. Checkpoint: correct kernel and timing harness.",
-      "study": "Predict memory traffic and arithmetic intensity; vary input and batch size. Separate compile, launch, and steady-state costs; explain the observed bottleneck with a trace.",
-      "thread": "training"
-    },
-    {
       "code": "T2",
       "title": "Distributed programming",
-      "due": "Due Week 12",
-      "date": "2027-04-09",
+      "due": "Due Week 10",
+      "date": "2027-03-26",
       "build": "Implement one small CPU all-reduce with mpi4py point-to-point messages; other primitives are provided. Build a torch.distributed/NCCL benchmark for GPU collectives and run a guided two-server case. Test results, rank/device mapping, and operation ordering. Checkpoint: correct collectives on small tensors.",
       "study": "Vary message size, rank count, and topology. Fit latency and bandwidth; compare predictions with measured time and diagnose synchronization or communication limits.",
       "thread": "training"
@@ -428,10 +407,19 @@ window.COURSE = {
     {
       "code": "T3",
       "title": "Parallel training systems",
-      "due": "Due Week 14",
-      "date": "2027-04-23",
+      "due": "Due Week 12",
+      "date": "2027-04-09",
       "build": "Implement data-parallel gradient averaging and compare one update with a single-process reference and PyTorch DDP. Train on D3 data. Complete guided tensor- and pipeline-parallel exercises with supplied code and a deeper toy model. Analyze a 3D DP × TP × PP layout using a supplied simulator. Checkpoint: correct DP update and basic layout tests. Full 3D training is optional.",
       "study": "Compare replicated and sharded state, communication volume, pipeline bubbles, and scaling efficiency. State the batch convention; justify a layout under a fixed GPU/memory budget and measure full DP training.",
+      "thread": "training"
+    },
+    {
+      "code": "T1",
+      "title": "GPU and framework execution",
+      "due": "Due Week 14",
+      "date": "2027-04-23",
+      "build": "Implement one Triton reduction or fused elementwise kernel and validate it against PyTorch. Integrate it into the forward pass of a supplied workload using your D3 dataset; compare PyTorch eager and compiled execution and a guided torch.func.vmap version. Model, autograd, optimizer, and data loader are provided. Checkpoint: correct kernel and timing harness.",
+      "study": "Predict memory traffic and arithmetic intensity; vary input and batch size. Separate compile, launch, and steady-state costs; explain the observed bottleneck with a trace.",
       "thread": "training"
     }
   ],
@@ -445,32 +433,25 @@ window.COURSE = {
     "Capstone": "https://github.com/comp329-spring27/student-assignments/blob/main/07_capstone/README.md"
   },
   "slides": {
-    "Week 1": {
-      "1": "assets/slides/w01_l1_pipeline_overview.pdf"
+    "Week 7": {
+      "1": "assets/slides/w10_l2_distributed_foundations.pdf"
     },
     "Week 8": {
-      "1": "assets/slides/w08_l1_gpu_architecture.pdf",
-      "2": "assets/slides/w08_l2_gpu_programming.pdf"
-    },
-    "Week 9": {
-      "1": "assets/slides/w09_l1_framework_fundamentals.pdf",
-      "2": "assets/slides/w09_l2_graphs_transformations.pdf"
-    },
-    "Week 10": {
-      "1": "assets/slides/w10_l1_framework_gpu.pdf",
-      "2": "assets/slides/w10_l2_distributed_foundations.pdf"
-    },
-    "Week 11": {
       "1": "assets/slides/w11_l1_nccl_communication.pdf",
       "2": "assets/slides/w11_l2_multiserver.pdf"
     },
-    "Week 12": {
-      "1": "assets/slides/w12_l1_data_parallelism.pdf",
-      "2": "assets/slides/w12_l2_tensor_parallelism.pdf"
+    "Week 9": {
+      "1": "assets/slides/w12_l1_data_parallelism.pdf"
     },
-    "Week 13": {
-      "1": "assets/slides/w13_l1_pipeline_3d.pdf",
-      "2": "assets/slides/w13_l2_diagnosing.pdf"
+    "Week 10": {
+      "1": "assets/slides/w12_l2_tensor_parallelism.pdf",
+      "2": "assets/slides/w13_l1_pipeline_3d.pdf"
+    },
+    "Week 12": {
+      "1": "assets/slides/w08_l1_gpu_architecture.pdf"
+    },
+    "Week 14": {
+      "2": "assets/slides/w08_l2_gpu_programming.pdf"
     }
   },
   "assignment_slides": {
@@ -646,26 +627,27 @@ window.COURSE = {
     {
       "name": "Lab 2",
       "description": "Write a MapReduce word count in plain Python, then in PySpark.",
-      "weeks": "2–3"
+      "weeks": "3–4"
     },
     {
       "name": "Lab 3",
       "description": "GPU and framework lab: inspect memory access, write a small Triton kernel, and trace PyTorch eager/compiled execution with a guided torch.func.vmap comparison.",
-      "weeks": "8–10"
+      "weeks": "12–14"
     },
     {
       "name": "Lab 4",
       "description": "Communication lab: rank/device mapping, CPU messages, NCCL collectives, and a guided two-server run; fit latency and bandwidth.",
-      "weeks": "10–11"
+      "weeks": "7–9"
     },
     {
       "name": "Lab 5",
       "description": "Parallelism lab: guided tensor and pipeline partitions of a supplied toy model; measure communication and pipeline bubbles; map a 3D layout.",
-      "weeks": "12–13"
+      "weeks": "10–11"
     }
   ],
   "readings": [
-    "Data systems block",
+    "Large-scale data processing (Weeks 1–4)",
+    "Codd, “A Relational Model of Data for Large Shared Data Banks,” CACM 1970.",
     "Dean and Ghemawat, “MapReduce: Simplified Data Processing on Large Clusters,” OSDI 2004.",
     "Zaharia et al., “Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing,” NSDI 2012.",
     "Armbrust et al., “Spark SQL: Relational Data Processing in Spark,” SIGMOD 2015.",
@@ -673,7 +655,7 @@ window.COURSE = {
     "Sennrich, Haddow, and Birch, “Neural Machine Translation of Rare Words with Subword Units,” ACL 2016.",
     "Lee et al., “Deduplicating Training Data Makes Language Models Better,” ACL 2022.",
     "Penedo et al., “The FineWeb Datasets: Decanting the Web for the Finest Text Data at Scale,” NeurIPS 2024 (Datasets and Benchmarks).",
-    "Training systems block",
+    "Distributed, ML, and GPU systems (Weeks 5–14)",
     "NVIDIA, CUDA Programming Guide: execution hierarchy, GPU memory, synchronization, and streams. CUDA guide",
     "PyTorch documentation: tensors, operator dispatch, torch.compile, torch.func (vmap), and asynchronous CUDA execution. PyTorch dispatch · Compilation · torch.func",
     "Williams, Waterman, and Patterson, “Roofline: An Insightful Visual Performance Model for Multicore Architectures,” CACM 2009.",
@@ -682,6 +664,8 @@ window.COURSE = {
     "Narayanan et al., “Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM,” SC 2021: composing data, tensor, and pipeline parallelism. Paper",
     "Rajbhandari et al., “ZeRO: Memory Optimizations Toward Training Trillion Parameter Models,” SC 2020.",
     "Bengio et al., “A Neural Probabilistic Language Model,” JMLR 2003, for the supplied workload.",
-    "Thakur, Rabenseifner, and Gropp, “Optimization of Collective Communication Operations in MPICH,” IJHPCA 2005, for collective cost models."
+    "Thakur, Rabenseifner, and Gropp, “Optimization of Collective Communication Operations in MPICH,” IJHPCA 2005, for collective cost models.",
+    "van de Geijn and Watts, “SUMMA: Scalable Universal Matrix Multiplication Algorithm,” Concurrency: Practice and Experience 1997, for 2D matrix multiplication.",
+    "Agarwal et al., “A Three-Dimensional Approach to Parallel Matrix Multiplication,” IBM Journal of Research and Development 1995, for 3D matrix multiplication."
   ]
 };

@@ -8,8 +8,8 @@ import hashlib
 from datetime import datetime, timedelta, timezone
 
 base = Path(__file__).resolve().parents[1]
-# The course workspace: the folder that holds course-pages/ and assignments/ side by side.
-workspace = base.parent
+# The course workspace: the folder that holds sites/, assignments/, and the syllabus side by side.
+workspace = base.parents[1]
 source = workspace / 'COMP 329 Syllabus - Spring 2027.docx'
 if not source.exists():
     source = base / 'dist/assets/syllabus-spring-2027.docx'
@@ -24,7 +24,8 @@ schedule = []
 for row in tables[5].findall('w:tr', ns)[1:]:
     c = cells(row)
     number = int(c[0][0].split()[-1]) if c[0][0].startswith('Week ') else None
-    block = 'data' if number and 2 <= number <= 7 else 'training' if number and 8 <= number <= 13 else 'shared'
+    # Weeks 1-4: large-scale data processing (Jermaine); Weeks 5-14: distributed, ML, and GPU systems (Wang).
+    block = 'data' if number and 1 <= number <= 4 else 'training' if number and 5 <= number <= 14 else 'shared'
     schedule.append({'week': c[0][0], 'dates': c[0][1], 'note': c[0][2:] or [], 'lecture1': c[1], 'lecture2': c[2] if len(c) == 4 else [], 'events': c[-1], 'block': block})
 def assignment_date(due):
     week_number = int(re.search(r'Week (\d+)', due).group(1))
@@ -50,21 +51,31 @@ handout_folders = {
     'Capstone': '07_capstone',
 }
 handouts = {code: f'{handout_root}/{folder}/README.md' for code, folder in handout_folders.items()}
-# Lecture slides (Week 1, Lecture 1 and the training block, Weeks 8-13): PDFs built in the course workspace
-# (assignments/lecturer/lectures/wWW_lN_*.pdf) are copied into dist/assets/slides/.
-# Without the workspace, the PDFs already in dist/ are used.
+# Lecture slides: PDFs built in the course workspace (assignments/lecturer/lectures/<deck>.pdf) are copied
+# into dist/assets/slides/ and linked under the week whose topic they cover in the current schedule.
+# Decks with no matching topic are not published. Without the workspace, the PDFs already in dist/ are used.
+slide_weeks = {
+    'w10_l2_distributed_foundations': ('Week 7', '1'),
+    'w11_l1_nccl_communication': ('Week 8', '1'),
+    'w11_l2_multiserver': ('Week 8', '2'),
+    'w12_l1_data_parallelism': ('Week 9', '1'),
+    'w12_l2_tensor_parallelism': ('Week 10', '1'),
+    'w13_l1_pipeline_3d': ('Week 10', '2'),
+    'w08_l1_gpu_architecture': ('Week 12', '1'),
+    'w08_l2_gpu_programming': ('Week 14', '2'),
+}
 slides_source = workspace / 'assignments/lecturer/lectures'
 slides_dir = base / 'dist/assets/slides'
 if slides_source.is_dir():
     slides_dir.mkdir(exist_ok=True)
-    for old in slides_dir.glob('w*_l*_*.pdf'):
+    for old in slides_dir.glob('*.pdf'):
         old.unlink()
-    for pdf in sorted(slides_source.glob('w[0-9][0-9]_l[12]_*.pdf')):
-        shutil.copyfile(pdf, slides_dir / pdf.name)
+    for deck in slide_weeks:
+        shutil.copyfile(slides_source / f'{deck}.pdf', slides_dir / f'{deck}.pdf')
 slides = {}
-for pdf in sorted(slides_dir.glob('w[0-9][0-9]_l[12]_*.pdf')):
-    week, lecture = re.match(r'w(\d\d)_l(\d)_', pdf.name).groups()
-    slides.setdefault(f'Week {int(week)}', {})[lecture] = f'assets/slides/{pdf.name}'
+for deck, (week, lecture) in slide_weeks.items():
+    if (slides_dir / f'{deck}.pdf').is_file():
+        slides.setdefault(week, {})[lecture] = f'assets/slides/{deck}.pdf'
 # Assignment slides (one deck per assignment, plus capstone and optional UI), built with
 # `make slides` in the course workspace (assignments/lecturer/slides/<folder>.pdf).
 assignment_slide_folders = {**handout_folders, 'UI': '08_ui_dashboard'}

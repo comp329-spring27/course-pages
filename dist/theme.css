@@ -1,39 +1,49 @@
 /* Shared palette and theme switch for the course homepage and the browser-readable syllabus. */
+/* Rice University palette, matching the lecture slides (Rice slide template): navy #00205B,
+   blue #0A509E, periwinkle #99ACFF. --data marks the data module (Weeks 1–4), --train the
+   distributed, ML, and GPU modules (Weeks 5–14); the header is a navy bar like the slides' title bars. */
 :root {
   color-scheme: light;
-  --paper: #f7f7f1;
-  --header: #e8ece3;
+  --paper: #f4f6fa;
+  --header: #00205b;
+  --header-ink: #ffffff;
+  --header-muted: #c8d2ee;
+  --header-line: rgba(255, 255, 255, .32);
   --surface: #ffffff;
-  --surface-soft: #eef1ea;
-  --ink: #173247;
-  --muted: #5a6b73;
-  --line: #d8ded5;
-  --green: #2b6d51;
-  --green-soft: #e8f0e8;
-  --blue: #366496;
-  --blue-soft: #e9eef5;
-  --accent: #102b40;
+  --surface-soft: #eef2f9;
+  --ink: #1a2233;
+  --muted: #535f70;
+  --line: #d6dce7;
+  --data: #0a509e;
+  --data-soft: #e3edf8;
+  --train: #00205b;
+  --train-soft: #e8ecfb;
+  --accent: #00205b;
   --accent-ink: #ffffff;
-  --focus: #bd7b28;
+  --focus: #5b78e0;
   --amber: #8a5514;
   --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
 }
 @media screen {
   :root[data-theme="dark"] {
     color-scheme: dark;
-    --paper: #14212c;
-    --header: #0f1a23;
-    --surface: #1c2d39;
-    --surface-soft: #243744;
-    --ink: #e4edf3;
-    --muted: #aebfc9;
-    --line: #3a4f5c;
-    --green: #9fd6b6;
-    --green-soft: #22392f;
-    --blue: #a9cdf1;
-    --blue-soft: #253a4f;
-    --accent: #a9d5bc;
-    --accent-ink: #142b20;
+    --paper: #0b1730;
+    --header: #06102a;
+    --header-ink: #ffffff;
+    --header-muted: #b3c0e3;
+    --header-line: rgba(255, 255, 255, .22);
+    --surface: #12213f;
+    --surface-soft: #1a2c50;
+    --ink: #e6ebf5;
+    --muted: #aab6cd;
+    --line: #2d3e62;
+    --data: #8fbbf0;
+    --data-soft: #16305a;
+    --train: #b4c2ff;
+    --train-soft: #1f2a5e;
+    --accent: #99acff;
+    --accent-ink: #0b1730;
+    --focus: #99acff;
     --amber: #e8b876;
   }
 }
@@ -41,13 +51,13 @@
 .theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 6px 0; border: 0; background: transparent; color: var(--ink); font: 500 14px/1.4 var(--sans); white-space: nowrap; min-height: 44px; cursor: pointer; }
 .theme-toggle-track { position: relative; display: block; width: 40px; height: 22px; border: 1px solid var(--line); background: var(--surface-soft); border-radius: 20px; }
 .theme-toggle-knob { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); box-shadow: 0 1px 3px rgba(0, 0, 0, .3); transition: transform .2s; }
-.theme-toggle[aria-checked="true"] .theme-toggle-track { background: var(--green); border-color: var(--green); }
+.theme-toggle[aria-checked="true"] .theme-toggle-track { background: var(--data); border-color: var(--data); }
 .theme-toggle[aria-checked="true"] .theme-toggle-knob { transform: translateX(18px); }
 .theme-toggle:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 4px; }
 
 .syllabus-page { background: var(--paper); color: var(--ink); }
 .syllabus-page main { background: var(--surface); border-color: var(--line); }
-.syllabus-page a { color: var(--green); }
+.syllabus-page a { color: var(--data); }
 .syllabus-page td, .syllabus-page .table-scroll { border-color: var(--line); }
 .syllabus-page tr:first-child { background: var(--surface-soft); }
 

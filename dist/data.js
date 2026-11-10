@@ -433,23 +433,44 @@ window.COURSE = {
     "Capstone": "https://github.com/comp329-spring27/student-assignments/blob/main/07_capstone/README.md"
   },
   "slides": {
+    "Week 5": {
+      "1": "assets/slides/w05_l1_processes_threads.pdf"
+    },
+    "Week 6": {
+      "1": "assets/slides/w06_l1_networking.pdf",
+      "2": "assets/slides/w06_l2_rpc_datacenter.pdf"
+    },
     "Week 7": {
-      "1": "assets/slides/w07_l1_message_passing.pdf"
+      "1": "assets/slides/w07_l1_message_passing.pdf",
+      "2": "assets/slides/w07_l2_collectives.pdf"
     },
     "Week 8": {
       "1": "assets/slides/w08_l1_allreduce.pdf",
       "2": "assets/slides/w08_l2_nccl_topology.pdf"
     },
     "Week 9": {
-      "1": "assets/slides/w09_l1_data_parallelism.pdf"
+      "1": "assets/slides/w09_l1_data_parallelism.pdf",
+      "2": "assets/slides/w09_l2_zero_fsdp.pdf"
     },
     "Week 10": {
       "1": "assets/slides/w10_l1_tensor_parallelism.pdf",
       "2": "assets/slides/w10_l2_pipeline_3d.pdf"
     },
+    "Week 11": {
+      "1": "assets/slides/w11_l1_matmul_2d.pdf",
+      "2": "assets/slides/w11_l2_matmul_3d.pdf"
+    },
     "Week 12": {
       "1": "assets/slides/w12_l1_gpu_architecture.pdf",
       "2": "assets/slides/w12_l2_gpu_execution.pdf"
+    },
+    "Week 13": {
+      "1": "assets/slides/w13_l1_memory_hierarchy.pdf",
+      "2": "assets/slides/w13_l2_roofline.pdf"
+    },
+    "Week 14": {
+      "1": "assets/slides/w14_l1_precision_matmul.pdf",
+      "2": "assets/slides/w14_l2_triton_end_to_end.pdf"
     }
   },
   "assignment_slides": {

@@ -55,14 +55,25 @@ handouts = {code: f'{handout_root}/{folder}/README.md' for code, folder in hando
 # into dist/assets/slides/ and linked under the week whose topic they cover in the current schedule.
 # Decks with no matching topic are not published. Without the workspace, the PDFs already in dist/ are used.
 slide_weeks = {
+    'w05_l1_processes_threads': ('Week 5', '1'),
+    'w06_l1_networking': ('Week 6', '1'),
+    'w06_l2_rpc_datacenter': ('Week 6', '2'),
     'w07_l1_message_passing': ('Week 7', '1'),
+    'w07_l2_collectives': ('Week 7', '2'),
     'w08_l1_allreduce': ('Week 8', '1'),
     'w08_l2_nccl_topology': ('Week 8', '2'),
     'w09_l1_data_parallelism': ('Week 9', '1'),
+    'w09_l2_zero_fsdp': ('Week 9', '2'),
     'w10_l1_tensor_parallelism': ('Week 10', '1'),
     'w10_l2_pipeline_3d': ('Week 10', '2'),
+    'w11_l1_matmul_2d': ('Week 11', '1'),
+    'w11_l2_matmul_3d': ('Week 11', '2'),
     'w12_l1_gpu_architecture': ('Week 12', '1'),
     'w12_l2_gpu_execution': ('Week 12', '2'),
+    'w13_l1_memory_hierarchy': ('Week 13', '1'),
+    'w13_l2_roofline': ('Week 13', '2'),
+    'w14_l1_precision_matmul': ('Week 14', '1'),
+    'w14_l2_triton_end_to_end': ('Week 14', '2'),
 }
 slides_source = workspace / 'assignments/lecturer/lectures'
 slides_dir = base / 'dist/assets/slides'

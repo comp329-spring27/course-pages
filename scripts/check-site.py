@@ -34,9 +34,9 @@ for code, url in data['handouts'].items():
     if student_manifest:
         folder = student_manifest['folders'][code.lower()]
         assert relative_path == f'{folder}/README.md' and (student_repo / relative_path).is_file(), f'Handout differs from student repository: {code}'
-# Lecture slides: existing decks linked under the weeks whose topics they cover.
-expected_slides = {'Week 7': {'1'}, 'Week 8': {'1', '2'}, 'Week 9': {'1'}, 'Week 10': {'1', '2'}, 'Week 12': {'1', '2'}}
-assert set(data['slides']) == set(expected_slides), 'Lecture slides are needed for Weeks 7-10 and 12.'
+# Lecture slides: one deck per lecture in Weeks 5-14 (Week 5 has one lecture: recess).
+expected_slides = {'Week 5': {'1'}, **{f'Week {n}': {'1', '2'} for n in range(6, 15)}}
+assert set(data['slides']) == set(expected_slides), 'Lecture slides are needed for every lecture in Weeks 5-14.'
 for week, files in data['slides'].items():
     assert set(files) == expected_slides[week], f'{week}: lecture slides should be {sorted(expected_slides[week])}.'
     for path in files.values():
@@ -90,4 +90,4 @@ for anchor in ('glossary', 'selected-readings'):
     assert f'syllabus.html#{anchor}' in refs.urls, f'Homepage no longer links to syllabus.html#{anchor}.'
 for name in ('theme.css', 'theme.js'):
     assert f'{name}?v=' + hashlib.sha256((dist / name).read_bytes()).hexdigest()[:12] in syllabus_html, f'Readable syllabus links a stale {name}; regenerate it.'
-print('PASS: source freshness, schedule/deadline agreement, seven calendar events, seven student handouts, eight lecture slide decks, eight assignment slide decks, readable syllabus, asset stamps, and local links.')
+print('PASS: source freshness, schedule/deadline agreement, seven calendar events, seven student handouts, 19 lecture slide decks (Weeks 5-14), eight assignment slide decks, readable syllabus, asset stamps, and local links.')

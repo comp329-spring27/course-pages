@@ -35,8 +35,8 @@ for code, url in data['handouts'].items():
         folder = student_manifest['folders'][code.lower()]
         assert relative_path == f'{folder}/README.md' and (student_repo / relative_path).is_file(), f'Handout differs from student repository: {code}'
 # Lecture slides: existing decks linked under the weeks whose topics they cover.
-expected_slides = {'Week 7': {'1'}, 'Week 8': {'1', '2'}, 'Week 9': {'1'}, 'Week 10': {'1', '2'}, 'Week 12': {'1'}, 'Week 14': {'2'}}
-assert set(data['slides']) == set(expected_slides), 'Lecture slides are needed for Weeks 7-10, 12, and 14.'
+expected_slides = {'Week 7': {'1'}, 'Week 8': {'1', '2'}, 'Week 9': {'1'}, 'Week 10': {'1', '2'}, 'Week 12': {'1', '2'}}
+assert set(data['slides']) == set(expected_slides), 'Lecture slides are needed for Weeks 7-10 and 12.'
 for week, files in data['slides'].items():
     assert set(files) == expected_slides[week], f'{week}: lecture slides should be {sorted(expected_slides[week])}.'
     for path in files.values():

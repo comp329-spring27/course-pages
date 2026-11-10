@@ -55,14 +55,14 @@ handouts = {code: f'{handout_root}/{folder}/README.md' for code, folder in hando
 # into dist/assets/slides/ and linked under the week whose topic they cover in the current schedule.
 # Decks with no matching topic are not published. Without the workspace, the PDFs already in dist/ are used.
 slide_weeks = {
-    'w10_l2_distributed_foundations': ('Week 7', '1'),
-    'w11_l1_nccl_communication': ('Week 8', '1'),
-    'w11_l2_multiserver': ('Week 8', '2'),
-    'w12_l1_data_parallelism': ('Week 9', '1'),
-    'w12_l2_tensor_parallelism': ('Week 10', '1'),
-    'w13_l1_pipeline_3d': ('Week 10', '2'),
-    'w08_l1_gpu_architecture': ('Week 12', '1'),
-    'w08_l2_gpu_programming': ('Week 14', '2'),
+    'w07_l1_message_passing': ('Week 7', '1'),
+    'w08_l1_allreduce': ('Week 8', '1'),
+    'w08_l2_nccl_topology': ('Week 8', '2'),
+    'w09_l1_data_parallelism': ('Week 9', '1'),
+    'w10_l1_tensor_parallelism': ('Week 10', '1'),
+    'w10_l2_pipeline_3d': ('Week 10', '2'),
+    'w12_l1_gpu_architecture': ('Week 12', '1'),
+    'w12_l2_gpu_execution': ('Week 12', '2'),
 }
 slides_source = workspace / 'assignments/lecturer/lectures'
 slides_dir = base / 'dist/assets/slides'

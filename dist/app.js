@@ -8,7 +8,7 @@ const bullets = items => `<ul>${items.map(item => `<li>${withTag(item)}</li>`).j
 
 // Schedule: one row per week; lecture details expand in place.
 const eventLabel = event => {
-  let label = event.replace(/\s*\(.+\)/, '').replace(/T([123]) and Lab ([345]) out.*/, 'T$1 + Lab $2 out');
+  let label = event.replace(/\s*\((?!Weeks )[^)]*\)/, '').replace(/T([123]) and Lab ([345]) out.*/, 'T$1 + Lab $2 out');
   const day = event.match(/\(((?:Mon|Tue|Wed|Thu|Fri)(?:, [A-Z][a-z]{2} \d+)?)/);
   if (day) label += ` (${day[1]})`;
   const due = /\bdue\b|checkpoint|^midterm(?! review)|^final exam/i.test(event) && !/^nothing/i.test(event);
@@ -70,8 +70,8 @@ const stageNotes = {
   D1: 'Stream a raw Wikipedia dump into Parquet records, then measure how throughput changes with more workers and find the bottleneck.',
   D2: 'Normalize the corpus and compute statistics with Spark DataFrames and SQL, then study strong and weak scaling and the effect of partition count.',
   D3: 'Remove near-duplicates with MinHash and LSH, train a BPE tokenizer, and write sharded training data that passes the dataset contract.',
-  T1: 'Write a fused Triton kernel, validate it against PyTorch, and compare eager and compiled execution of a supplied model trained on your D3 data.',
-  T2: 'Build an all-reduce from point-to-point messages, benchmark NCCL collectives across GPUs and servers, and fit a latency–bandwidth model.',
+  T1: 'Write a Triton reduction or fused elementwise kernel, validate it against PyTorch, use it in the forward pass of a supplied workload on your D3 data, and compare eager, compiled, and vmap execution.',
+  T2: 'Build an all-reduce from point-to-point messages, benchmark NCCL collectives across GPUs with a guided two-server run, and fit a latency–bandwidth model.',
   T3: 'Implement data-parallel gradient averaging, work through tensor and pipeline layouts, and justify a 3D layout under a fixed GPU budget.'
 };
 const overview = $('.overview');

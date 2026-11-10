@@ -434,24 +434,22 @@ window.COURSE = {
   },
   "slides": {
     "Week 7": {
-      "1": "assets/slides/w10_l2_distributed_foundations.pdf"
+      "1": "assets/slides/w07_l1_message_passing.pdf"
     },
     "Week 8": {
-      "1": "assets/slides/w11_l1_nccl_communication.pdf",
-      "2": "assets/slides/w11_l2_multiserver.pdf"
+      "1": "assets/slides/w08_l1_allreduce.pdf",
+      "2": "assets/slides/w08_l2_nccl_topology.pdf"
     },
     "Week 9": {
-      "1": "assets/slides/w12_l1_data_parallelism.pdf"
+      "1": "assets/slides/w09_l1_data_parallelism.pdf"
     },
     "Week 10": {
-      "1": "assets/slides/w12_l2_tensor_parallelism.pdf",
-      "2": "assets/slides/w13_l1_pipeline_3d.pdf"
+      "1": "assets/slides/w10_l1_tensor_parallelism.pdf",
+      "2": "assets/slides/w10_l2_pipeline_3d.pdf"
     },
     "Week 12": {
-      "1": "assets/slides/w08_l1_gpu_architecture.pdf"
-    },
-    "Week 14": {
-      "2": "assets/slides/w08_l2_gpu_programming.pdf"
+      "1": "assets/slides/w12_l1_gpu_architecture.pdf",
+      "2": "assets/slides/w12_l2_gpu_execution.pdf"
     }
   },
   "assignment_slides": {

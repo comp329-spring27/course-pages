@@ -113,6 +113,7 @@ details[open] > summary .chevron { transform: rotate(45deg); }
 .week-body { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 4px 12px 20px 182px; background: var(--surface-soft); }
 .week-body > div + div { border-left: 1px solid var(--line); padding-left: 24px; }
 .week-body ul { margin: 0; padding-left: 18px; font-size: 15px; line-height: 1.55; }
+.week-body .topics { margin: 0; font-size: 15px; line-height: 1.55; }
 .week-body li { margin-bottom: 6px; }
 .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .04em; line-height: 1.3; padding: 1px 5px; margin-left: 6px; border: 1px solid var(--line); border-radius: 3px; color: var(--muted); vertical-align: 1px; }
 .tag-build { color: var(--green); border-color: var(--green); }

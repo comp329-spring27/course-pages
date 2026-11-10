@@ -31,13 +31,17 @@ const dividers = {
 };
 $('#schedule-rows').innerHTML = course.schedule.map(week => {
   const divider = dividers[week.week] ? `<div class="block-divider block-${dividers[week.week][0]}"><span>${dividers[week.week][1]}</span><small>${dividers[week.week][2]}</small></div>` : '';
-  const [title1, ...notes1] = week.lecture1;
-  const [title2, ...notes2] = week.lecture2;
+  // Expanded rows show only each lecture's topics (its CONCEPT line); the full WHY / WE WILL / BUILD
+  // detail stays in the syllabus and the slides.
+  const topics = notes => notes.filter(note => /\sCONCEPT$/.test(note)).map(note => note.replace(/\s+CONCEPT$/, ''));
+  const [title1, ...rest1] = week.lecture1;
+  const [title2, ...rest2] = week.lecture2;
+  const notes1 = topics(rest1), notes2 = topics(rest2);
   const summary = `<span class="week-col"><strong>${escapeHTML(week.week)}</strong><span class="week-dates">${escapeHTML(week.dates)}</span>${week.note.map(note => `<span class="week-note">${escapeHTML(note)}</span>`).join('')}</span>` +
     `<span class="lectures"><span>${escapeHTML(title1)}${slidesLink(week.week, 1)}</span>${title2 ? `<span>${escapeHTML(title2)}${slidesLink(week.week, 2)}</span>` : ''}</span>` +
     `<span class="events">${week.events.map(eventLabel).join('')}</span>`;
   if (!notes1.length && !notes2.length) return `${divider}<div class="week block-${week.block}">${summary}<span></span></div>`;
-  const body = [[1, notes1], [2, notes2]].filter(([, notes]) => notes.length).map(([n, notes]) => `<div><h4>Lecture ${n}</h4>${bullets(notes)}</div>`).join('');
+  const body = [[1, notes1], [2, notes2]].filter(([, notes]) => notes.length).map(([n, notes]) => `<div><h4>Lecture ${n}</h4>${notes.map(note => `<p class="topics">${escapeHTML(note)}</p>`).join('')}</div>`).join('');
   return `${divider}<details class="week block-${week.block}"><summary>${summary}<span class="chevron" aria-hidden="true"></span></summary><div class="week-body">${body}</div></details>`;
 }).join('');
 

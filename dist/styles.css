@@ -88,18 +88,18 @@ small { font-size: 14px; }
 .block-divider { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; padding: 22px 12px 8px; border-bottom: 1px solid var(--line); font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 .block-divider small { font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--muted); }
 .block-divider.block-data { color: var(--data); }
-.block-divider.block-training { color: var(--train); }
+.block-divider.block-training { color: var(--amber); }
 .week { border-bottom: 1px solid var(--line); border-left: 3px solid transparent; }
 .week.block-data { border-left-color: var(--data); }
-.week.block-training { border-left-color: var(--train); }
+.week.block-training { border-left-color: var(--amber); }
 .week.block-data > summary:hover, .week.block-data[open] > summary, .week.block-data .week-body { background: var(--data-soft); }
-.week.block-training > summary:hover, .week.block-training[open] > summary, .week.block-training .week-body { background: var(--train-soft); }
+.week.block-training > summary:hover, .week.block-training[open] > summary, .week.block-training .week-body { background: var(--amber-soft); }
 .week > summary { list-style: none; cursor: pointer; }
 .week > summary::-webkit-details-marker { display: none; }
 .week > summary:hover, .week[open] > summary { background: var(--surface-soft); }
 .week-col strong { display: block; font-size: 16px; font-weight: 600; line-height: 1.4; }
 .block-data .week-col strong { color: var(--data); }
-.block-training .week-col strong { color: var(--train); }
+.week.block-training .week-col strong { color: var(--amber); }
 .week-dates, .week-note { display: block; font-size: 14px; color: var(--muted); line-height: 1.4; }
 .week-note { font-size: 13px; margin-top: 4px; }
 .lectures span { display: block; font-size: 16px; line-height: 1.45; }

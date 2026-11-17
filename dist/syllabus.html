@@ -3,9 +3,9 @@
 <title>Syllabus · COMP 329 · Spring 2027</title>
 <link rel="icon" type="image/svg+xml" href="assets/course-mark.svg">
 <link rel="stylesheet" href="syllabus.css?v=f53c60656450">
-<link rel="stylesheet" href="theme.css?v=8c1338f9bfa3">
+<link rel="stylesheet" href="theme.css?v=c6d2e642d1c5">
 <script src="theme.js?v=db279466140b"></script>
-<meta name="source-sha256" content="d5938d36616ad3acbc138523258cb450877e1749257959a698c6ea953044b3ee">
+<meta name="source-sha256" content="caf6145295237427624dccaf4975fd414c5cb34226f8db5e1ea7fc7b1e9e0a41">
 </head><body class="syllabus-page"><header><a href="./"><img src="assets/course-mark.svg" alt="" width="40" height="40">COMP 329 · Course home</a><span>Spring 2027 syllabus</span><button type="button" class="theme-toggle" data-theme-toggle role="switch" aria-checked="false" aria-label="Dark mode"><span class="theme-toggle-track" aria-hidden="true"><span class="theme-toggle-knob"></span></span><span class="theme-toggle-label">Dark mode</span></button></header>
 <main><h1><strong>COMP 329: Systems for Artificial Intelligence</strong></h1>
 <p><em>Understand and build the systems behind scalable AI</em></p>
@@ -32,8 +32,8 @@
 <li>Predict, measure, and explain memory, throughput, scaling efficiency, and energy, using traces to justify a systems change.</li>
 </ul>
 <h2 id="the-system-you-will-study-and-build"><strong>The System You Will Study and Build</strong></h2>
-<p>Six assignments build one pipeline, from a raw Wikipedia dump to a trained model. The diagram shows each stage and what it reads and writes; the pipeline section of the course website shows each stage’s data format, shape, and a real example. Staff provide the model, autograd, optimizer, and reference programs; you build selected components, test them, and explain their performance.</p>
-<p><img class="figure" src="assets/syllabus-pipeline.png?v=8667ac612e86" alt="The course pipeline at a high level. A Wikipedia XML dump goes through D1 Collect (articles.parquet), D2 Process (cleaned Parquet and statistics) and D3 Build the dataset, which writes BPE token shards that follow the dataset contract. T3 Parallel training and T1 GPU kernel and execution read the shards; T2 Distributed programming uses synthetic tensors and provides the collectives T3 uses. T2 produces collective timings and a latency-bandwidth fit, T3 a trained model and scaling report, and T1 kernel timings and a profiler trace. Every stage can start from the staff reference output."></p>
+<p>Six assignments build one pipeline, from a raw Wikipedia dump to a trained model. The diagram shows the stages in order and how data flows between them; the pipeline section of the course website shows what each stage reads and writes, with formats, shapes, and real examples. Staff provide the model, autograd, optimizer, and reference programs; you build selected components, test them, and explain their performance.</p>
+<p><img class="figure" src="assets/syllabus-pipeline.png?v=6a139a337792" alt="The course pipeline. A Wikipedia dump flows through D1 Collect (due Week 3), D2 Process (Week 5) and D3 Build dataset (Week 7) into token shards, the training data. T3 Parallel training (Week 12) and T1 GPU kernel (Week 14) read the shards; T2 Distributed (Week 10) provides the collectives T3 uses."></p>
 <p>D3&#x27;s shards follow a written dataset contract, which T1 and T3 read. T2 uses synthetic tensors to isolate communication. If one of your earlier stages is incomplete, start the next from the staff reference output.</p>
 <h2 id="how-the-course-works">How the Course Works</h2>
 <h3>Each week</h3>

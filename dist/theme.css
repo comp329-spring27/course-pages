@@ -1,7 +1,8 @@
 /* Shared palette and theme switch for the course homepage and the browser-readable syllabus. */
 /* Rice University palette, matching the lecture slides (Rice slide template): navy #00205B,
    blue #0A509E, periwinkle #99ACFF. --data marks the data module (Weeks 1–4), --train the
-   distributed, ML, and GPU modules (Weeks 5–14); the header is a navy bar like the slides' title bars. */
+   distributed, ML, and GPU modules (Weeks 5–14). The schedule rows for Weeks 5–14 use --amber,
+   matching the training stages in the Pipeline figure; the header is a navy bar like the slides' title bars. */
 :root {
   color-scheme: light;
   --paper: #f4f6fa;
@@ -22,6 +23,7 @@
   --accent-ink: #ffffff;
   --focus: #5b78e0;
   --amber: #8a5514;
+  --amber-soft: #fbf1e4;
   --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
 }
 @media screen {
@@ -45,6 +47,7 @@
     --accent-ink: #0b1730;
     --focus: #99acff;
     --amber: #e8b876;
+    --amber-soft: #33281a;
   }
 }
 

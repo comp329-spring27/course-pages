@@ -12,10 +12,13 @@ base = Path(__file__).resolve().parents[1]
 dist = base / 'dist'
 raw = (dist / 'data.js').read_text()
 data = json.loads(raw.removeprefix('window.COURSE = ').removesuffix(';\n'))
-source = base.parents[1] / 'COMP 329 Syllabus - Spring 2027.docx'
+# The source repositories sit next to this folder (cs329-spring27/{assignments, course-pages, student-assignments});
+# the older layout, one level up, is searched too. Checks against them run only when they are found.
+roots = [base.parent, base.parents[1]]
+source = next((p for r in roots for p in (r / 'COMP 329 Syllabus - Spring 2027.docx', r / 'assignments/lecturer/syllabus-spring-2027.docx') if p.exists()), None)
 download = dist / 'assets/syllabus-spring-2027.docx'
 assert hashlib.sha256(download.read_bytes()).hexdigest() == data['source_sha256'], 'Bundled syllabus and website data differ.'
-if source.exists():
+if source:
     assert hashlib.sha256(source.read_bytes()).hexdigest() == data['source_sha256'], 'Source syllabus changed; regenerate and review the website.'
 assert len(data['schedule']) == 17
 assert len(data['assignments']) == 6
@@ -25,8 +28,9 @@ assert [a['code'] for a in data['assignments']] == ['D1', 'D2', 'D3', 'T2', 'T3'
 assert set(data['handouts']) == {a['code'] for a in data['assignments']} | {'Capstone'}
 assert len(set(data['handouts'].values())) == 7, 'Each assignment needs its own handout.'
 handout_prefix = 'https://github.com/comp329-spring27/student-assignments/blob/main/'
-student_repo = base.parents[1] / 'students-assignment'
-student_manifest = json.loads((student_repo / 'workspace_manifest.json').read_text()) if student_repo.exists() else None
+student_repo = next((r / 'student-assignments' for r in roots if (r / 'student-assignments/workspace_manifest.json').is_file()), None)
+student_manifest = json.loads((student_repo / 'workspace_manifest.json').read_text()) if student_repo else None
+print(f'Cross-checked against: syllabus {source or "(not found, skipped)"}; student repository {student_repo or "(not found, skipped)"}')
 for code, url in data['handouts'].items():
     assert url.startswith(handout_prefix) and url.endswith('/README.md'), f'Invalid student handout: {url}'
     relative_path = url.removeprefix(handout_prefix)

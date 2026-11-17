@@ -8,11 +8,16 @@ import hashlib
 from datetime import datetime, timedelta, timezone
 
 base = Path(__file__).resolve().parents[1]
-# The course workspace: the folder that holds sites/, assignments/, and the syllabus side by side.
-workspace = base.parents[1]
-source = workspace / 'COMP 329 Syllabus - Spring 2027.docx'
-if not source.exists():
-    source = base / 'dist/assets/syllabus-spring-2027.docx'
+# The source repositories sit next to this folder: cs329-spring27/{assignments, course-pages, student-assignments}.
+# The older layout (this folder under sites/, beside assignments/ and a loose syllabus .docx) is searched too.
+roots = [base.parent, base.parents[1]]
+assignments_repo = next((r / 'assignments' for r in roots if (r / 'assignments/lecturer').is_dir()), None)
+syllabus_candidates = [r / 'COMP 329 Syllabus - Spring 2027.docx' for r in roots]
+if assignments_repo:
+    syllabus_candidates.append(assignments_repo / 'lecturer/syllabus-spring-2027.docx')
+source = next((p for p in syllabus_candidates if p.exists()), base / 'dist/assets/syllabus-spring-2027.docx')
+print(f'Syllabus: {source}')
+print(f'Assignments repository: {assignments_repo or "not found; keeping the slide PDFs already in dist/"}')
 ns = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
 with ZipFile(source) as archive:
     root = ET.fromstring(archive.read('word/document.xml'))
@@ -51,9 +56,9 @@ handout_folders = {
     'Capstone': '07_capstone',
 }
 handouts = {code: f'{handout_root}/{folder}/README.md' for code, folder in handout_folders.items()}
-# Lecture slides: PDFs built in the course workspace (assignments/lecturer/lectures/<deck>.pdf) are copied
+# Lecture slides: PDFs built in the assignments repository (lecturer/lectures/<deck>.pdf) are copied
 # into dist/assets/slides/ and linked under the week whose topic they cover in the current schedule.
-# Decks with no matching topic are not published. Without the workspace, the PDFs already in dist/ are used.
+# Decks with no matching topic are not published. Without the repository, the PDFs already in dist/ are used.
 slide_weeks = {
     'w05_l1_processes_threads': ('Week 5', '1'),
     'w06_l1_networking': ('Week 6', '1'),
@@ -75,9 +80,9 @@ slide_weeks = {
     'w14_l1_precision_matmul': ('Week 14', '1'),
     'w14_l2_triton_end_to_end': ('Week 14', '2'),
 }
-slides_source = workspace / 'assignments/lecturer/lectures'
+slides_source = assignments_repo / 'lecturer/lectures' if assignments_repo else None
 slides_dir = base / 'dist/assets/slides'
-if slides_source.is_dir():
+if slides_source and slides_source.is_dir():
     slides_dir.mkdir(exist_ok=True)
     for old in slides_dir.glob('*.pdf'):
         old.unlink()
@@ -88,11 +93,11 @@ for deck, (week, lecture) in slide_weeks.items():
     if (slides_dir / f'{deck}.pdf').is_file():
         slides.setdefault(week, {})[lecture] = f'assets/slides/{deck}.pdf'
 # Assignment slides (one deck per assignment, plus capstone and optional UI), built with
-# `make slides` in the course workspace (assignments/lecturer/slides/<folder>.pdf).
+# `make slides` in the assignments repository (lecturer/slides/<folder>.pdf).
 assignment_slide_folders = {**handout_folders, 'UI': '08_ui_dashboard'}
-assignment_slides_source = workspace / 'assignments/lecturer/slides'
+assignment_slides_source = assignments_repo / 'lecturer/slides' if assignments_repo else None
 assignment_slides_dir = base / 'dist/assets/assignment-slides'
-if assignment_slides_source.is_dir():
+if assignment_slides_source and assignment_slides_source.is_dir():
     assignment_slides_dir.mkdir(exist_ok=True)
     for folder in assignment_slide_folders.values():
         shutil.copyfile(assignment_slides_source / f'{folder}.pdf', assignment_slides_dir / f'{folder}.pdf')

@@ -1,5 +1,5 @@
 window.COURSE = {
-  "source_sha256": "183111ed73bda3ecefdc4d4a3385a2b2fcb214ca4f9dc004e9fe98f6d3ba5494",
+  "source_sha256": "b9f82ee9de46dfadc8571d9a2fc236011d6b1f62b3162ffd05d7b2d7756076fa",
   "schedule": [
     {
       "week": "Week 0",
@@ -574,7 +574,7 @@ window.COURSE = {
     },
     {
       "term": "α–β model",
-      "meaning": "Sending n bytes takes about α + nβ (latency plus size ÷ bandwidth)."
+      "meaning": "Sending n bytes takes about α + nβ: α is the latency and β the time per byte (1 ÷ bandwidth). From Week 7, lectures write the same model as α + n/β, with β the bandwidth."
     },
     {
       "term": "Data parallelism",

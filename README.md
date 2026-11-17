@@ -14,9 +14,10 @@ The homepage has five sections, each written to be read top to bottom without ta
 
 1. **Overview** – title, one line, three facts, and a single course map of the two instructors' halves (D1–D3, then T2, T3, T1 in due order). Hovering, focusing, or tapping a stage card reveals why the stage is needed (**Why:**), what we will do in it (**We will:**), and the due date in the panel below the map, without covering the other cards; clicking a card jumps to the assignment row. The explanations (`stageWhy` and `stageNotes`) are in `dist/app.js`.
 2. **Schedule** – one row per week with lecture topics and what is due or released, grouped under divider rows for getting ready, the four modules (data processing, distributed and parallel computing, distributed computing for tensors and ML, GPU hardware), and finals, with the block colors from the course map. Opening a row shows each lecture's topics (its CONCEPT line from the syllabus) in two columns divided by a rule; the BUILD and STRETCH lines stay in the syllabus. Every lecture in Weeks 5–14 has a [slides] link to its PDF.
-3. **Assignments** – one row per assignment; opening it shows the scope, the scaling study, and the handout link. There are no labs and no capstone.
-4. **Grading** – the grade breakdown and four short policy items.
-5. **Resources** – prerequisites, the pre-term checklist, and links.
+3. **Pipeline** – the clickable course pipeline (see below).
+4. **Assignments** – one row per assignment; opening it shows the scope, the scaling study, and the handout link. There are no labs and no capstone.
+5. **Grading** – the grade breakdown and four short policy items.
+6. **Resources** – prerequisites, the pre-term checklist, and links.
 
 The reading list and glossary live on the readable syllabus page (`syllabus.html#selected-readings`, `syllabus.html#glossary`) rather than the homepage.
 
@@ -48,6 +49,8 @@ The ignored `.openai/` folder contains local metadata from an unused Sites regis
 
 `dist/assets/course-mark.svg` is the custom course owl used in the header, footer, and SVG browser icon. Matching PNG, ICO, and Apple touch icons are included in `dist/assets/`. Keep these variants in sync when changing the mark.
 
-Syllabus links open `dist/syllabus.html` in a new tab for browser reading. This page is generated from the bundled Word syllabus by `scripts/prepare-syllabus.py`, also run during content preparation. Its section headings carry ids so the homepage can link into it. The pipeline diagram in the Word syllabus becomes a clickable figure on this page: one box per stage, and selecting a stage opens what it reads and writes (format, shape and an example). The markup and examples are in `scripts/pipeline-figure.html`, the behaviour in `dist/pipeline-figure.js`, and the styles in `dist/syllabus.css`; the Word image stays available as its printable version. Without JavaScript, and when printing, every stage is shown open. If you edit `pipeline-figure.js` or `syllabus.css`, re-run `scripts/prepare-syllabus.py` to update their stamps. The examples come from the staff sample run, as does the Word figure drawn by `assignments/lecturer/tools/syllabus_pipeline_diagram.py`; change both together.
+Syllabus links open `dist/syllabus.html` in a new tab for browser reading. This page is generated from the bundled Word syllabus by `scripts/prepare-syllabus.py`, also run during content preparation. Its section headings carry ids so the homepage can link into it. The syllabus shows the course pipeline as a high-level image (drawn by `assignments/lecturer/tools/syllabus_pipeline_diagram.py` and embedded in the Word file).
+
+The homepage has a **Pipeline** section with the clickable version: one box per stage, and selecting a stage opens what it reads and writes (format, shape and a real example), right under that row; "Token shards" opens a step-by-step walkthrough from D3's shards to a training batch. The markup and examples are in `scripts/pipeline-figure.html`, which `scripts/prepare-pipeline.py` copies between the `pipeline-figure` markers in `dist/index.html` (run by `prepare-content.py`); the behaviour is in `dist/pipeline-figure.js` and the styles in `dist/pipeline-figure.css`. Without JavaScript, and when printing, every panel is shown. The examples come from the staff sample run; keep them in step with the high-level image.
 
 The homepage and syllabus share `theme.css` and `theme.js`. Light mode is the default; the header switch saves the selected theme in local storage and synchronizes it across open tabs. All colors are CSS variables defined once in `theme.css` for light and dark, so component styles need no per-theme overrides.

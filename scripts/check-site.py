@@ -80,12 +80,16 @@ for url in refs.urls:
     elif not re.match(r'https?://', url):
         path = urlsplit(url).path
         assert (dist / path).is_file(), f'Missing local asset: {url}'
-        if path in {'theme.css', 'styles.css', 'theme.js', 'app.js', 'data.js'}:
+        if path in {'theme.css', 'styles.css', 'theme.js', 'app.js', 'data.js', 'pipeline-figure.css', 'pipeline-figure.js'}:
             assert urlsplit(url).query == 'v=' + hashlib.sha256((dist / path).read_bytes()).hexdigest()[:12], f'Stale asset stamp: {url}; run scripts/stamp-assets.py'
 manifest_path = base / '.openai/hosting.json'
 if manifest_path.exists():
     manifest = json.loads(manifest_path.read_text())
     assert manifest['project_id'] and manifest['static']['directory'] == 'dist'
+homepage = (dist / 'index.html').read_text()
+assert (base / 'scripts/pipeline-figure.html').read_text().strip() in homepage, 'Homepage pipeline figure is stale; run scripts/prepare-pipeline.py.'
+for name in ('pipeline-figure.css', 'pipeline-figure.js'):
+    assert f'{name}?v=' + hashlib.sha256((dist / name).read_bytes()).hexdigest()[:12] in homepage, f'Homepage links a stale {name}; run scripts/stamp-assets.py.'
 syllabus_html = (dist / 'syllabus.html').read_text()
 assert f'content="{data["source_sha256"]}"' in syllabus_html, 'Readable syllabus is stale; regenerate it.'
 for anchor in ('glossary', 'selected-readings'):
@@ -93,4 +97,4 @@ for anchor in ('glossary', 'selected-readings'):
     assert f'syllabus.html#{anchor}' in refs.urls, f'Homepage no longer links to syllabus.html#{anchor}.'
 for name in ('theme.css', 'theme.js'):
     assert f'{name}?v=' + hashlib.sha256((dist / name).read_bytes()).hexdigest()[:12] in syllabus_html, f'Readable syllabus links a stale {name}; regenerate it.'
-print('PASS: source freshness, schedule/deadline agreement, six calendar events, six student handouts, 19 lecture slide decks (Weeks 5-14), seven assignment slide decks, readable syllabus, asset stamps, and local links.')
+print('PASS: source freshness, schedule/deadline agreement, six calendar events, six student handouts, 19 lecture slide decks (Weeks 5-14), seven assignment slide decks, readable syllabus, homepage pipeline figure, asset stamps, and local links.')

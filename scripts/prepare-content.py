@@ -139,4 +139,5 @@ print(f'Prepared {len(schedule)} schedule entries, {len(assignments)} assignment
 # Keep the browser-readable syllabus and the homepage's asset links in sync.
 import runpy
 runpy.run_path(str(base / "scripts/prepare-syllabus.py"))
+runpy.run_path(str(base / "scripts/prepare-pipeline.py"))
 runpy.run_path(str(base / "scripts/stamp-assets.py"))

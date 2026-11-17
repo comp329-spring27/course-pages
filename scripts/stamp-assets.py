@@ -13,6 +13,6 @@ def stamp(match):
     digest = hashlib.sha256((dist / name).read_bytes()).hexdigest()[:12]
     return f'{name}?v={digest}'
 
-html = re.sub(r'((?:theme|styles|app|data)\.(?:css|js))\?v=[^"]*', stamp, html)
+html = re.sub(r'((?:theme|styles|app|data|pipeline-figure)\.(?:css|js))\?v=[^"]*', stamp, html)
 page.write_text(html)
 print('Stamped homepage asset links.')

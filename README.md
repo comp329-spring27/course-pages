@@ -10,7 +10,7 @@ Run `python3 scripts/check-site.py` to validate source freshness, schedule/deadl
 
 ## Page structure
 
-The homepage has five sections, each written to be read top to bottom without tabs, filters, dialogs, or introductory prose:
+The homepage has six sections, each written to be read top to bottom without tabs, filters, dialogs, or introductory prose:
 
 1. **Overview** – title, one line, three facts, and a single course map of the two instructors' halves (D1–D3, then T2, T3, T1 in due order). Hovering, focusing, or tapping a stage card reveals why the stage is needed (**Why:**), what we will do in it (**We will:**), and the due date in the panel below the map, without covering the other cards; clicking a card jumps to the assignment row. The explanations (`stageWhy` and `stageNotes`) are in `dist/app.js`.
 2. **Pipeline** – the clickable course pipeline (see below).

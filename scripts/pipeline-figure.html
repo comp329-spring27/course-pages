@@ -14,13 +14,13 @@
   <button type="button" class="pl-stage pl-bridge" aria-expanded="false" aria-controls="pl-shards"><span class="pl-code">D3 → T1, T3</span> <span class="pl-name">Token shards</span> <span class="pl-from">how training reads them</span></button>
 </div>
 
-<div class="pl-band pl-band-train">Training systems · T1–T3 · from training data to a trained model</div>
+<div class="pl-band pl-band-train">Training systems · T2, T3, T1 · from training data to a trained model</div>
 <div class="pl-flow pl-flow-train">
   <button type="button" class="pl-stage pl-train" aria-expanded="false" aria-controls="pl-t2"><span class="pl-code">T2</span> <span class="pl-name">Distributed programming</span> <span class="pl-from">reads synthetic tensors</span> <span class="pl-due">due Week 10</span></button>
   <span class="pl-arrow pl-arrow-label" aria-hidden="true"><small>collectives</small></span>
-  <button type="button" class="pl-stage pl-train" aria-expanded="false" aria-controls="pl-t3"><span class="pl-code">T3</span> <span class="pl-name">Parallel training</span> <span class="pl-from">reads the token shards</span> <span class="pl-due">due Week 12</span></button>
+  <button type="button" class="pl-stage pl-train" aria-expanded="false" aria-controls="pl-t3"><span class="pl-code">T3</span> <span class="pl-name">Parallel training systems</span> <span class="pl-from">reads the token shards</span> <span class="pl-due">due Week 12</span></button>
   <span class="pl-gap" aria-hidden="true"></span>
-  <button type="button" class="pl-stage pl-train" aria-expanded="false" aria-controls="pl-t1"><span class="pl-code">T1</span> <span class="pl-name">GPU kernel and execution</span> <span class="pl-from">reads the token shards</span> <span class="pl-due">due Week 14</span></button>
+  <button type="button" class="pl-stage pl-train" aria-expanded="false" aria-controls="pl-t1"><span class="pl-code">T1</span> <span class="pl-name">GPU and framework execution</span> <span class="pl-from">reads the token shards</span> <span class="pl-due">due Week 14</span></button>
 </div>
 <div class="pl-footer">Every stage can start from the staff reference output, released 48 hours after each deadline.</div>
 
@@ -45,7 +45,7 @@
 </section>
 
 <section class="pl-panel pl-data" id="pl-d2" aria-label="D2 Process: data in and out">
-  <h4><span class="pl-code">D2</span> Process: normalize text and filter low-quality articles with Spark DataFrames and SQL</h4>
+  <h4><span class="pl-code">D2</span> Process: normalize text, filter low-quality articles, and compute statistics with Spark DataFrames and SQL</h4>
   <div class="pl-cards">
     <div class="pl-card"><div class="pl-io">Reads</div><div class="pl-file-name">articles.parquet</div><div class="pl-meta">Parquet table · 34 rows × 7 columns (from D1)</div>
 <pre>doc_id  title                              text
@@ -145,8 +145,8 @@ fit over message sizes:  seconds ≈ α + β · bytes
   </div>
 </section>
 
-<section class="pl-panel pl-train" id="pl-t3" aria-label="T3 Parallel training: data in and out">
-  <h4><span class="pl-code">T3</span> Parallel training: data-parallel gradient averaging, tensor- and pipeline-parallel pieces, a 3D layout</h4>
+<section class="pl-panel pl-train" id="pl-t3" aria-label="T3 Parallel training systems: data in and out">
+  <h4><span class="pl-code">T3</span> Parallel training systems: data-parallel gradient averaging, tensor- and pipeline-parallel pieces, a 3D layout</h4>
   <div class="pl-cards">
     <div class="pl-card"><div class="pl-io">Reads</div><div class="pl-file-name">training batches from datasets/bpe/</div><div class="pl-meta">built by the supplied loader · global batch split across ranks</div>
 <pre>contexts  (64, 8)   int64   8 previous token IDs per example
@@ -161,8 +161,8 @@ logits (64, 290) float32 → loss → bits per byte</pre>
   </div>
 </section>
 
-<section class="pl-panel pl-train" id="pl-t1" aria-label="T1 GPU kernel and execution: data in and out">
-  <h4><span class="pl-code">T1</span> GPU kernel and execution: a Triton kernel in the forward pass; eager, kernel, and compiled runs</h4>
+<section class="pl-panel pl-train" id="pl-t1" aria-label="T1 GPU and framework execution: data in and out">
+  <h4><span class="pl-code">T1</span> GPU and framework execution: a Triton kernel in the forward pass; eager, kernel, and compiled runs</h4>
   <div class="pl-cards">
     <div class="pl-card"><div class="pl-io">Reads</div><div class="pl-file-name">a layer's pre-activation</div><div class="pl-meta">from training batches on the token shards · CUDA tensors</div>
 <pre>x  (64, 64)  float32   = embeddings (64, 128) @ W1

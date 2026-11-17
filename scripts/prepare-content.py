@@ -45,10 +45,12 @@ def assignment_date(due):
     offset = 2 if 'Wed' in due else 4
     return (monday + timedelta(days=offset)).date().isoformat()
 assignments = []
-for row in table('Data (D)').findall('w:tr', ns)[1:]:
-    for c in cells(row):
-        code, title = c[0].split(' ', 1)
-        assignments.append({'code': code, 'title': title, 'due': c[1], 'date': assignment_date(c[1]), 'build': c[2].removeprefix('What you build: '), 'study': c[3].removeprefix('Scaling study: '), 'thread': 'data' if code.startswith('D') else 'training'})
+# One row per assignment, in due order: Assignment | Due | What you build | Scaling study.
+for row in table('Assignment').findall('w:tr', ns)[1:]:
+    name, due, build, study = (' '.join(c) for c in cells(row))
+    code, title = name.split(' ', 1)
+    due = 'Due ' + due
+    assignments.append({'code': code, 'title': title, 'due': due, 'date': assignment_date(due), 'build': build, 'study': study, 'thread': 'data' if code.startswith('D') else 'training'})
 assignments.sort(key=lambda a: a['date'])
 handout_root = 'https://github.com/comp329-spring27/student-assignments/blob/main'
 handout_folders = {

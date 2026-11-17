@@ -57,6 +57,12 @@ def inline(node):
 
 first_paragraph = True
 
+FIGURE = (base / 'scripts/pipeline-figure.html').read_text()
+
+def is_pipeline_figure(node):
+    blip = node.find('.//' + A + 'blip')
+    return blip is not None and images.get(blip.get(R + 'embed'), '').endswith('syllabus-pipeline.png')
+
 def slug(html):
     text = re.sub(r'<[^>]+>', '', html)
     return re.sub(r'[^a-z0-9]+', '-', text.lower()).strip('-')
@@ -66,6 +72,16 @@ def blocks(parent):
     result = []
     in_list = False
     for node in parent:
+        if node.tag == W + 'p' and is_pipeline_figure(node):
+            # The course pipeline diagram becomes the clickable figure in scripts/pipeline-figure.html;
+            # the PNG stays available as its printable version.
+            if in_list:
+                result.append('</ul>')
+                in_list = False
+            png = images[node.find('.//' + A + 'blip').get(R + 'embed')]
+            stamp = hashlib.sha256((base / 'dist' / png).read_bytes()).hexdigest()[:12]
+            result.append(FIGURE.replace('PNG_URL', f'{png}?v={stamp}'))
+            continue
         if node.tag == W + 'p':
             content = inline(node)
             if not content.strip():
@@ -113,10 +129,10 @@ page = '''<!doctype html>
 <link rel="icon" type="image/svg+xml" href="assets/course-mark.svg">
 <link rel="stylesheet" href="syllabus.css?v=CSS_HASH">
 <link rel="stylesheet" href="theme.css?v=THEME_CSS_HASH">
-<script src="theme.js?v=THEME_JS_HASH"></script>
+<script src="theme.js?v=THEME_JS_HASH"></script>FIGURE_SCRIPT
 <meta name="source-sha256" content="SOURCE_HASH">
 </head><body class="syllabus-page"><header><a href="./"><img src="assets/course-mark.svg" alt="" width="40" height="40">COMP 329 · Course home</a><span>Spring 2027 syllabus</span><button type="button" class="theme-toggle" data-theme-toggle role="switch" aria-checked="false" aria-label="Dark mode"><span class="theme-toggle-track" aria-hidden="true"><span class="theme-toggle-knob"></span></span><span class="theme-toggle-label">Dark mode</span></button></header>
 <main>CONTENT</main></body></html>
-'''.replace('THEME_CSS_HASH', hashlib.sha256((base / 'dist/theme.css').read_bytes()).hexdigest()[:12]).replace('THEME_JS_HASH', hashlib.sha256((base / 'dist/theme.js').read_bytes()).hexdigest()[:12]).replace('CSS_HASH', hashlib.sha256((base / 'dist/syllabus.css').read_bytes()).hexdigest()[:12]).replace('SOURCE_HASH', hashlib.sha256(source.read_bytes()).hexdigest()).replace('CONTENT', content)
+'''.replace('THEME_CSS_HASH', hashlib.sha256((base / 'dist/theme.css').read_bytes()).hexdigest()[:12]).replace('THEME_JS_HASH', hashlib.sha256((base / 'dist/theme.js').read_bytes()).hexdigest()[:12]).replace('CSS_HASH', hashlib.sha256((base / 'dist/syllabus.css').read_bytes()).hexdigest()[:12]).replace('SOURCE_HASH', hashlib.sha256(source.read_bytes()).hexdigest()).replace('CONTENT', content).replace('FIGURE_SCRIPT', f'\n<script src="pipeline-figure.js?v={hashlib.sha256((base / "dist/pipeline-figure.js").read_bytes()).hexdigest()[:12]}" defer></script>' if 'class="pipeline"' in content else '')
 (base / 'dist/syllabus.html').write_text(page)
 print('Prepared browser-readable syllabus.')

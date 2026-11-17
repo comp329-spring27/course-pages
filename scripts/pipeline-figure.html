@@ -1,0 +1,123 @@
+<figure class="pipeline" aria-labelledby="pipeline-title">
+<figcaption id="pipeline-title"><strong>The course pipeline.</strong> Select a stage to see the data it reads and writes: format, shape, and a real example from the staff sample run. <a href="PNG_URL">Printable version</a></figcaption>
+
+<div class="pl-band pl-band-data">Data pipeline · D1–D3 · from a raw dump to training data</div>
+<div class="pl-flow">
+  <div class="pl-file">Wikipedia XML dump</div>
+  <span class="pl-arrow" aria-hidden="true"></span>
+  <button type="button" class="pl-stage pl-data" aria-expanded="false" aria-controls="pl-d1"><span class="pl-code">D1</span> <span class="pl-name">Collect</span> <span class="pl-due">due Week 3</span></button>
+  <span class="pl-arrow" aria-hidden="true"></span>
+  <button type="button" class="pl-stage pl-data" aria-expanded="false" aria-controls="pl-d2"><span class="pl-code">D2</span> <span class="pl-name">Process</span> <span class="pl-due">due Week 5 (Wed)</span></button>
+  <span class="pl-arrow" aria-hidden="true"></span>
+  <button type="button" class="pl-stage pl-data" aria-expanded="false" aria-controls="pl-d3"><span class="pl-code">D3</span> <span class="pl-name">Build the dataset</span> <span class="pl-due">due Week 7</span></button>
+  <span class="pl-arrow" aria-hidden="true"></span>
+  <div class="pl-file pl-contract">Token shards<br><small>the dataset contract</small></div>
+</div>
+
+<div class="pl-band pl-band-train">Training systems · T1–T3 · from training data to a trained model</div>
+<div class="pl-flow pl-flow-train">
+  <button type="button" class="pl-stage pl-train" aria-expanded="false" aria-controls="pl-t2"><span class="pl-code">T2</span> <span class="pl-name">Distributed programming</span> <span class="pl-from">reads synthetic tensors</span> <span class="pl-due">due Week 10</span></button>
+  <span class="pl-arrow pl-arrow-label" aria-hidden="true"><small>collectives</small></span>
+  <button type="button" class="pl-stage pl-train" aria-expanded="false" aria-controls="pl-t3"><span class="pl-code">T3</span> <span class="pl-name">Parallel training</span> <span class="pl-from">reads the token shards</span> <span class="pl-due">due Week 12</span></button>
+  <span class="pl-gap" aria-hidden="true"></span>
+  <button type="button" class="pl-stage pl-train" aria-expanded="false" aria-controls="pl-t1"><span class="pl-code">T1</span> <span class="pl-name">GPU kernel and execution</span> <span class="pl-from">reads the token shards</span> <span class="pl-due">due Week 14</span></button>
+</div>
+<div class="pl-capstone"><strong>Capstone</strong> (pairs, due Tue, May 4): change one part of this pipeline and measure the effect. Every stage can start from the staff reference output, released 48 hours after each deadline.</div>
+
+<p class="pl-hint">Select a stage above to see its input and output data.</p>
+
+<section class="pl-panel pl-data" id="pl-d1" aria-label="D1 Collect: data in and out">
+  <h4><span class="pl-code">D1</span> Collect: stream-parse the XML, strip wiki markup, skip redirects and empty pages</h4>
+  <div class="pl-cards">
+    <div class="pl-card"><div class="pl-io">Reads</div><div class="pl-file-name">tiny-wiki.xml.bz2</div><div class="pl-meta">Wikipedia XML dump · 37 pages · 3.4 KB compressed</div>
+<pre>&lt;page&gt;&lt;title&gt;Matrix Multiplication / study 1&lt;/title&gt;
+  &lt;ns&gt;0&lt;/ns&gt;&lt;id&gt;1&lt;/id&gt;
+  &lt;revision&gt;&lt;id&gt;10001&lt;/id&gt;
+    &lt;text&gt;'''Matrix Multiplication''' is a topic
+      in [[linear algebra]]. == Method == ...&lt;/text&gt;
+  &lt;/revision&gt;&lt;/page&gt;</pre></div>
+    <div class="pl-card"><div class="pl-io">Writes</div><div class="pl-file-name">articles.parquet</div><div class="pl-meta">Parquet table · 34 rows × 7 columns</div>
+<pre>doc_id  title                              text
+'1'     'Matrix Multiplication / study 1'  'Matrix Multiplication is a topic in ...'
+'2'     'Language Models / study 2'        'Language Models is a topic in ...'</pre>
+    <p class="pl-note">Also revision_id, timestamp, source, and license. 3 of 37 pages are skipped (a redirect, another namespace, an empty page).</p></div>
+  </div>
+</section>
+
+<section class="pl-panel pl-data" id="pl-d2" aria-label="D2 Process: data in and out">
+  <h4><span class="pl-code">D2</span> Process: normalize text and filter low-quality articles with Spark DataFrames and SQL</h4>
+  <div class="pl-cards">
+    <div class="pl-card"><div class="pl-io">Reads</div><div class="pl-file-name">articles.parquet</div><div class="pl-meta">Parquet table · 34 rows × 7 columns (from D1)</div>
+<pre>doc_id  title                              text
+'1'     'Matrix Multiplication / study 1'  'Matrix Multiplication is a topic in ...'</pre></div>
+    <div class="pl-card"><div class="pl-io">Writes</div><div class="pl-file-name">processed/*.parquet + processing.stats.json</div><div class="pl-meta">Parquet parts · 32 rows × 7 columns, plus statistics</div>
+<pre>same 7 columns, cleaned text       filtered out: short 1, email 1
+
+{"documents": 32, "bytes": 29742,
+ "top_words": [["the", 416], ["and", 160], ["a", 132], ...]}</pre></div>
+  </div>
+</section>
+
+<section class="pl-panel pl-data" id="pl-d3" aria-label="D3 Build the dataset: data in and out">
+  <h4><span class="pl-code">D3</span> Build the dataset: remove copies (MinHash/LSH), split, train a BPE tokenizer, write token shards</h4>
+  <div class="pl-cards">
+    <div class="pl-card"><div class="pl-io">Reads</div><div class="pl-file-name">processed/*.parquet</div><div class="pl-meta">Parquet parts · 32 rows × 7 columns (from D2)</div>
+<pre>doc_id  title                              text
+'1'     'Matrix Multiplication / study 1'  'Matrix Multiplication is a topic in ...'</pre>
+    <p class="pl-note">8 copies are removed (4 exact, 4 near), leaving 24 documents: 20 train, 2 validation, 2 test.</p></div>
+    <div class="pl-card"><div class="pl-io">Writes</div><div class="pl-file-name">datasets/bpe/</div><div class="pl-meta">uint16 token shards + manifest.json + tokenizer.json · vocabulary of 290 token IDs</div>
+<pre>train-00000.bin   uint16 array, shape (647,)
+[256,  77,   97,   116,  114,  105,  120,  32,   77,   ...,  257]
+ BOS   M     a     t     r     i     x     ' '   M          EOS
+
+manifest.json
+{"doc_id": "1", "split": "train", "offset": 0, "tokens": 647, ...}</pre>
+    <p class="pl-note">This folder is the dataset contract that T1 and T3 read.</p></div>
+  </div>
+</section>
+
+<section class="pl-panel pl-train" id="pl-t2" aria-label="T2 Distributed programming: data in and out">
+  <h4><span class="pl-code">T2</span> Distributed programming: a ring all-reduce with mpi4py, an NCCL benchmark, and an α–β fit</h4>
+  <div class="pl-cards">
+    <div class="pl-card"><div class="pl-io">Reads</div><div class="pl-file-name">synthetic tensors</div><div class="pl-meta">float32 buffers on each rank · 1 KiB to 4 MiB · not the token shards</div>
+<pre>rank 0: [x0, x1, x2, x3, x4, x5]    float32, split into
+rank 1: [y0, y1, y2, y3, y4, y5]    one chunk per rank
+rank 2: [z0, z1, z2, z3, z4, z5]</pre></div>
+    <div class="pl-card"><div class="pl-io">Writes</div><div class="pl-file-name">sums + measurements.csv</div><div class="pl-meta">every rank holds the element-wise sum · timings per message size</div>
+<pre>every rank: [x0+y0+z0, x1+y1+z1, ...]
+
+fit over message sizes:  seconds ≈ α + β · bytes
+  α = latency per message,  β = time per byte</pre>
+    <p class="pl-note">T3 uses the same collectives to average gradients.</p></div>
+  </div>
+</section>
+
+<section class="pl-panel pl-train" id="pl-t3" aria-label="T3 Parallel training: data in and out">
+  <h4><span class="pl-code">T3</span> Parallel training: data-parallel gradient averaging, tensor- and pipeline-parallel pieces, a 3D layout</h4>
+  <div class="pl-cards">
+    <div class="pl-card"><div class="pl-io">Reads</div><div class="pl-file-name">training batches from datasets/bpe/</div><div class="pl-meta">built by the supplied loader · global batch split across ranks</div>
+<pre>contexts  (64, 8)   int64   8 previous token IDs per example
+targets   (64,)     int64   the next token ID to predict
+with p ranks, each rank gets (64/p, 8) and (64/p,)</pre></div>
+    <div class="pl-card"><div class="pl-io">Writes</div><div class="pl-file-name">trained model + measurements.csv</div><div class="pl-meta">31,746 float32 parameters · loss, bits per byte, tokens/s</div>
+<pre>E   (290, 16)    W1  (128, 64)    b1  (64,)
+W2  (64, 290)    b2  (290,)
+logits (64, 290) float32 → loss → bits per byte</pre>
+    <p class="pl-note">Each update must match a single-process reference and PyTorch DDP.</p></div>
+  </div>
+</section>
+
+<section class="pl-panel pl-train" id="pl-t1" aria-label="T1 GPU kernel and execution: data in and out">
+  <h4><span class="pl-code">T1</span> GPU kernel and execution: a Triton kernel in the forward pass; eager, kernel, and compiled runs</h4>
+  <div class="pl-cards">
+    <div class="pl-card"><div class="pl-io">Reads</div><div class="pl-file-name">a layer's pre-activation</div><div class="pl-meta">from training batches on the token shards · CUDA tensors</div>
+<pre>x  (64, 64)  float32   = embeddings (64, 128) @ W1
+b  (64,)     float32   the layer's bias</pre></div>
+    <div class="pl-card"><div class="pl-io">Writes</div><div class="pl-file-name">hidden + measurements.csv + trace</div><div class="pl-meta">one Triton launch · timings for eager, kernel, and compiled</div>
+<pre>hidden = tanh(x + b)   (64, 64) float32
+
+setup, warmup and steady-state step times
+a profiler trace that explains the bottleneck</pre></div>
+  </div>
+</section>
+</figure>

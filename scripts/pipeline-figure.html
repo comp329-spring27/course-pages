@@ -54,7 +54,8 @@
 <pre>same 7 columns, cleaned text       filtered out: short 1, email 1
 
 {"documents": 32, "bytes": 29742,
- "top_words": [["the", 416], ["and", 160], ["a", 132], ...]}</pre></div>
+ "top_words": [{"word": "the", "count": 416},
+               {"word": "and", "count": 160}, ...]}</pre></div>
   </div>
 </section>
 
@@ -103,10 +104,23 @@ manifest.json     {"doc_id": "1", "shard": "train-00000.bin", "offset": 0, "toke
 ...</pre>
       <p>This document gives 646 examples (every token after BOS is a target once). All 20 training documents give 12,882.</p></li>
     <li><div class="pl-step-title">Batch: stack 64 examples</div>
-<pre>contexts  (64, 8)   int64     64 examples × 8 context IDs
-targets   (64,)     int64     the 64 next-token IDs</pre></li>
+<pre>contexts  (64, 8)   64 examples × 8 context IDs
+targets   (64,)     the 64 next-token IDs</pre>
+      <p>The loader returns NumPy <code>int32</code> arrays; training turns them into PyTorch <code>int64</code> tensors, the type PyTorch needs to look up rows of a table.</p></li>
+    <li><div class="pl-step-title">Embedding: each token ID becomes 16 numbers</div>
+      <p>A token ID is just a label (77 is not "bigger" than 32), so the model cannot do arithmetic on it directly. Instead it keeps an <strong>embedding table</strong> <code>E</code> with one row per ID: 290 rows, each a list of 16 numbers. Looking up an ID means taking its row.</p>
+<pre>ID    token   row of E: 16 numbers
+77    M       [ 0.12, -0.40,  0.03,  0.88,  ...,  -0.21]
+97    a       [-0.35,  0.10,  0.62, -0.07,  ...,   0.44]
+256   BOS     [ 0.01,  0.27, -0.15,  0.09,  ...,   0.30]
+...   (290 rows in all)</pre>
+      <p>These numbers are illustrative: they start random and training adjusts them, so tokens used in similar ways end up with similar rows. <strong>16</strong> is a design choice (the embedding width <code>D</code>): enough numbers to tell 290 tokens apart in this small model. Large language models use hundreds to thousands.</p>
+<pre>one example's context   [256, 256, 256, 256, 256, 256, 256, 77]
+look up 8 rows          (8, 16)     7 copies of the BOS row, then the row for M
+put them side by side   (128,)      8 × 16 = 128 numbers: the input to the first layer
+the whole batch         (64, 8) → (64, 8, 16) → (64, 128)</pre></li>
     <li><div class="pl-step-title">Model: one training step on the batch</div>
-<pre>E[contexts]                 (64, 8, 16)   look up a row of 16 numbers per ID (E is 290 × 16)
+<pre>E[contexts]                 (64, 8, 16)   the embedding lookup from step 6
 flatten                     (64, 128)     8 tokens × 16 numbers
 hidden = tanh(x @ W1 + b1)  (64, 64)      ← T1 writes a Triton kernel for tanh(· + b1)
 logits = hidden @ W2 + b2   (64, 290)     one score for each of the 290 IDs
@@ -118,8 +132,8 @@ loss compares logits with targets  →  gradients  →  update</pre>
 <section class="pl-panel pl-train" id="pl-t2" aria-label="T2 Distributed programming: data in and out">
   <h4><span class="pl-code">T2</span> Distributed programming: a ring all-reduce with mpi4py, an NCCL benchmark, and an α–β fit</h4>
   <div class="pl-cards">
-    <div class="pl-card"><div class="pl-io">Reads</div><div class="pl-file-name">synthetic tensors</div><div class="pl-meta">float32 buffers on each rank · 1 KiB to 4 MiB · not the token shards</div>
-<pre>rank 0: [x0, x1, x2, x3, x4, x5]    float32, split into
+    <div class="pl-card"><div class="pl-io">Reads</div><div class="pl-file-name">synthetic tensors</div><div class="pl-meta">random values on each rank, not the token shards · CPU ring (mpi4py): float64, 1 KiB–4 MiB · GPU benchmark (NCCL): float32, 4 KiB–16 MiB</div>
+<pre>rank 0: [x0, x1, x2, x3, x4, x5]    each rank's values, split into
 rank 1: [y0, y1, y2, y3, y4, y5]    one chunk per rank
 rank 2: [z0, z1, z2, z3, z4, z5]</pre></div>
     <div class="pl-card"><div class="pl-io">Writes</div><div class="pl-file-name">sums + measurements.csv</div><div class="pl-meta">every rank holds the element-wise sum · timings per message size</div>

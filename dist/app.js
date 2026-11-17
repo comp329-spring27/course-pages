@@ -3,7 +3,7 @@ const $ = (selector, context = document) => context.querySelector(selector);
 const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const course = window.COURSE;
 const dateLabel = date => new Date(`${date}T12:00:00`).toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
-const withTag = text => escapeHTML(text).replace(/\s+(WHY|WE WILL|CONCEPT|BUILD|STRETCH)$/, (_, tag) => ` <span class="tag tag-${tag.toLowerCase().replace(' ', '-')}">${tag}</span>`);
+const withTag = text => escapeHTML(text).replace(/\s+(CONCEPT|BUILD|STRETCH)$/, (_, tag) => ` <span class="tag tag-${tag.toLowerCase().replace(' ', '-')}">${tag}</span>`);
 const bullets = items => `<ul>${items.map(item => `<li>${withTag(item)}</li>`).join('')}</ul>`;
 
 // Schedule: one row per week; lecture details expand in place.
@@ -29,8 +29,8 @@ const dividers = {
 };
 $('#schedule-rows').innerHTML = course.schedule.map(week => {
   const divider = dividers[week.week] ? `<div class="block-divider block-${dividers[week.week][0]}"><span>${dividers[week.week][1]}</span><small>${dividers[week.week][2]}</small></div>` : '';
-  // Expanded rows show only each lecture's topics (its CONCEPT line); the full WHY / WE WILL / BUILD
-  // detail stays in the syllabus and the slides.
+  // Expanded rows show only each lecture's topics (its CONCEPT line); the BUILD and STRETCH lines
+  // stay in the syllabus.
   const topics = notes => notes.filter(note => /\sCONCEPT$/.test(note)).map(note => note.replace(/\s+CONCEPT$/, ''));
   const [title1, ...rest1] = week.lecture1;
   const [title2, ...rest2] = week.lecture2;
@@ -72,9 +72,9 @@ const stageNotes = {
   D1: 'Stream a raw Wikipedia dump into Parquet records, then measure how throughput changes with more workers and find the bottleneck.',
   D2: 'Normalize the corpus and compute statistics with Spark DataFrames and SQL, then study strong and weak scaling and the effect of partition count.',
   D3: 'Remove near-duplicates with MinHash and LSH, train a BPE tokenizer, and write sharded training data that passes the dataset contract.',
-  T1: 'Write a Triton reduction or fused elementwise kernel, validate it against PyTorch, use it in the forward pass of a supplied workload on your D3 data, and compare eager, compiled, and vmap execution.',
+  T1: 'Write a Triton reduction or fused elementwise kernel, validate it against PyTorch, use it in the forward pass of a supplied workload on your D3 data, and compare eager, kernel, and compiled execution.',
   T2: 'Build an all-reduce from point-to-point messages, benchmark NCCL collectives across GPUs with a guided two-server run, and fit a latency–bandwidth model.',
-  T3: 'Implement data-parallel gradient averaging, work through tensor and pipeline layouts, and justify a 3D layout under a fixed GPU budget.'
+  T3: 'Implement data-parallel gradient averaging, work through tensor and pipeline layouts, and justify a 3D layout under a fixed GPU and memory budget.'
 };
 const overview = $('.overview');
 const detailBody = $('#stage-detail-body');

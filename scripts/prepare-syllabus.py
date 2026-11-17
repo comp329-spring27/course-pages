@@ -14,8 +14,27 @@ with ZipFile(source) as archive:
     document = ET.fromstring(archive.read('word/document.xml'))
     relationships = ET.fromstring(archive.read('word/_rels/document.xml.rels'))
 links = {r.get('Id'): r.get('Target') for r in relationships if r.get('TargetMode') == 'External'}
+# Embedded images (the course pipeline diagram) are copied next to the page as assets/syllabus-<name>.
+A = '{http://schemas.openxmlformats.org/drawingml/2006/main}'
+WP = '{http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing}'
+images = {}
+with ZipFile(source) as archive:
+    for r in relationships:
+        if r.get('Type', '').endswith('/image'):
+            name = 'syllabus-' + Path(r.get('Target')).name
+            (base / 'dist/assets' / name).write_bytes(archive.read('word/' + r.get('Target')))
+            images[r.get('Id')] = 'assets/' + name
 
 def inline(node):
+    if node.tag == W + 'drawing':
+        blip = node.find('.//' + A + 'blip')
+        doc_pr = node.find('.//' + WP + 'docPr')
+        target = images.get(blip.get(R + 'embed')) if blip is not None else None
+        if not target:
+            return ''
+        stamp = hashlib.sha256((base / 'dist' / target).read_bytes()).hexdigest()[:12]
+        alt = escape(doc_pr.get('descr', ''), quote=True) if doc_pr is not None else ''
+        return f'<img class="figure" src="{target}?v={stamp}" alt="{alt}">'
     if node.tag == W + 't':
         return escape(node.text or '')
     if node.tag == W + 'br':

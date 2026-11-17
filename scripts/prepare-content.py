@@ -21,12 +21,17 @@ print(f'Assignments repository: {assignments_repo or "not found; keeping the sli
 ns = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
 with ZipFile(source) as archive:
     root = ET.fromstring(archive.read('word/document.xml'))
-tables = root.findall('.//w:tbl', ns)
 def cells(row):
     return [[ ''.join(p.itertext()).strip() for p in c.findall('w:p', ns) if ''.join(p.itertext()).strip() ] for c in row.findall('w:tc', ns)]
+# Tables are found by the first cell of their header row, so adding or removing a table elsewhere
+# in the syllabus does not shift them.
+def table(header):
+    found = [t for t in root.findall('.//w:tbl', ns) if cells(t.find('w:tr', ns))[0][:1] == [header]]
+    assert len(found) == 1, f'Expected one syllabus table headed {header!r}, found {len(found)}'
+    return found[0]
 
 schedule = []
-for row in tables[5].findall('w:tr', ns)[1:]:
+for row in table('Week').findall('w:tr', ns)[1:]:
     c = cells(row)
     number = int(c[0][0].split()[-1]) if c[0][0].startswith('Week ') else None
     # Weeks 1-4: large-scale data processing (Jermaine); Weeks 5-14: distributed, ML, and GPU systems (Wang).
@@ -40,7 +45,7 @@ def assignment_date(due):
     offset = 2 if 'Wed' in due else 4
     return (monday + timedelta(days=offset)).date().isoformat()
 assignments = []
-for row in tables[4].findall('w:tr', ns)[1:]:
+for row in table('Data (D)').findall('w:tr', ns)[1:]:
     for c in cells(row):
         code, title = c[0].split(' ', 1)
         assignments.append({'code': code, 'title': title, 'due': c[1], 'date': assignment_date(c[1]), 'build': c[2].removeprefix('What you build: '), 'study': c[3].removeprefix('Scaling study: '), 'thread': 'data' if code.startswith('D') else 'training'})
@@ -103,8 +108,8 @@ if assignment_slides_source and assignment_slides_source.is_dir():
         shutil.copyfile(assignment_slides_source / f'{folder}.pdf', assignment_slides_dir / f'{folder}.pdf')
 assignment_slides = {code: f'assets/assignment-slides/{folder}.pdf' for code, folder in assignment_slide_folders.items()
                      if (assignment_slides_dir / f'{folder}.pdf').is_file()}
-glossary = [{'term': c[0][0], 'meaning': c[1][0]} for c in (cells(r) for r in tables[6].findall('w:tr', ns)[1:])]
-labs = [{'name': c[0][0], 'description': c[1][0], 'weeks': c[2][0]} for c in (cells(r) for r in tables[3].findall('w:tr', ns)[1:])]
+glossary = [{'term': c[0][0], 'meaning': c[1][0]} for c in (cells(r) for r in table('Term').findall('w:tr', ns)[1:])]
+labs = [{'name': c[0][0], 'description': c[1][0], 'weeks': c[2][0]} for c in (cells(r) for r in table('Lab').findall('w:tr', ns)[1:])]
 paragraphs = [''.join(p.itertext()).strip() for p in root.findall('.//w:p', ns)]
 readings = paragraphs[paragraphs.index('Selected Readings') + 2:paragraphs.index('Glossary')]
 data = {'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(), 'schedule': schedule, 'assignments': assignments, 'handouts': handouts, 'slides': slides, 'assignment_slides': assignment_slides, 'glossary': glossary, 'labs': labs, 'readings': readings}

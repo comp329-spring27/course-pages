@@ -23,7 +23,7 @@ if source:
 assert len(data['schedule']) == 17
 assert len(data['assignments']) == 6
 assert len(data['labs']) == 5
-assert len(data['glossary']) == 38
+assert len(data['glossary']) == 32
 assert [a['code'] for a in data['assignments']] == ['D1', 'D2', 'D3', 'T2', 'T3', 'T1']
 assert set(data['handouts']) == {a['code'] for a in data['assignments']} | {'Capstone'}
 assert len(set(data['handouts'].values())) == 7, 'Each assignment needs its own handout.'

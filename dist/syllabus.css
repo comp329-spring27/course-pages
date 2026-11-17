@@ -17,5 +17,6 @@ table { width: 100%; border-collapse: collapse; font-size: 17px; line-height: 1.
 td { padding: 16px; border: 1px solid #d6dce7; vertical-align: top; min-width: 160px; }
 tr:first-child { background: #eef2f9; }
 td p:last-child { margin-bottom: 0; }
+img.figure { display: block; width: 100%; max-width: 980px; height: auto; margin: 8px auto 20px; padding: 12px; background: white; border: 1px solid #d6dce7; border-radius: 12px; box-sizing: border-box; }
 @media (max-width: 760px) { header { padding: 18px; flex-wrap: wrap; gap: 8px; } main { margin: 0 10px 24px; padding: 28px 20px; } h2 { font-size: 27px; } }
 @media print { body { background: white; font-size: 11pt; } header { display: none; } main { max-width: none; margin: 0; padding: 0; border: 0; } h2, h3 { break-after: avoid; } .table-scroll { overflow: visible; } td { min-width: 0; padding: 8px; } table { font-size: 9pt; } }

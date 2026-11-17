@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="syllabus.css?v=f53c60656450">
 <link rel="stylesheet" href="theme.css?v=8c1338f9bfa3">
 <script src="theme.js?v=db279466140b"></script>
-<meta name="source-sha256" content="28b78bd062844df83b1f3236f77d32ec2b521f3aedbdc489a1ab4f7619f1d005">
+<meta name="source-sha256" content="0c4af36a0995d4bac974f81eec36d2e8a956d772abb9b3c7764e149b3a9f7c93">
 </head><body class="syllabus-page"><header><a href="./"><img src="assets/course-mark.svg" alt="" width="40" height="40">COMP 329 · Course home</a><span>Spring 2027 syllabus</span><button type="button" class="theme-toggle" data-theme-toggle role="switch" aria-checked="false" aria-label="Dark mode"><span class="theme-toggle-track" aria-hidden="true"><span class="theme-toggle-knob"></span></span><span class="theme-toggle-label">Dark mode</span></button></header>
 <main><h1><strong>COMP 329: Systems for Artificial Intelligence</strong></h1>
 <p><em>Understand and build the systems behind scalable AI</em></p>
@@ -31,10 +31,6 @@
 <li>Explain where time goes when PyTorch runs a model (kernel launches, operator dispatch, and graph compilation) and compare eager and compiled execution.</li>
 <li>Predict, measure, and explain memory, throughput, scaling efficiency, and energy, using traces to justify a systems change.</li>
 </ul>
-<h2 id="the-system-you-will-study-and-build"><strong>The System You Will Study and Build</strong></h2>
-<p>Six assignments build one pipeline, from a raw Wikipedia dump to a trained model. The diagram shows what each stage reads and writes. Staff provide the model, autograd, optimizer, and reference programs; you build selected components, test them, and explain their performance.</p>
-<p><img class="figure" src="assets/syllabus-pipeline.png?v=10cc7da357c7" alt="The course pipeline: a Wikipedia XML dump goes through D1 (articles.parquet), D2 (processed Parquet and statistics) and D3 (BPE token shards that follow the dataset contract). T3 trains on the shards and produces a trained model and scaling report; T1 runs a Triton kernel on them and produces kernel timings and a profiler trace; T2 uses synthetic tensors to build and time collectives that T3 uses. The capstone changes one part of the pipeline."></p>
-<p>D3&#x27;s shards follow a written dataset contract, which T1 and T3 read. T2 uses synthetic tensors to isolate communication. If one of your earlier stages is incomplete, start the next from the staff reference output.</p>
 <h2 id="how-the-course-works">How the Course Works</h2>
 <h3>Each week</h3>
 <ul>
@@ -51,6 +47,10 @@
 </ul>
 <h3>Reading the schedule</h3>
 <p>Each lecture in the schedule lists its topics. BUILD marks what you implement; STRETCH is optional.</p>
+<h2 id="the-system-you-will-study-and-build"><strong>The System You Will Study and Build</strong></h2>
+<p>Six assignments build one pipeline, from a raw Wikipedia dump to a trained model. The diagram shows what each stage reads and writes. Staff provide the model, autograd, optimizer, and reference programs; you build selected components, test them, and explain their performance.</p>
+<p><img class="figure" src="assets/syllabus-pipeline.png?v=8cfd0ed5c1d0" alt="The course pipeline with a real example at each step. A Wikipedia XML dump (37 pages) goes through D1 to articles.parquet (34 rows by 7 columns: doc_id, title, text, and more), through D2 to cleaned Parquet (32 rows) with statistics, and through D3 to datasets/bpe: 24 documents stored as uint16 token-ID shards, for example 256, 77, 97, 116 for BOS M a t, with a manifest. The training stages read batches of contexts (64, 8) and targets (64,), and the model outputs logits (64, 290). T2 uses synthetic float32 buffers and produces fitted latency and bandwidth; T3 trains the model with data parallelism and reports loss, bits per byte and throughput; T1 runs a Triton kernel and reports step times and a profiler trace. The capstone changes one part of the pipeline."></p>
+<p>D3&#x27;s shards follow a written dataset contract, which T1 and T3 read. T2 uses synthetic tensors to isolate communication. If one of your earlier stages is incomplete, start the next from the staff reference output.</p>
 <h2 id="software-and-computing">Software and Computing</h2>
 <ul>
 <li><strong>Tools.</strong> Python, PySpark, and Parquet for data; mpi4py, torch.distributed (NCCL), PyTorch, and Triton for training systems. Required code is Python and Triton.</li>

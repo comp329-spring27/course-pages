@@ -58,7 +58,6 @@ handout_folders = {
     'T1': '04_t1_numpy',
     'T2': '05_t2_triton',
     'T3': '06_t3_scale_out',
-    'Capstone': '07_capstone',
 }
 handouts = {code: f'{handout_root}/{folder}/README.md' for code, folder in handout_folders.items()}
 # Lecture slides: PDFs built in the assignments repository (lecturer/lectures/<deck>.pdf) are copied
@@ -97,7 +96,7 @@ slides = {}
 for deck, (week, lecture) in slide_weeks.items():
     if (slides_dir / f'{deck}.pdf').is_file():
         slides.setdefault(week, {})[lecture] = f'assets/slides/{deck}.pdf'
-# Assignment slides (one deck per assignment, plus capstone and optional UI), built with
+# Assignment slides (one deck per assignment, plus the optional UI), built with
 # `make slides` in the assignments repository (lecturer/slides/<folder>.pdf).
 assignment_slide_folders = {**handout_folders, 'UI': '08_ui_dashboard'}
 assignment_slides_source = assignments_repo / 'lecturer/slides' if assignments_repo else None
@@ -109,10 +108,9 @@ if assignment_slides_source and assignment_slides_source.is_dir():
 assignment_slides = {code: f'assets/assignment-slides/{folder}.pdf' for code, folder in assignment_slide_folders.items()
                      if (assignment_slides_dir / f'{folder}.pdf').is_file()}
 glossary = [{'term': c[0][0], 'meaning': c[1][0]} for c in (cells(r) for r in table('Term').findall('w:tr', ns)[1:])]
-labs = [{'name': c[0][0], 'description': c[1][0], 'weeks': c[2][0]} for c in (cells(r) for r in table('Lab').findall('w:tr', ns)[1:])]
 paragraphs = [''.join(p.itertext()).strip() for p in root.findall('.//w:p', ns)]
 readings = paragraphs[paragraphs.index('Selected Readings') + 2:paragraphs.index('Glossary')]
-data = {'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(), 'schedule': schedule, 'assignments': assignments, 'handouts': handouts, 'slides': slides, 'assignment_slides': assignment_slides, 'glossary': glossary, 'labs': labs, 'readings': readings}
+data = {'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(), 'schedule': schedule, 'assignments': assignments, 'handouts': handouts, 'slides': slides, 'assignment_slides': assignment_slides, 'glossary': glossary, 'readings': readings}
 (base / 'dist/data.js').write_text('window.COURSE = ' + json.dumps(data, ensure_ascii=False, indent=2) + ';\n')
 target = base / 'dist/assets/syllabus-spring-2027.docx'
 if source != target:
@@ -121,7 +119,7 @@ if source != target:
 events = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//COMP 329//Spring 2027 Assignment Deadlines//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:COMP 329 · Assignment deadlines', 'X-WR-TIMEZONE:America/Chicago']
 from zoneinfo import ZoneInfo
 stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
-for a in assignments + [{'code': 'Capstone', 'title': 'Final submission', 'date': '2027-05-04'}]:
+for a in assignments:
     date = datetime.fromisoformat(a['date']).replace(hour=23, minute=59, tzinfo=ZoneInfo('America/Chicago')).astimezone(timezone.utc)
     events.extend(['BEGIN:VEVENT', f'UID:comp329-s27-{a["code"].lower()}@course.local', f'DTSTAMP:{stamp}', 'DTSTART:' + date.strftime('%Y%m%dT%H%M%SZ'), 'DTEND:' + (date + timedelta(minutes=1)).strftime('%Y%m%dT%H%M%SZ'), f'SUMMARY:COMP 329 — {a["code"]}: {a["title"]} due', 'DESCRIPTION:Due at 11:59 p.m. America/Chicago. Based on the Spring 2027 syllabus. Check Canvas for updates.', 'END:VEVENT'])
 events.append('END:VCALENDAR')
@@ -136,7 +134,7 @@ for line in events:
         part += char
     folded.append(part)
 (base / 'dist/assets/assignment-deadlines.ics').write_bytes(('\r\n'.join(folded) + '\r\n').encode())
-print(f'Prepared {len(schedule)} schedule entries, {len(assignments)} assignments, {len(labs)} labs, and {len(glossary)} glossary terms.')
+print(f'Prepared {len(schedule)} schedule entries, {len(assignments)} assignments and {len(glossary)} glossary terms.')
 
 # Keep the browser-readable syllabus and the homepage's asset links in sync.
 import runpy

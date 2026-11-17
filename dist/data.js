@@ -1,5 +1,5 @@
 window.COURSE = {
-  "source_sha256": "0c4af36a0995d4bac974f81eec36d2e8a956d772abb9b3c7764e149b3a9f7c93",
+  "source_sha256": "688f4d2b9ef219fa41a66953128761fe3851315a5a3c05a2c41d5bda5abce839",
   "schedule": [
     {
       "week": "Week 0",
@@ -28,7 +28,6 @@ window.COURSE = {
         "Stream a Wikipedia dump into Parquet records.  BUILD"
       ],
       "events": [
-        "Lab 1 out",
         "D1 out (Fri)",
         "Dataset contract published"
       ],
@@ -49,7 +48,6 @@ window.COURSE = {
         "Tuple relational calculus and its equivalence with the algebra; SELECT/FROM/WHERE, JOIN, and GROUP BY.  CONCEPT"
       ],
       "events": [
-        "Lab 1 due",
         "D1 checkpoint"
       ],
       "block": "data"
@@ -69,7 +67,6 @@ window.COURSE = {
       ],
       "events": [
         "D1 due",
-        "Lab 2 out (after Lecture 1)",
         "D2 out (after Lecture 2)"
       ],
       "block": "data"
@@ -90,7 +87,6 @@ window.COURSE = {
       ],
       "events": [
         "D2 checkpoint",
-        "Lab 2 due",
         "D3 out (after Lecture 2)"
       ],
       "block": "data"
@@ -146,8 +142,7 @@ window.COURSE = {
       ],
       "events": [
         "D3 due",
-        "Capstone spec out",
-        "T2 and Lab 4 out (after Lecture 2)",
+        "T2 out (after Lecture 2)",
         "Midterm review"
       ],
       "block": "training"
@@ -184,8 +179,7 @@ window.COURSE = {
         "ZeRO and Fully Sharded Data Parallel; memory versus communication.  CONCEPT"
       ],
       "events": [
-        "T2 checkpoint",
-        "Lab 4 due"
+        "T2 checkpoint"
       ],
       "block": "training"
     },
@@ -218,7 +212,7 @@ window.COURSE = {
       ],
       "events": [
         "T2 due",
-        "T3 and Lab 5 out (after Lecture 2)"
+        "T3 out (after Lecture 2)"
       ],
       "block": "training"
     },
@@ -235,8 +229,7 @@ window.COURSE = {
         "The 3D algorithm: trading memory for communication; tensor parallelism as a 1D/2D decomposition.  CONCEPT"
       ],
       "events": [
-        "T3 checkpoint",
-        "Lab 5 due (after Lecture 2)"
+        "T3 checkpoint"
       ],
       "block": "training"
     },
@@ -254,7 +247,7 @@ window.COURSE = {
       ],
       "events": [
         "T3 due",
-        "T1 and Lab 3 out (after Lecture 2)"
+        "T1 out (after Lecture 2)"
       ],
       "block": "training"
     },
@@ -272,8 +265,7 @@ window.COURSE = {
         "Predict a kernel bottleneck with the roofline model.  BUILD"
       ],
       "events": [
-        "T1 checkpoint",
-        "Capstone pairs set"
+        "T1 checkpoint"
       ],
       "block": "training"
     },
@@ -293,8 +285,7 @@ window.COURSE = {
         "Triton blocks, masks, and reductions; correct timing and tests.  BUILD"
       ],
       "events": [
-        "T1 due",
-        "Lab 3 due (after Lecture 1)"
+        "T1 due"
       ],
       "block": "training"
     },
@@ -307,8 +298,7 @@ window.COURSE = {
       ],
       "lecture2": [],
       "events": [
-        "Final exam",
-        "Capstone due (Tue, May 4)"
+        "Final exam"
       ],
       "block": "shared"
     }
@@ -375,8 +365,7 @@ window.COURSE = {
     "D3": "https://github.com/comp329-spring27/student-assignments/blob/main/03_d3_dataset/README.md",
     "T1": "https://github.com/comp329-spring27/student-assignments/blob/main/04_t1_numpy/README.md",
     "T2": "https://github.com/comp329-spring27/student-assignments/blob/main/05_t2_triton/README.md",
-    "T3": "https://github.com/comp329-spring27/student-assignments/blob/main/06_t3_scale_out/README.md",
-    "Capstone": "https://github.com/comp329-spring27/student-assignments/blob/main/07_capstone/README.md"
+    "T3": "https://github.com/comp329-spring27/student-assignments/blob/main/06_t3_scale_out/README.md"
   },
   "slides": {
     "Week 5": {
@@ -426,7 +415,6 @@ window.COURSE = {
     "T1": "assets/assignment-slides/04_t1_numpy.pdf",
     "T2": "assets/assignment-slides/05_t2_triton.pdf",
     "T3": "assets/assignment-slides/06_t3_scale_out.pdf",
-    "Capstone": "assets/assignment-slides/07_capstone.pdf",
     "UI": "assets/assignment-slides/08_ui_dashboard.pdf"
   },
   "glossary": [
@@ -557,33 +545,6 @@ window.COURSE = {
     {
       "term": "FSDP",
       "meaning": "Fully sharded data parallelism: shard model state across data-parallel workers and communicate it when needed."
-    }
-  ],
-  "labs": [
-    {
-      "name": "Lab 1",
-      "description": "Set up the environment and run a cluster job. Measure CPU matrix multiplication and identify compute and memory costs.",
-      "weeks": "1–2"
-    },
-    {
-      "name": "Lab 2",
-      "description": "Write a MapReduce word count in plain Python, then in PySpark.",
-      "weeks": "3–4"
-    },
-    {
-      "name": "Lab 3",
-      "description": "GPU and framework lab: inspect memory access, write a small Triton kernel, and trace PyTorch eager/compiled execution with a guided torch.func.vmap comparison.",
-      "weeks": "12–14"
-    },
-    {
-      "name": "Lab 4",
-      "description": "Communication lab: rank/device mapping, CPU messages, NCCL collectives, and a guided two-server run; fit latency and bandwidth.",
-      "weeks": "7–9"
-    },
-    {
-      "name": "Lab 5",
-      "description": "Parallelism lab: guided tensor and pipeline partitions of a supplied toy model; measure communication and pipeline bubbles; map a 3D layout.",
-      "weeks": "10–11"
     }
   ],
   "readings": [

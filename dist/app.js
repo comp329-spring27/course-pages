@@ -8,13 +8,11 @@ const bullets = items => `<ul>${items.map(item => `<li>${withTag(item)}</li>`).j
 
 // Schedule: one row per week; lecture details expand in place.
 const eventLabel = event => {
-  let label = event.replace(/\s*\((?!Weeks )[^)]*\)/, '').replace(/T([123]) and Lab ([345]) out.*/, 'T$1 + Lab $2 out');
+  let label = event.replace(/\s*\((?!Weeks )[^)]*\)/, '');
   const day = event.match(/\(((?:Mon|Tue|Wed|Thu|Fri)(?:, [A-Z][a-z]{2} \d+)?)/);
   if (day) label += ` (${day[1]})`;
   const due = /\bdue\b|checkpoint|^midterm(?! review)|^final exam/i.test(event) && !/^nothing/i.test(event);
-  const slides = /^Capstone spec out/.test(event) && course.assignment_slides.Capstone
-    ? ` <a class="slides-link" href="${escapeHTML(course.assignment_slides.Capstone)}" target="_blank" rel="noopener" aria-label="Capstone slides (PDF)">[slides]</a>` : '';
-  return `<span class="event${due ? ' due' : ''}">${escapeHTML(label)}${slides}</span>`;
+  return `<span class="event${due ? ' due' : ''}">${escapeHTML(label)}</span>`;
 };
 // Lectures with a slide deck link it; the PDFs are listed in data.js.
 const slidesLink = (week, lecture) => {

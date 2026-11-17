@@ -48,9 +48,11 @@ img.figure { display: block; width: 100%; max-width: 980px; height: auto; margin
 .pl-name { font-weight: 700; font-size: 16px; }
 .pl-from { font-size: 13px; color: var(--muted, #535f70); }
 .pl-due { margin-top: auto; padding-top: 4px; font-size: 13px; font-weight: 600; color: var(--accent-color); }
-.pl-capstone { margin-top: 18px; padding: 12px 16px; border-radius: 12px; background: var(--header, #00205b); color: var(--header-ink, white); font-size: 15px; line-height: 1.5; }
+.pl-footer { margin-top: 18px; padding: 12px 16px; border-radius: 12px; background: var(--header, #00205b); color: var(--header-ink, white); font-size: 15px; line-height: 1.5; }
 .pl-hint { margin: 18px 0 0; font-size: 15px; color: var(--muted, #535f70); font-style: italic; }
 .pl-panel { margin-top: 18px; padding: 18px 20px; border-radius: 14px; background: var(--surface, white); border: 1px solid var(--line, #d6dce7); border-top: 4px solid var(--panel-color); }
+.pl-js .pl-panel { position: relative; margin: 14px 0 6px; box-shadow: 0 6px 18px rgba(0, 0, 0, .10); }
+.pl-js .pl-panel::before { content: ""; position: absolute; top: -14px; left: calc(var(--caret-x, 50%) - 12px); border: 12px solid transparent; border-top: 0; border-bottom: 10px solid var(--panel-color); }
 .pl-panel.pl-data { --panel-color: var(--data, #0a509e); }
 .pl-panel.pl-train { --panel-color: var(--amber, #8a5514); }
 .pl-panel h4 { margin: 0 0 14px; font-size: 17px; line-height: 1.45; }

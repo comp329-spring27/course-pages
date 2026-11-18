@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="syllabus.css?v=f53c60656450">
 <link rel="stylesheet" href="theme.css?v=c6d2e642d1c5">
 <script src="theme.js?v=db279466140b"></script>
-<meta name="source-sha256" content="caf6145295237427624dccaf4975fd414c5cb34226f8db5e1ea7fc7b1e9e0a41">
+<meta name="source-sha256" content="74a1f2ae7c9d3350071a1d04b4ebb4034a2c6c32c889a65107742a44040355e4">
 </head><body class="syllabus-page"><header><a href="./"><img src="assets/course-mark.svg" alt="" width="40" height="40">COMP 329 · Course home</a><span>Spring 2027 syllabus</span><button type="button" class="theme-toggle" data-theme-toggle role="switch" aria-checked="false" aria-label="Dark mode"><span class="theme-toggle-track" aria-hidden="true"><span class="theme-toggle-knob"></span></span><span class="theme-toggle-label">Dark mode</span></button></header>
 <main><h1><strong>COMP 329: Systems for Artificial Intelligence</strong></h1>
 <p><em>Understand and build the systems behind scalable AI</em></p>
@@ -40,7 +40,7 @@
 <ul>
 <li><strong>Two lectures</strong> each week, except during university closures. Each lecture comes with a runnable notebook.</li>
 <li><strong>One recitation:</strong> hands-on help with tools, starter code, and math.</li>
-<li><strong>One concept check:</strong> a short quiz with unlimited attempts, graded for completion.</li>
+<li><strong>One in-class check-in:</strong> three or four short quiz questions on the week’s lectures, at one lecture each week; your two lowest scores are dropped.</li>
 <li><strong>Office hours</strong> with instructors and TAs.</li>
 </ul>
 <h3>Each assignment: predict, build, measure</h3>
@@ -59,12 +59,15 @@
 <li><strong>Compute.</strong> Every graded run fits a guaranteed per-student allocation. Bigger runs are optional. If the cluster goes down near a deadline, the deadline moves.</li>
 </ul>
 <h2 id="assessment">Assessment</h2>
-<div class="table-scroll" tabindex="0" role="region" aria-label="Syllabus table"><table><tr><td><p><strong>Component</strong></p></td><td><p><strong>Weight</strong></p></td></tr><tr><td><p>Weekly concept checks</p></td><td><p>10%</p></td></tr><tr><td><p>Assignments (6 × 10%)</p></td><td><p>60%</p></td></tr><tr><td><p>Midterm (Weeks 1–7)</p></td><td><p>15%</p></td></tr><tr><td><p>Final (cumulative)</p></td><td><p>15%</p></td></tr><tr><td><p><strong>Total</strong></p></td><td><p><strong>100%</strong></p></td></tr></table></div>
-<h3>Assignments (60%)</h3>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Syllabus table"><table><tr><td><p><strong>Component</strong></p></td><td><p><strong>Weight</strong></p></td></tr><tr><td><p>Weekly in-class check-ins</p></td><td><p>10%</p></td></tr><tr><td><p>Assignments (6 × 5%)</p></td><td><p>30%</p></td></tr><tr><td><p>Midterm (Weeks 1–7)</p></td><td><p>20%</p></td></tr><tr><td><p>Final (cumulative)</p></td><td><p>20%</p></td></tr><tr><td><p>Final project (individual)</p></td><td><p>20%</p></td></tr><tr><td><p><strong>Total</strong></p></td><td><p><strong>100%</strong></p></td></tr></table></div>
+<h3>Assignments (30%)</h3>
 <p>The table lists the assignments in due order: D1 → D2 → D3 → T2 → T3 → T1. The checkpoint counts for 20% and the final for 80%. Final work is graded on correctness (~50%), performance (~20%), and analysis (~30%). Analysis connects a measured bottleneck to a mechanism and tests a proposed change. Only correct code earns performance credit; a sound scaling-limit explanation can earn full analysis credit.</p>
 <div class="table-scroll" tabindex="0" role="region" aria-label="Syllabus table"><table><tr><td><p><strong>Assignment</strong></p></td><td><p><strong>Due</strong></p></td><td><p><strong>What you build</strong></p></td><td><p><strong>Scaling study</strong></p></td></tr><tr><td><p><strong>D1 Collect</strong></p></td><td><p>Week 3</p></td><td><p>Stream-parse a Wikipedia dump into Parquet; an approved library strips wikitext markup.</p></td><td><p><em>Throughput vs. worker count; find the bottleneck; estimate full-dump time and cost.</em></p></td></tr><tr><td><p><strong>D2 Process</strong></p></td><td><p>Week 5 (Wed, before recess)</p></td><td><p>Normalize the corpus and compute statistics with Spark DataFrames and SQL; tests compare your output with a single-machine run.</p></td><td><p><em>Strong and weak scaling; effect of partition count.</em></p></td></tr><tr><td><p><strong>D3 Build the dataset</strong></p></td><td><p>Week 7</p></td><td><p>Deduplicate with MinHash and LSH in Spark (the checkpoint), train a BPE tokenizer with the provided trainer, and write shards that pass the contract checker. Stretch: write BPE training yourself.</p></td><td><p><em>Dedup cost vs. corpus size; LSH accuracy vs. time; tokens per second.</em></p></td></tr><tr><td><p><strong>T2 Distributed programming</strong></p></td><td><p>Week 10</p></td><td><p>Write a CPU ring all-reduce with mpi4py point-to-point messages and a torch.distributed/NCCL benchmark, including a guided two-server run. Checkpoint: correct collectives on small tensors.</p></td><td><p><em>Vary message size, rank count, and topology; fit latency and bandwidth and compare predictions with measurements.</em></p></td></tr><tr><td><p><strong>T3 Parallel training systems</strong></p></td><td><p>Week 12</p></td><td><p>Implement data-parallel gradient averaging, check one update against a single-process reference and PyTorch DDP, and train on D3 data. Guided tensor- and pipeline-parallel exercises; analyze a 3D layout with a supplied simulator. Checkpoint: correct DP update and layout tests.</p></td><td><p><em>Compare replicated and sharded state, communication volume, and pipeline bubbles; justify a layout under a fixed GPU and memory budget.</em></p></td></tr><tr><td><p><strong>T1 GPU and framework execution</strong></p></td><td><p>Week 14</p></td><td><p>Write a Triton reduction or fused elementwise kernel, check it against PyTorch, and use it in the forward pass of a supplied model on your D3 data; compare eager, kernel, and compiled execution. Checkpoint: correct kernel and timing harness.</p></td><td><p><em>Predict memory traffic and arithmetic intensity; separate compile, launch, and steady-state costs; explain the bottleneck with a trace.</em></p></td></tr></table></div>
-<h3>Exams (30%)</h3>
+<h3>Exams (40%)</h3>
 <p>The midterm in Week 8 covers Weeks 1–7: data processing and the first weeks of distributed computing. The final is cumulative, emphasizing Weeks 8–14 and the connections between the modules. Both test reasoning, not memorization. Practice exams are provided, and you may bring one page of notes.</p>
+<h3>Final project (20%)</h3>
+<p>An open-ended, individual project: choose one systems question from the course’s topics, predict the answer with a cost model, build or change something, measure it, and explain the result. Guidelines come out in Week 8. A one-page proposal is due in Week 11 and a short progress check-in in Week 13; the report (at most six pages, with code and raw measurements) is due Tue, May 4, and you present it briefly during the final examination period. A well-supported negative result can earn full credit.</p>
+<p>Proposal 10%, progress check-in 10%, report 60%, presentation 20% of the project grade. The report is graded on the question and design, the prediction, reproducible experiments, an analysis that connects a measured bottleneck to a mechanism, and communication.</p>
 <h2 id="course-schedule">Course Schedule</h2>
 <p>Christopher Jermaine teaches Weeks 1–4; Yuke Wang teaches Weeks 5–14. Work is due Fridays at 11:59 p.m. Central Time unless noted. No assignment is due in the midterm week.</p>
 <div class="table-scroll" tabindex="0" role="region" aria-label="Syllabus table"><table><tr><td><p><strong>Week</strong></p></td><td><p><strong>Lecture 1</strong></p></td><td><p><strong>Lecture 2</strong></p></td><td><p><strong>Due and released</strong></p></td></tr><tr><td><p><strong>Week 0</strong></p>
@@ -105,7 +108,8 @@
 <p>Mar 1–5</p></td><td><p><strong>All-reduce: rings and trees</strong></p>
 <p>Ring all-reduce and its cost; tree versus ring by message size.<strong>  CONCEPT</strong></p></td><td><p><strong>NCCL and interconnect topology</strong></p>
 <p>NCCL and torch.distributed; interconnect topology: NVLink, PCIe, and InfiniBand.<strong>  CONCEPT</strong></p>
-<p>Benchmark NCCL collectives and check their results.<strong>  BUILD</strong></p></td><td><p>Midterm (Weeks 1–7), evening TBA</p></td></tr><tr><td><p><strong>Week 9</strong></p>
+<p>Benchmark NCCL collectives and check their results.<strong>  BUILD</strong></p></td><td><p>Midterm (Weeks 1–7), evening TBA</p>
+<p>Final project guidelines out</p></td></tr><tr><td><p><strong>Week 9</strong></p>
 <p>Mar 8–12</p></td><td><p><strong>Data parallelism</strong></p>
 <p>Parameters, gradients, optimizer state, and activations; synchronous data parallelism: shard the batch, all-reduce the gradients; Distributed Data Parallel.<strong>  CONCEPT</strong></p>
 <p>Check a distributed update against a single-process reference.<strong>  BUILD</strong></p></td><td><p><strong>Sharding the state: ZeRO and FSDP</strong></p>
@@ -119,7 +123,8 @@
 <p>T3 out (after Lecture 2)</p></td></tr><tr><td><p><strong>Week 11</strong></p>
 <p>Mar 29–Apr 2</p></td><td><p><strong>Distributed matrix multiplication in 2D</strong></p>
 <p>Matrix multiply as the unit of ML work; Cannon’s algorithm and SUMMA; communication cost on a √p × √p grid.<strong>  CONCEPT</strong></p></td><td><p><strong>3D matrix multiplication and tensor parallelism</strong></p>
-<p>The 3D algorithm: trading memory for communication; tensor parallelism as a 1D/2D decomposition.<strong>  CONCEPT</strong></p></td><td><p>T3 checkpoint</p></td></tr><tr><td><p><strong>Week 12</strong></p>
+<p>The 3D algorithm: trading memory for communication; tensor parallelism as a 1D/2D decomposition.<strong>  CONCEPT</strong></p></td><td><p>T3 checkpoint</p>
+<p>Project proposal due</p></td></tr><tr><td><p><strong>Week 12</strong></p>
 <p>Apr 5–9</p></td><td><p><strong>GPU architecture</strong></p>
 <p>CPUs versus GPUs; streaming multiprocessors, CUDA cores, and tensor cores; threads, warps, thread blocks, and grids; SIMT and warp divergence.<strong>  CONCEPT</strong></p></td><td><p><strong>The GPU execution model</strong></p>
 <p>Latency hiding by warp scheduling; occupancy; kernels and kernel launches; host-to-device transfers.<strong>  CONCEPT</strong></p></td><td><p>T3 due</p>
@@ -127,13 +132,16 @@
 <p>Apr 12–16</p></td><td><p><strong>The GPU memory hierarchy</strong></p>
 <p>Registers, shared memory, L2, and high-bandwidth memory: capacity and bandwidth at each level; memory coalescing.<strong>  CONCEPT</strong></p></td><td><p><strong>Arithmetic intensity and the roofline model</strong></p>
 <p>Arithmetic intensity; the roofline model; memory-bound versus compute-bound operations.<strong>  CONCEPT</strong></p>
-<p>Predict a kernel bottleneck with the roofline model.<strong>  BUILD</strong></p></td><td><p>T1 checkpoint</p></td></tr><tr><td><p><strong>Week 14</strong></p>
+<p>Predict a kernel bottleneck with the roofline model.<strong>  BUILD</strong></p></td><td><p>T1 checkpoint</p>
+<p>Project check-in due</p></td></tr><tr><td><p><strong>Week 14</strong></p>
 <p>Apr 19–23</p>
 <p><em>Last class: Fri, Apr 23</em></p></td><td><p><strong>Precision and the anatomy of a matrix multiply</strong></p>
 <p>Number formats: range versus precision; mixed precision: low-precision inputs, FP32 accumulation, and loss scaling; naive matmul is memory-bound; tiling; tensor cores and tile shapes.<strong>  CONCEPT</strong></p></td><td><p><strong>Triton, and one training step end to end</strong></p>
 <p>Programs instead of threads; blocks, tl.load, tl.store, masks, and tl.dot; what the compiler does; autotuning; kernel fusion; course synthesis.<strong>  CONCEPT</strong></p>
 <p>Triton blocks, masks, and reductions; correct timing and tests.<strong>  BUILD</strong></p></td><td><p>T1 due</p></td></tr><tr><td><p><strong>Finals</strong></p>
-<p>Apr 28–May 4</p></td><td colspan="2"><p><strong>Final examination period</strong></p></td><td><p>Final exam</p></td></tr></table></div>
+<p>Apr 28–May 4</p></td><td colspan="2"><p><strong>Final examination period</strong></p></td><td><p>Final exam</p>
+<p>Project report due (Tue, May 4)</p>
+<p>Project presentations</p></td></tr></table></div>
 <h2 id="getting-help">Getting Help</h2>
 <ul>
 <li><strong>Fell behind?</strong> Start the next stage from the reference output.</li>
@@ -145,9 +153,9 @@
 </ul>
 <h2 id="course-policies">Course Policies</h2>
 <h3>Late work</h3>
-<p>You have five slip days per semester, with at most two per submission. Reference outputs come out 48 hours after each deadline, and no submissions are accepted after that. Accommodations and outages are handled separately.</p>
+<p>You have five slip days per semester, with at most two per submission. Slip days do not apply to the final project report. Reference outputs come out 48 hours after each deadline, and no submissions are accepted after that. Accommodations and outages are handled separately.</p>
 <h3>Collaboration</h3>
-<p>Discuss ideas freely. Write your own code and analysis. Provided code and reference outputs may be used. Don’t share or view others’ code. Every assignment, including T3, is individual.</p>
+<p>Discuss ideas freely. Write your own code and analysis. Provided code and reference outputs may be used. Don’t share or view others’ code. Every assignment, including T3, and the final project is individual.</p>
 <h3>AI tools</h3>
 <p>You may use AI to explain concepts, read documentation, and debug. You may not use it to write the parts each handout lists as yours, such as Spark jobs in D2/D3, the kernel and measurement code in T1, collective logic in T2, or gradient synchronization in T3. Cite any AI use, including your prompts.</p>
 <h3>Code check-offs</h3>

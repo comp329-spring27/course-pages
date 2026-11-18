@@ -58,8 +58,8 @@ calendar = (dist / 'assets/assignment-deadlines.ics').read_bytes().decode()
 assert all(len(line.encode()) <= 75 for line in calendar.split('\r\n'))
 calendar = calendar.replace('\r\n ', '')
 events = calendar.split('BEGIN:VEVENT\r\n')[1:]
-assert len(events) == 6
-for event in events:
+assert len(events) == 7
+for event in events[:6]:
     code = re.search(r'UID:comp329-s27-(\w+)@', event).group(1).upper()
     a = next(a for a in data['assignments'] if a['code'] == code)
     time = datetime.strptime(re.search(r'DTSTART:(\d+T\d+Z)', event).group(1), '%Y%m%dT%H%M%SZ').replace(tzinfo=ZoneInfo('UTC')).astimezone(ZoneInfo('America/Chicago'))
@@ -97,4 +97,4 @@ for anchor in ('glossary', 'selected-readings'):
     assert f'syllabus.html#{anchor}' in refs.urls, f'Homepage no longer links to syllabus.html#{anchor}.'
 for name in ('theme.css', 'theme.js'):
     assert f'{name}?v=' + hashlib.sha256((dist / name).read_bytes()).hexdigest()[:12] in syllabus_html, f'Readable syllabus links a stale {name}; regenerate it.'
-print('PASS: source freshness, schedule/deadline agreement, six calendar events, six student handouts, 19 lecture slide decks (Weeks 5-14), seven assignment slide decks, readable syllabus, homepage pipeline figure, asset stamps, and local links.')
+print('PASS: source freshness, schedule/deadline agreement, seven calendar events, six student handouts, 19 lecture slide decks (Weeks 5-14), seven assignment slide decks, readable syllabus, homepage pipeline figure, asset stamps, and local links.')

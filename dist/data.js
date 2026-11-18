@@ -1,5 +1,5 @@
 window.COURSE = {
-  "source_sha256": "caf6145295237427624dccaf4975fd414c5cb34226f8db5e1ea7fc7b1e9e0a41",
+  "source_sha256": "74a1f2ae7c9d3350071a1d04b4ebb4034a2c6c32c889a65107742a44040355e4",
   "schedule": [
     {
       "week": "Week 0",
@@ -161,7 +161,8 @@ window.COURSE = {
         "Benchmark NCCL collectives and check their results.  BUILD"
       ],
       "events": [
-        "Midterm (Weeks 1–7), evening TBA"
+        "Midterm (Weeks 1–7), evening TBA",
+        "Final project guidelines out"
       ],
       "block": "training"
     },
@@ -229,7 +230,8 @@ window.COURSE = {
         "The 3D algorithm: trading memory for communication; tensor parallelism as a 1D/2D decomposition.  CONCEPT"
       ],
       "events": [
-        "T3 checkpoint"
+        "T3 checkpoint",
+        "Project proposal due"
       ],
       "block": "training"
     },
@@ -265,7 +267,8 @@ window.COURSE = {
         "Predict a kernel bottleneck with the roofline model.  BUILD"
       ],
       "events": [
-        "T1 checkpoint"
+        "T1 checkpoint",
+        "Project check-in due"
       ],
       "block": "training"
     },
@@ -298,7 +301,9 @@ window.COURSE = {
       ],
       "lecture2": [],
       "events": [
-        "Final exam"
+        "Final exam",
+        "Project report due (Tue, May 4)",
+        "Project presentations"
       ],
       "block": "shared"
     }

@@ -23,7 +23,7 @@ The reading list and glossary live on the readable syllabus page (`syllabus.html
 
 ## Content
 
-`scripts/prepare-content.py` extracts the schedule, assignments, readings, and glossary from the syllabus and writes `dist/data.js`. It also creates an assignment calendar with deadlines at 11:59 p.m. America/Chicago. Only assignment deadlines are included; exam dates and times remain TBA.
+`scripts/prepare-content.py` extracts the schedule, assignments, readings, and glossary from the syllabus and writes `dist/data.js`. It also creates an assignment calendar with deadlines at 11:59 p.m. America/Chicago. Only assignment deadlines and the final project report are included; exam dates and times remain TBA.
 
 Assignment slides (D1–T3 next to each handout link, and the optional UI under Resources) are copied the same way from `assignments/lecturer/slides/` (built with `make slides`) into `dist/assets/assignment-slides/`. Lecture slides for Weeks 5–14 (19 decks; Week 5 has one lecture) are copied by `scripts/prepare-content.py` from `assignments/lecturer/lectures/` (built with `make lectures`) into `dist/assets/slides/` and listed in `dist/data.js`; `check-site.py` requires all 19.
 

@@ -121,7 +121,7 @@ if source != target:
 events = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//COMP 329//Spring 2027 Assignment Deadlines//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:COMP 329 · Assignment deadlines', 'X-WR-TIMEZONE:America/Chicago']
 from zoneinfo import ZoneInfo
 stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
-for a in assignments:
+for a in assignments + [{'code': 'Project', 'title': 'Final project report', 'date': '2027-05-04'}]:
     date = datetime.fromisoformat(a['date']).replace(hour=23, minute=59, tzinfo=ZoneInfo('America/Chicago')).astimezone(timezone.utc)
     events.extend(['BEGIN:VEVENT', f'UID:comp329-s27-{a["code"].lower()}@course.local', f'DTSTAMP:{stamp}', 'DTSTART:' + date.strftime('%Y%m%dT%H%M%SZ'), 'DTEND:' + (date + timedelta(minutes=1)).strftime('%Y%m%dT%H%M%SZ'), f'SUMMARY:COMP 329 — {a["code"]}: {a["title"]} due', 'DESCRIPTION:Due at 11:59 p.m. America/Chicago. Based on the Spring 2027 syllabus. Check Canvas for updates.', 'END:VEVENT'])
 events.append('END:VCALENDAR')

@@ -16,7 +16,7 @@ The homepage has six sections, each written to be read top to bottom without tab
 2. **Pipeline** – the clickable course pipeline (see below).
 3. **Schedule** – one row per week with lecture topics and what is due or released, grouped under divider rows for getting ready, the four modules (data processing, distributed and parallel computing, distributed computing for tensors and ML, GPU hardware), and finals, with the block colors from the course map. Opening a row shows each lecture's topics (its CONCEPT line from the syllabus) in two columns divided by a rule; the BUILD and STRETCH lines stay in the syllabus. Every lecture in Weeks 5–14 has a [slides] link to its PDF.
 4. **Assignments** – one row per assignment; opening it shows the scope, the scaling study, and the handout link. There are no labs and no capstone.
-5. **Grading** – the grade breakdown and four short policy items.
+5. **Grading** – the grade breakdown and five short policy items.
 6. **Resources** – prerequisites, the pre-term checklist, and links.
 
 The reading list and glossary live on the readable syllabus page (`syllabus.html#selected-readings`, `syllabus.html#glossary`) rather than the homepage.

@@ -1,5 +1,5 @@
 window.COURSE = {
-  "source_sha256": "74a1f2ae7c9d3350071a1d04b4ebb4034a2c6c32c889a65107742a44040355e4",
+  "source_sha256": "923c425871cc0910c52d64183afcb36968466adc57e2962d98dab95c7923e719",
   "schedule": [
     {
       "week": "Week 0",
@@ -332,7 +332,7 @@ window.COURSE = {
       "title": "Build the dataset",
       "due": "Due Week 7",
       "date": "2027-02-26",
-      "build": "Deduplicate with MinHash and LSH in Spark (the checkpoint), train a BPE tokenizer with the provided trainer, and write shards that pass the contract checker. Stretch: write BPE training yourself.",
+      "build": "Deduplicate with MinHash and LSH, first locally (the checkpoint) and then in Spark; train a BPE tokenizer with the provided trainer; and write shards that pass the contract checker. Stretch: write BPE training yourself.",
       "study": "Dedup cost vs. corpus size; LSH accuracy vs. time; tokens per second.",
       "thread": "data"
     },

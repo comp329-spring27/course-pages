@@ -1,5 +1,5 @@
 window.COURSE = {
-  "source_sha256": "923c425871cc0910c52d64183afcb36968466adc57e2962d98dab95c7923e719",
+  "source_sha256": "c92c0753498c63b84d85d64560ae9e17828610cfea004211a37763826789bd34",
   "schedule": [
     {
       "week": "Week 0",
